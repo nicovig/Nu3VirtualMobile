@@ -1,13 +1,13 @@
 import 'dart:convert';
 
 class UserModel {
-  String? id;
+  int? id;
   String? pseudo;
   String? firstName;
   String? lastName;
   DateTime? birthday;
-  String? height;
-  String? weight;
+  int? height;
+  double? weight;
   String? email;
   String? password;
 
@@ -28,11 +28,13 @@ class UserModel {
         pseudo: parsedJson['pseudo'] ?? "",
         firstName: parsedJson['firstName'] ?? "",
         lastName: parsedJson['lastName'] ?? "",
-        birthday: parsedJson['birthday'] ?? "",
         height: parsedJson['height'] ?? "",
         weight: parsedJson['weight'] ?? "",
         email: parsedJson['email'] ?? "",
-        password: parsedJson['password'] ?? "");
+        password: parsedJson['password'] ?? "",
+        birthday: parsedJson['birthday'] != null
+            ? DateTime.parse(parsedJson['birthday'])
+            : null);
   }
 
   String toJson() {

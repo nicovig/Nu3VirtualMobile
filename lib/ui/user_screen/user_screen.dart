@@ -152,7 +152,8 @@ class UserScreen extends StatelessWidget {
                                 weight: weight,
                                 birthday: birthday,
                                 email: email,
-                                password: password);
+                                password: password,
+                                context: context);
                           }
                         },
                         child: const Text('Créer un compte'),

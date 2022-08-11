@@ -1,24 +1,40 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+
+import 'package:nu3virtual/core/services/authentication/authentication_service.dart';
+import 'package:nu3virtual/service_locator.dart';
 import 'package:nu3virtual/ui/user_screen/user_screen.dart';
 
 class AuthenticationScreenViewModel extends ChangeNotifier {
-  int _someValue = 0;
-  int get someValue => _someValue;
+  final AuthenticationService _authenticationService =
+      getIt<AuthenticationService>();
+
+  late String login;
+  late String password;
+
   Future loadData() async {
     // do initialization...
     notifyListeners();
   }
 
+  checkEmailOrPseudo(String input) {
+    login = input;
+  }
+
+  checkPassword(String input) {
+    password = input;
+  }
+
   void createAccount(BuildContext context) {
     Navigator.push(
-        context, new MaterialPageRoute(builder: (context) => UserScreen()));
+        context, MaterialPageRoute(builder: (context) => UserScreen()));
     notifyListeners();
   }
 
-  void login() {
-    // do something...
+  void connect() {
+    if (login != '' && password != '') {
+      _authenticationService.login(login, password);
+    }
+
     notifyListeners();
   }
 }

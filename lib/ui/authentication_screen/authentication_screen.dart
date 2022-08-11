@@ -29,17 +29,20 @@ class AuthenticationScreen extends StatelessWidget {
                     children: [
                       CustomTitle(title: "Créer un compte"),
                       CustomFormField(
-                          handleOnSaved: (value) => _checkEmailOrPseudo(value),
+                          handleOnSaved: (value) =>
+                              model.checkEmailOrPseudo(value ?? ''),
                           hintText: 'Pseudo ou email'),
                       CustomFormField(
-                          handleOnSaved: (value) => _checkPassword(value),
+                          handleOnSaved: (value) =>
+                              model.checkPassword(value ?? ''),
+                          hideInput: true,
                           hintText: 'Mot de passe'),
                       SizedBox(
                         width: MediaQuery.of(context).size.width * 0.9,
                         child: ElevatedButton(
                           onPressed: () {
                             if (_formKey.currentState!.validate()) {
-                              model.login();
+                              model.connect();
                             }
                           },
                           child: const Text('Se connecter'),
@@ -59,13 +62,5 @@ class AuthenticationScreen extends StatelessWidget {
                 ),
               ),
             )));
-  }
-
-  _checkEmailOrPseudo(String? input) {
-    print(input);
-  }
-
-  _checkPassword(String? input) {
-    print(input);
   }
 }

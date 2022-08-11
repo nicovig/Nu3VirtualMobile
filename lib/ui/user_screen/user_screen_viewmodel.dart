@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:nu3virtual/core/models/user_model.dart';
 import 'package:nu3virtual/core/services/user/user_service_class.dart';
 import 'package:nu3virtual/service_locator.dart';
+import 'package:nu3virtual/ui/home_screen/home_screen.dart';
 
 class UserScreenViewModel extends ChangeNotifier {
   final UserServiceApiClass _userService = getIt<UserServiceApiClass>();
@@ -12,7 +13,7 @@ class UserScreenViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void createUser(
+  Future<void> createUser(
       {required String lastname,
       required String firstname,
       required String pseudo,
@@ -20,18 +21,28 @@ class UserScreenViewModel extends ChangeNotifier {
       required double weight,
       required DateTime birthday,
       required String email,
-      required String password}) {
+      required String password,
+      required BuildContext context}) async {
     UserModel user = UserModel(
-        id: '0',
+        id: 0,
         firstName: firstname,
         lastName: lastname,
         email: email,
-        height: height.toString(),
+        height: height,
         password: password,
         pseudo: pseudo,
-        weight: weight.toString(),
+        weight: weight,
         birthday: birthday);
-    _userService.create(user, password);
+    bool isCreationOk = await _userService.create(user, password);
+    if (isCreationOk) {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => HomeScreen(
+                    title: 'Home',
+                  )));
+    }
+
     notifyListeners();
   }
 }

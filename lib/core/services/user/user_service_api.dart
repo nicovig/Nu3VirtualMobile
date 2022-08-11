@@ -1,9 +1,15 @@
+import 'dart:convert';
+
 import 'package:http/http.dart' as http;
 
 import 'package:nu3virtual/core/models/user_model.dart';
 import 'package:nu3virtual/core/services/user/user_service_class.dart';
+import 'package:nu3virtual/service_locator.dart';
 
 class UserService extends UserServiceApiClass {
+  final UserServiceStoreClass _userServiceStore =
+      getIt<UserServiceStoreClass>();
+
   static const Map<String, String> headers = {
     "Content-Type": "application/json"
   };
@@ -13,23 +19,10 @@ class UserService extends UserServiceApiClass {
   static Uri url = Uri.https(hostedDeviceLocalhost + apiUrl, controllerName);
 
   @override
-  Future<UserModel> create(UserModel userToCreate, String password) async {
+  Future<bool> create(UserModel userToCreate, String password) async {
     var response =
         await http.post(url, headers: headers, body: userToCreate.toJson());
-
-    print('Response status: ${response.statusCode}');
-    print('Response body: ${response.body}');
-    return UserModel(
-        birthday: DateTime.now(),
-        email: '',
-        firstName: '',
-        height: '',
-        id: '',
-        lastName: '',
-        password: '',
-        pseudo: '',
-        weight: '0');
-    ;
-    //return response.body
+    _userServiceStore.saveCurrentUser(response.body);
+    return response.statusCode == 200 || response.statusCode == 204;
   }
 }

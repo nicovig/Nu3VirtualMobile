@@ -8,11 +8,11 @@ class AuthenticationServiceCaller extends AuthenticationService {
         birthday: DateTime.now(),
         email: '',
         firstName: '',
-        height: '',
-        id: '',
+        height: 0,
+        id: 0,
         lastName: '',
         password: '',
         pseudo: '',
-        weight: '');
+        weight: 0);
   }
 }

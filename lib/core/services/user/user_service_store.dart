@@ -15,10 +15,8 @@ class UserServiceStore extends UserServiceStoreClass {
   }
 
   @override
-  Future<void> saveCurrentUser(UserModel currentUser) async {
+  Future<void> saveCurrentUser(String currentUserString) async {
     final prefs = await SharedPreferences.getInstance();
-    Map<String, dynamic> decodeOptions = jsonDecode(UserModel().jsonString());
-    String user = jsonEncode(UserModel.fromJson(decodeOptions));
-    prefs.setString('currentUser', user);
+    prefs.setString('currentUser', currentUserString);
   }
 }
