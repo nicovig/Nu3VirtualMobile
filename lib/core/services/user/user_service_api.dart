@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:http/http.dart' as http;
 
 import 'package:nu3virtual/core/models/user_model.dart';
@@ -15,7 +13,7 @@ class UserService extends UserServiceApiClass {
   };
   static const hostedDeviceLocalhost = '10.0.2.2:';
   static const apiUrl = '44383';
-  static const controllerName = 'User';
+  static const controllerName = 'Authentication';
   static Uri url = Uri.https(hostedDeviceLocalhost + apiUrl, controllerName);
 
   @override
