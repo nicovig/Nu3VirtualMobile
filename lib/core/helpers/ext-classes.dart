@@ -5,18 +5,23 @@ extension string_extensions on String {
   }
 
   bool get isValidName {
-    final nameRegExp = new RegExp('[a-zA-Z]');
+    final nameRegExp = RegExp(r"[a-zA-Z]");
     return nameRegExp.hasMatch(this);
   }
 
   bool get isValidPseudo {
-    final nameRegExp = new RegExp('[a-zA-Z0-9.^@]');
+    final nameRegExp = RegExp('[a-zA-Z0-9.^@]');
+    return nameRegExp.hasMatch(this);
+  }
+
+  bool get isValidNumber {
+    final nameRegExp = RegExp(r"[0-9]");
     return nameRegExp.hasMatch(this);
   }
 
   bool get isValidPassword {
     final passwordRegExp = RegExp(
-        r"^(?=.{10,}$)(?=(?:.*?[A-Z]){1})(?=.*?[a-z])(?=(?:.*?[0-9]){1}).*$"); //Password which contains 2 capital, 1 minuscule, 1 number and a length of 10 at least
+        r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\><*~]).{8,}/pre>'); //Password must contain an uppercase, lowercase, numeric digit and special character
     return passwordRegExp.hasMatch(this);
   }
 

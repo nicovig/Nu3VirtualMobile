@@ -16,24 +16,22 @@ class UserScreenViewModel extends ChangeNotifier {
       {required String lastname,
       required String firstname,
       required String pseudo,
-      required String height,
-      required String weight,
+      required int height,
+      required double weight,
+      required DateTime birthday,
       required String email,
-      required String phone,
       required String password}) {
     UserModel user = UserModel(
         id: '0',
         firstName: firstname,
         lastName: lastname,
         email: email,
-        height: height,
+        height: height.toString(),
         password: password,
         pseudo: pseudo,
-        weight: weight,
-        birthday: DateTime.now().toString());
-
+        weight: weight.toString(),
+        birthday: birthday);
     _userService.create(user, password);
-    // do something...
     notifyListeners();
   }
 }

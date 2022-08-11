@@ -6,6 +6,7 @@ class CustomFormField extends StatelessWidget {
     Key? key,
     this.errorText,
     required this.handleOnSaved,
+    this.hideInput,
     required this.hintText,
     this.inputFormatters,
     this.keyboardType,
@@ -14,6 +15,7 @@ class CustomFormField extends StatelessWidget {
   }) : super(key: key);
   final String? errorText;
   final String hintText;
+  final bool? hideInput;
   final Function(String?) handleOnSaved;
   final List<TextInputFormatter>? inputFormatters;
   final TextInputType? keyboardType;
@@ -30,6 +32,7 @@ class CustomFormField extends StatelessWidget {
         keyboardType: keyboardType,
         onChanged: onChanged,
         validator: validator,
+        obscureText: hideInput ?? false,
         decoration: InputDecoration(hintText: hintText, errorText: errorText),
       ),
     );

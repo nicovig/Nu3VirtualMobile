@@ -1,9 +1,11 @@
+import 'dart:convert';
+
 class UserModel {
   String? id;
   String? pseudo;
   String? firstName;
   String? lastName;
-  String? birthday;
+  DateTime? birthday;
   String? height;
   String? weight;
   String? email;
@@ -33,22 +35,18 @@ class UserModel {
         password: parsedJson['password'] ?? "");
   }
 
-  // Map<String, dynamic> toJson() {
-  //   return {
-  //     "id": id,
-  //     "pseudo": pseudo,
-  //     "firstName": firstName,
-  //     "lastName": lastName,
-  //     "birthday": birthday,
-  //     "height": height,
-  //     "weight": weight,
-  //     "email": email,
-  //     "password": password
-  //   };
-  // }
-
   String toJson() {
-    return 'id: ${id}, pseudo: ${pseudo}, firstName: ${firstName}, lastName: ${lastName}, birthday: ${birthday}, height: ${height}, weight: ${weight}, email: ${email}, password: ${password}';
+    return jsonEncode({
+      'id': id,
+      'pseudo': pseudo,
+      'firstName': firstName,
+      'lastName': lastName,
+      'birthday': birthday?.toIso8601String(),
+      'height': height,
+      'weight': weight,
+      'email': email,
+      'password': password
+    });
   }
 
   String jsonString() {

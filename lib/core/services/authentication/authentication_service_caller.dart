@@ -5,7 +5,7 @@ class AuthenticationServiceCaller extends AuthenticationService {
   @override
   Future<UserModel> login(String login, String password) async {
     return UserModel(
-        birthday: DateTime.now().toString(),
+        birthday: DateTime.now(),
         email: '',
         firstName: '',
         height: '',

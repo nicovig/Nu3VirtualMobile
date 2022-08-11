@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:nu3virtual/layouts/forms/custom_form_field_date.dart';
 import 'package:stacked/stacked.dart';
 
 import 'package:nu3virtual/layouts/screen_layouts/custom_title.dart';
 import 'package:nu3virtual/ui/user_screen/user_screen_viewmodel.dart';
-import 'package:nu3virtual/core/helper-classes/ext-classes.dart';
+import 'package:nu3virtual/core/helpers/ext-classes.dart';
 import 'package:nu3virtual/layouts/forms/custom_form_field.dart';
 
 class UserScreen extends StatelessWidget {
@@ -16,9 +17,8 @@ class UserScreen extends StatelessWidget {
   int height = 0;
   double weight = 0;
   String email = '';
-  int phone = 0;
   String password = '';
-  DateTime dateTime = DateTime.now();
+  DateTime birthday = DateTime.now();
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +43,7 @@ class UserScreen extends StatelessWidget {
                         hintText: 'Nom',
                         inputFormatters: [
                           FilteringTextInputFormatter.allow(
-                            RegExp('[a-zA-Z]'),
+                            RegExp(r"[a-zA-Z]"),
                           )
                         ],
                         keyboardType: TextInputType.name,
@@ -60,7 +60,7 @@ class UserScreen extends StatelessWidget {
                         hintText: 'Prénom',
                         inputFormatters: [
                           FilteringTextInputFormatter.allow(
-                            RegExp(r"[a-zA-Z]+|\s"),
+                            RegExp(r"[a-zA-Z]"),
                           )
                         ],
                         keyboardType: TextInputType.name,
@@ -93,12 +93,12 @@ class UserScreen extends StatelessWidget {
                         hintText: 'Taille (en cm)',
                         inputFormatters: [
                           FilteringTextInputFormatter.allow(
-                            RegExp('[0-9]'),
+                            RegExp(r"[0-9]"),
                           )
                         ],
                         keyboardType: TextInputType.number,
                         validator: (val) {
-                          if (val != null && !val.isValidName) {
+                          if (val != null && !val.isValidNumber) {
                             return 'Veuillez entrer une taille valide';
                           }
                         },
@@ -110,16 +110,19 @@ class UserScreen extends StatelessWidget {
                         hintText: 'Poids (en kg)',
                         inputFormatters: [
                           FilteringTextInputFormatter.allow(
-                            RegExp('[0-9]'),
+                            RegExp(r"[0-9\.-]"),
                           )
                         ],
                         keyboardType: TextInputType.number,
                         validator: (val) {
-                          if (val != null && !val.isValidName) {
+                          if (val != null && !val.isValidNumber) {
                             return 'Veuillez entrer un poids valide';
                           }
                         },
                       ),
+                      CustomFormFieldDate(handleOnSaved: (value) {
+                        if (value != null) birthday = value;
+                      }),
                       CustomFormField(
                         handleOnSaved: (value) {
                           if (value != null) email = value;
@@ -134,73 +137,23 @@ class UserScreen extends StatelessWidget {
                       ),
                       CustomFormField(
                         handleOnSaved: (value) {
-                          if (value != null) phone = int.parse(value);
-                        },
-                        hintText: 'Téléphone',
-                        inputFormatters: [
-                          FilteringTextInputFormatter.allow(
-                            RegExp(r"[0-9]"),
-                          )
-                        ],
-                        keyboardType: TextInputType.phone,
-                        validator: (val) {
-                          if (val != null && !val.isValidPhone) {
-                            return 'Veuillez entrer un téléphone valide';
-                          }
-                        },
-                      ),
-                      CustomFormField(
-                        handleOnSaved: (value) {
                           if (value != null) password = value;
                         },
                         hintText: 'Mot de passe',
-                        validator: (val) {
-                          if (val != null && !val.isValidPassword) {
-                            return 'Veuillez entrer un mot de passe valide';
-                          }
-                        },
                       ),
-                      //'Date de naissance'
-                      // Row(
-                      //   children: [
-                      //     Text('Date de naissance' + dateTime.toString() != null
-                      //         ? dateTime.toString()
-                      //         : ''),
-                      //     Container(margin: const EdgeInsets.only(right: 20)),
-                      //     ElevatedButton(
-                      //         onPressed: () async {
-                      //           showDatePicker(
-                      //               context: context,
-                      //               initialDate: dateTime,
-                      //               firstDate: DateTime(1900),
-                      //               lastDate: DateTime.now());
-                      //         },
-                      //         child: const Text('Select date')),
-                      //   ],
-                      // ),
                       ElevatedButton(
                         onPressed: () {
-                          //if (formKey.currentState!.validate()) {
-                          // model.createUser(
-                          //     lastname: lastname,
-                          //     firstname: firstname,
-                          //     pseudo: pseudo,
-                          //       height: height,
-                          //     weight: weight,
-                          //     email: email,
-                          //     phone: phone,
-                          //     password: password);
-
-                          model.createUser(
-                              lastname: 'Vigouroux',
-                              firstname: 'Nicolas',
-                              pseudo: 'koalaviril',
-                              height: '168',
-                              weight: '75.5',
-                              email: 'koalaviril@gmail.com',
-                              phone: '0606060606',
-                              password: 'password');
-                          //}
+                          if (formKey.currentState!.validate()) {
+                            model.createUser(
+                                lastname: lastname,
+                                firstname: firstname,
+                                pseudo: pseudo,
+                                height: height,
+                                weight: weight,
+                                birthday: birthday,
+                                email: email,
+                                password: password);
+                          }
                         },
                         child: const Text('Créer un compte'),
                       )
