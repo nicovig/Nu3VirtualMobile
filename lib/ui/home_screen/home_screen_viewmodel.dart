@@ -8,6 +8,10 @@ class HomeScreenViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  void addMeal() {
+    notifyListeners();
+  }
+
   void doSomthg() {
     // do something...
     notifyListeners();
