@@ -1,14 +1,13 @@
 import 'dart:convert';
-
 import 'package:http/http.dart' as http;
 
-import 'package:nu3virtual/core/models/user_model.dart';
-import 'package:nu3virtual/core/services/authentication/authentication_service.dart';
-import 'package:nu3virtual/core/services/response_models/authentication_response_models.dart';
-import 'package:nu3virtual/core/services/user/user_service_class.dart';
 import 'package:nu3virtual/service_locator.dart';
+import 'package:nu3virtual/core/models/user_model.dart';
+import 'package:nu3virtual/core/services/response_models/authentication_response_models.dart';
+import 'package:nu3virtual/core/services/authentication/authentication_service.dart';
+import 'package:nu3virtual/core/services/user/user_service_class.dart';
 
-class UserServiceApi extends UserService {
+class AuthenticationServiceApi extends AuthenticationService {
   final AuthenticationStore _authenticationStore = getIt<AuthenticationStore>();
   final UserStore _userStore = getIt<UserStore>();
 
@@ -17,18 +16,18 @@ class UserServiceApi extends UserService {
   };
   static const hostedDeviceLocalhost = '10.0.2.2:';
   static const apiUrl = '44383';
-  static const controllerName = 'User';
+  static const controllerName = 'Authentication';
   static Uri url = Uri.https(hostedDeviceLocalhost + apiUrl, controllerName);
 
   @override
-  Future<bool> create(UserModel userToCreate, String password) async {
-    var response =
-        await http.post(url, headers: headers, body: userToCreate.toJson());
-    _saveCreateResponse(response.body);
+  Future<bool> login(String login, String password) async {
+    var response = await http.post(url,
+        headers: headers, body: '{"login": "$login", "password": "$password"}');
+    _saveAuthenticationResponse(response.body);
     return response.statusCode == 200 || response.statusCode == 204;
   }
 
-  _saveCreateResponse(String tokenModelString) {
+  _saveAuthenticationResponse(String tokenModelString) {
     Map<String, dynamic> json = jsonDecode(tokenModelString);
     TokenModelResponse tokenModelResponse = TokenModelResponse.fromJson(json);
     var test = UserModel.objectToString(tokenModelResponse.user);

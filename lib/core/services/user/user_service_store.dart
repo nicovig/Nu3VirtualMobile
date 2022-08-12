@@ -4,7 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:nu3virtual/core/services/user/user_service_class.dart';
 import 'package:nu3virtual/core/models/user_model.dart';
 
-class UserServiceStore extends UserServiceStoreClass {
+class UserServiceStore extends UserStore {
   @override
   Future<UserModel> getCurrentUser() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();

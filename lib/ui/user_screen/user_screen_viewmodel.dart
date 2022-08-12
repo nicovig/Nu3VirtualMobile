@@ -6,12 +6,7 @@ import 'package:nu3virtual/service_locator.dart';
 import 'package:nu3virtual/ui/home_screen/home_screen.dart';
 
 class UserScreenViewModel extends ChangeNotifier {
-  final UserServiceApiClass _userService = getIt<UserServiceApiClass>();
-
-  Future loadData() async {
-    // do initialization...
-    notifyListeners();
-  }
+  final UserService _userService = getIt<UserService>();
 
   Future<void> createUser(
       {required String lastname,

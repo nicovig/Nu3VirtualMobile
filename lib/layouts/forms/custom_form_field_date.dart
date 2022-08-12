@@ -14,7 +14,7 @@ class CustomFormFieldDate extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: DateTimeFormField(
         onDateSelected: handleOnSaved,
-        dateFormat: DateFormat('dd-MM-yyyy'),
+        dateFormat: DateFormat('dd MM yyyy'),
         firstDate: DateTime(1900),
         lastDate: DateTime.now(),
         decoration: const InputDecoration(

@@ -51,6 +51,10 @@ class UserModel {
     });
   }
 
+  static String objectToString(UserModel user) {
+    return '{"id": ${user.id}, "pseudo": "${user.pseudo}", "firstName": "${user.firstName}", "lastName": "${user.lastName}", "birthday": ${user.birthday}, "height": ${user.id}, "weight": ${user.weight}, "email": "${user.email}", "password": "${user.password}"}';
+  }
+
   String jsonString() {
     return '{"id": 0, "pseudo": "", "firstName": "", "lastName": "", "birthday": null, "height": 0, "weight": 0, "email": "", "password": ""}';
   }

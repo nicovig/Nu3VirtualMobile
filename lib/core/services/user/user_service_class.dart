@@ -1,10 +1,10 @@
 import 'package:nu3virtual/core/models/user_model.dart';
 
-abstract class UserServiceStoreClass {
+abstract class UserStore {
   Future<UserModel> getCurrentUser();
   Future<void> saveCurrentUser(String currentUserString);
 }
 
-abstract class UserServiceApiClass {
+abstract class UserService {
   Future<bool> create(UserModel userToCreate, String password);
 }

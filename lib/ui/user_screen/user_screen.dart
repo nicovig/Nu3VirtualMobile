@@ -24,7 +24,6 @@ class UserScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return ViewModelBuilder<UserScreenViewModel>.reactive(
         viewModelBuilder: () => UserScreenViewModel(),
-        onModelReady: (model) => model.loadData(),
         builder: (context, model, child) => Scaffold(
             appBar: AppBar(
               title: const Text("NuVirtual"),
@@ -35,7 +34,7 @@ class UserScreen extends StatelessWidget {
                   key: formKey,
                   child: Column(
                     children: [
-                      CustomTitle(title: "Créer un compte"),
+                      const CustomTitle(title: "Créer un compte"),
                       CustomFormField(
                         handleOnSaved: (value) {
                           if (value != null) lastname = value;
@@ -143,18 +142,29 @@ class UserScreen extends StatelessWidget {
                       ),
                       ElevatedButton(
                         onPressed: () {
-                          if (formKey.currentState!.validate()) {
-                            model.createUser(
-                                lastname: lastname,
-                                firstname: firstname,
-                                pseudo: pseudo,
-                                height: height,
-                                weight: weight,
-                                birthday: birthday,
-                                email: email,
-                                password: password,
-                                context: context);
-                          }
+                          // if (formKey.currentState!.validate()) {
+                          //   model.createUser(
+                          //       lastname: lastname,
+                          //       firstname: firstname,
+                          //       pseudo: pseudo,
+                          //       height: height,
+                          //       weight: weight,
+                          //       birthday: birthday,
+                          //       email: email,
+                          //       password: password,
+                          //       context: context);
+                          // }
+
+                          model.createUser(
+                              lastname: 'Vigouroux',
+                              firstname: 'Nicolas',
+                              pseudo: 'koalaviril',
+                              height: 168,
+                              weight: 75.5,
+                              birthday: DateTime(1994, 7, 31),
+                              email: 'koalaviril@gmail.com',
+                              password: 'password',
+                              context: context);
                         },
                         child: const Text('Créer un compte'),
                       )
