@@ -5,7 +5,7 @@ import 'package:nu3virtual/layouts/forms/custom_form_field.dart';
 class MealDialog extends StatelessWidget {
   MealDialog({required this.handleValidation});
 
-  final Function(String?)? handleValidation;
+  final Function() handleValidation;
 
   @override
   Widget build(BuildContext context) {

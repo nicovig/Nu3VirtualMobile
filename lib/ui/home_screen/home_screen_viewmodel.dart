@@ -8,7 +8,7 @@ class HomeScreenViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void addMeal() {
+  addMeal() {
     notifyListeners();
   }
 
