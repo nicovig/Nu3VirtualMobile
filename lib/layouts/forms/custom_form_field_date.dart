@@ -3,10 +3,18 @@ import 'package:flutter/material.dart';
 import 'package:intl/src/intl/date_format.dart';
 
 class CustomFormFieldDate extends StatelessWidget {
-  CustomFormFieldDate({Key? key, required this.handleOnSaved})
+  CustomFormFieldDate(
+      {Key? key,
+      required this.firstDate,
+      required this.lastDate,
+      required this.handleOnSaved,
+      required this.label})
       : super(key: key);
 
   final Function(DateTime?) handleOnSaved;
+  final DateTime firstDate;
+  final String label;
+  final DateTime lastDate;
 
   @override
   Widget build(BuildContext context) {
@@ -15,13 +23,13 @@ class CustomFormFieldDate extends StatelessWidget {
       child: DateTimeFormField(
         onDateSelected: handleOnSaved,
         dateFormat: DateFormat('dd MM yyyy'),
-        firstDate: DateTime(1900),
-        lastDate: DateTime.now(),
-        decoration: const InputDecoration(
-          hintStyle: TextStyle(color: Colors.black45),
-          errorStyle: TextStyle(color: Colors.redAccent),
-          suffixIcon: Icon(Icons.event_note),
-          labelText: 'Date de naissance',
+        firstDate: firstDate,
+        lastDate: lastDate,
+        decoration: InputDecoration(
+          hintStyle: const TextStyle(color: Colors.black45),
+          errorStyle: const TextStyle(color: Colors.redAccent),
+          suffixIcon: const Icon(Icons.event_note),
+          labelText: label,
         ),
         mode: DateTimeFieldPickerMode.date,
       ),

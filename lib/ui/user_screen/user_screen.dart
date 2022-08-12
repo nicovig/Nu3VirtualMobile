@@ -119,9 +119,13 @@ class UserScreen extends StatelessWidget {
                           }
                         },
                       ),
-                      CustomFormFieldDate(handleOnSaved: (value) {
-                        if (value != null) birthday = value;
-                      }),
+                      CustomFormFieldDate(
+                          firstDate: DateTime(1900),
+                          label: 'Date de naissance',
+                          lastDate: DateTime.now(),
+                          handleOnSaved: (value) {
+                            if (value != null) birthday = value;
+                          }),
                       CustomFormField(
                         handleOnSaved: (value) {
                           if (value != null) email = value;
@@ -142,29 +146,18 @@ class UserScreen extends StatelessWidget {
                       ),
                       ElevatedButton(
                         onPressed: () {
-                          // if (formKey.currentState!.validate()) {
-                          //   model.createUser(
-                          //       lastname: lastname,
-                          //       firstname: firstname,
-                          //       pseudo: pseudo,
-                          //       height: height,
-                          //       weight: weight,
-                          //       birthday: birthday,
-                          //       email: email,
-                          //       password: password,
-                          //       context: context);
-                          // }
-
-                          model.createUser(
-                              lastname: 'Vigouroux',
-                              firstname: 'Nicolas',
-                              pseudo: 'koalaviril',
-                              height: 168,
-                              weight: 75.5,
-                              birthday: DateTime(1994, 7, 31),
-                              email: 'koalaviril@gmail.com',
-                              password: 'password',
-                              context: context);
+                          if (formKey.currentState!.validate()) {
+                            model.createUser(
+                                lastname: lastname,
+                                firstname: firstname,
+                                pseudo: pseudo,
+                                height: height,
+                                weight: weight,
+                                birthday: birthday,
+                                email: email,
+                                password: password,
+                                context: context);
+                          }
                         },
                         child: const Text('Créer un compte'),
                       )

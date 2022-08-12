@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:nu3virtual/layouts/forms/custom_form_field_date.dart';
+import 'package:nu3virtual/ui/meal_dialog/meal_dialog.dart';
 import 'package:stacked/stacked.dart';
 
 import 'package:nu3virtual/layouts/forms/custom_form_field.dart';
@@ -37,29 +40,85 @@ class HomeScreen extends StatelessWidget {
                                         ),
                                         children: [
                                           CustomFormField(
+                                              inputFormatters: [
+                                                FilteringTextInputFormatter
+                                                    .allow(
+                                                  RegExp('[a-zA-Z0-9.]'),
+                                                )
+                                              ],
                                               handleOnSaved: (value) => null,
                                               hintText: 'Nom'),
+                                          CustomFormFieldDate(
+                                              firstDate: DateTime(
+                                                  DateTime.now().year,
+                                                  DateTime.now().month - 1,
+                                                  DateTime.now().day),
+                                              label: 'Date de naissance',
+                                              lastDate: DateTime(
+                                                  DateTime.now().year,
+                                                  DateTime.now().month + 1,
+                                                  DateTime.now().day),
+                                              handleOnSaved: (value) {
+                                                if (value != null) null;
+                                              }),
                                           CustomFormField(
-                                              handleOnSaved: (value) => null,
-                                              hintText: 'Date'),
+                                            hintText: 'Glucides',
+                                            handleOnSaved: (value) {
+                                              if (value != null)
+                                                double.parse(value);
+                                            },
+                                            inputFormatters: [
+                                              FilteringTextInputFormatter.allow(
+                                                RegExp(r"[0-9\.-]"),
+                                              )
+                                            ],
+                                            keyboardType: TextInputType.number,
+                                          ),
                                           CustomFormField(
-                                              handleOnSaved: (value) => null,
-                                              hintText: 'Glucides'),
+                                            hintText: 'Lipides',
+                                            handleOnSaved: (value) {
+                                              if (value != null)
+                                                double.parse(value);
+                                            },
+                                            inputFormatters: [
+                                              FilteringTextInputFormatter.allow(
+                                                RegExp(r"[0-9\.-]"),
+                                              )
+                                            ],
+                                            keyboardType: TextInputType.number,
+                                          ),
                                           CustomFormField(
-                                              handleOnSaved: (value) => null,
-                                              hintText: 'Lipides'),
+                                            hintText: 'Protéines',
+                                            handleOnSaved: (value) {
+                                              if (value != null)
+                                                double.parse(value);
+                                            },
+                                            inputFormatters: [
+                                              FilteringTextInputFormatter.allow(
+                                                RegExp(r"[0-9\.-]"),
+                                              )
+                                            ],
+                                            keyboardType: TextInputType.number,
+                                          ),
                                           CustomFormField(
-                                              handleOnSaved: (value) => null,
-                                              hintText: 'Protéines'),
-                                          CustomFormField(
-                                              handleOnSaved: (value) => null,
-                                              hintText: 'Calories'),
+                                            hintText: 'Calories',
+                                            handleOnSaved: (value) {
+                                              if (value != null)
+                                                double.parse(value);
+                                            },
+                                            inputFormatters: [
+                                              FilteringTextInputFormatter.allow(
+                                                RegExp(r"[0-9]"),
+                                              )
+                                            ],
+                                            keyboardType: TextInputType.number,
+                                          ),
                                           Container(
                                             padding: const EdgeInsets.fromLTRB(
                                                 10, 10, 10, 0),
                                             child: ElevatedButton(
                                                 onPressed: () {
-                                                  model.addMeal();
+                                                  //model.addMeal();
                                                 },
                                                 child: const Text("Ajouter")),
                                           ),
