@@ -29,14 +29,8 @@ class UserScreenViewModel extends ChangeNotifier {
         weight: weight,
         birthday: birthday);
     bool isCreationOk = await _userService.create(user, password);
-    if (isCreationOk) {
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => HomeScreen(
-                    title: 'Home',
-                  )));
-    }
+    if (isCreationOk)
+      Navigator.of(context).pushNamedAndRemoveUntil('/home', (route) => false);
 
     notifyListeners();
   }

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import 'package:nu3virtual/service_locator.dart';
 import 'package:nu3virtual/ui/authentication_screen/authentication_screen.dart';
+import 'package:nu3virtual/ui/home_screen/home_screen.dart';
 
 void main() {
   setupServiceLocator();
@@ -21,6 +22,7 @@ class MyApp extends StatelessWidget {
         theme:
             ThemeData(appBarTheme: const AppBarTheme(color: Colors.lightBlue)),
         home: AuthenticationScreen(title: 'NuVirtual'),
+        routes: {'/home': (context) => HomeScreen(title: 'Home')},
         color: Colors.white,
         debugShowCheckedModeBanner: false);
   }

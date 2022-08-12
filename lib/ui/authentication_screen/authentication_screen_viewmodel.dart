@@ -29,14 +29,9 @@ class AuthenticationScreenViewModel extends ChangeNotifier {
   void connect(BuildContext context) async {
     if (login != '' && password != '') {
       bool isLoginOk = await _authenticationService.login(login, password);
-      if (isLoginOk) {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => HomeScreen(
-                      title: 'Home',
-                    )));
-      }
+      if (isLoginOk)
+        Navigator.of(context)
+            .pushNamedAndRemoveUntil('/home', (route) => false);
     }
 
     notifyListeners();

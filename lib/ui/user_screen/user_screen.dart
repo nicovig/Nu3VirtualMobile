@@ -26,8 +26,8 @@ class UserScreen extends StatelessWidget {
         viewModelBuilder: () => UserScreenViewModel(),
         builder: (context, model, child) => Scaffold(
             appBar: AppBar(
-              title: const Text("NuVirtual"),
-            ),
+                title: const Text("NuVirtual"),
+                automaticallyImplyLeading: false),
             body: SingleChildScrollView(
               child: SafeArea(
                 child: Form(
