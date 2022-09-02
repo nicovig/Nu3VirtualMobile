@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:nu3virtual/ui/home_screen/meal_tab/meal_tab_screen.dart';
 import 'package:stacked/stacked.dart';
 
-import 'package:nu3virtual/ui/meal_dialog/meal_dialog.dart';
 import 'package:nu3virtual/ui/home_screen/home_screen_viewmodel.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -22,7 +22,7 @@ class HomeScreen extends StatelessWidget {
               title: Text('Bonjour ${model.user.firstName}'),
               actions: <Widget>[
                 Padding(
-                    padding: EdgeInsets.only(right: 20.0),
+                    padding: const EdgeInsets.only(right: 20.0),
                     child: GestureDetector(
                       onTap: () => model.disconnect(context),
                       child: const Icon(
@@ -32,37 +32,19 @@ class HomeScreen extends StatelessWidget {
                     ))
               ],
               bottom: const TabBar(
+                indicatorPadding: EdgeInsets.all(5),
+                unselectedLabelColor: Colors.white30,
                 tabs: [
                   Tab(icon: Icon(Icons.restaurant_menu_outlined)),
-                  Tab(icon: Icon(Icons.sports_football_outlined)),
+                  Tab(icon: Icon(Icons.fitness_center_outlined)),
                   Tab(icon: Icon(Icons.accessibility_new_outlined))
                 ],
               )),
           body: TabBarView(
             children: [
-              SingleChildScrollView(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Column(
-                      children: [
-                        ElevatedButton(
-                            onPressed: () {
-                              showDialog(
-                                context: context,
-                                builder: (context) => MealDialog(
-                                    handleValidation: (meal, dialogContext) =>
-                                        model.addMeal(meal, dialogContext)),
-                              );
-                            },
-                            child: const Text("Ajouter un repas"))
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-              Icon(Icons.sports_football_outlined),
-              Icon(Icons.accessibility_new_outlined)
+              MealTabScreen(),
+              const Icon(Icons.sports_football_outlined),
+              const Icon(Icons.accessibility_new_outlined)
             ],
           ),
         ),
