@@ -13,10 +13,12 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<HomeScreenViewModel>.reactive(
-        viewModelBuilder: () => HomeScreenViewModel(),
-        onModelReady: (model) => model.loadData(),
-        builder: (context, model, child) => Scaffold(
-            appBar: AppBar(
+      viewModelBuilder: () => HomeScreenViewModel(),
+      onModelReady: (model) => model.loadData(),
+      builder: (context, model, child) => DefaultTabController(
+        length: 3,
+        child: Scaffold(
+          appBar: AppBar(
               title: Text('Bonjour ${model.user.firstName}'),
               actions: <Widget>[
                 Padding(
@@ -29,27 +31,42 @@ class HomeScreen extends StatelessWidget {
                       ),
                     ))
               ],
-            ),
-            body: SingleChildScrollView(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Column(
-                    children: [
-                      ElevatedButton(
-                          onPressed: () {
-                            showDialog(
-                              context: context,
-                              builder: (context) => MealDialog(
-                                  handleValidation: (meal, dialogContext) =>
-                                      model.addMeal(meal, dialogContext)),
-                            );
-                          },
-                          child: const Text("Ajouter un repas"))
-                    ],
-                  ),
+              bottom: const TabBar(
+                tabs: [
+                  Tab(icon: Icon(Icons.restaurant_menu_outlined)),
+                  Tab(icon: Icon(Icons.sports_football_outlined)),
+                  Tab(icon: Icon(Icons.accessibility_new_outlined))
                 ],
+              )),
+          body: TabBarView(
+            children: [
+              SingleChildScrollView(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Column(
+                      children: [
+                        ElevatedButton(
+                            onPressed: () {
+                              showDialog(
+                                context: context,
+                                builder: (context) => MealDialog(
+                                    handleValidation: (meal, dialogContext) =>
+                                        model.addMeal(meal, dialogContext)),
+                              );
+                            },
+                            child: const Text("Ajouter un repas"))
+                      ],
+                    ),
+                  ],
+                ),
               ),
-            )));
+              Icon(Icons.sports_football_outlined),
+              Icon(Icons.accessibility_new_outlined)
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }
