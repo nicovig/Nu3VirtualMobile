@@ -5,16 +5,16 @@ import 'package:intl/src/intl/date_format.dart';
 class CustomFormFieldDate extends StatelessWidget {
   CustomFormFieldDate(
       {Key? key,
-      required this.firstDate,
-      required this.lastDate,
+      this.firstDate,
+      this.lastDate,
       required this.handleOnSaved,
       required this.label})
       : super(key: key);
 
   final Function(DateTime?) handleOnSaved;
-  final DateTime firstDate;
+  final DateTime? firstDate;
   final String label;
-  final DateTime lastDate;
+  final DateTime? lastDate;
 
   @override
   Widget build(BuildContext context) {

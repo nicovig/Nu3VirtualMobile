@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 class UserModel {
   int? id;
@@ -23,6 +24,8 @@ class UserModel {
       this.password});
 
   factory UserModel.fromJson(Map<String, dynamic> parsedJson) {
+    var birthdayFromJSON = DateTime.parse(parsedJson['birthday']);
+    log(birthdayFromJSON.toString());
     return UserModel(
         id: parsedJson['id'] ?? 0,
         pseudo: parsedJson['pseudo'] ?? "",
@@ -52,7 +55,7 @@ class UserModel {
   }
 
   static String objectToString(UserModel user) {
-    return '{"id": ${user.id}, "pseudo": "${user.pseudo}", "firstName": "${user.firstName}", "lastName": "${user.lastName}", "birthday": ${user.birthday}, "height": ${user.id}, "weight": ${user.weight}, "email": "${user.email}", "password": "${user.password}"}';
+    return '{"id": ${user.id}, "pseudo": "${user.pseudo}", "firstName": "${user.firstName}", "lastName": "${user.lastName}", "birthday": "${user.birthday}", "height": ${user.height}, "weight": ${user.weight}, "email": "${user.email}", "password": "${user.password}"}';
   }
 
   String jsonString() {

@@ -10,7 +10,7 @@ class MealModel {
   int? lipid;
   int? protein;
   int? calorie;
-  UserModel? user;
+  int? userId;
 
   MealModel(
       {this.id,
@@ -20,7 +20,7 @@ class MealModel {
       this.lipid,
       this.protein,
       this.calorie,
-      this.user});
+      this.userId});
 
   factory MealModel.fromJson(Map<String, dynamic> parsedJson) {
     return MealModel(
@@ -31,19 +31,19 @@ class MealModel {
         lipid: parsedJson['lipid'] ?? "",
         protein: parsedJson['protein'] ?? "",
         calorie: parsedJson['calorie'] ?? "",
-        user: UserModel.fromJson(parsedJson['user']));
+        userId: parsedJson['userId'] ?? 0);
   }
 
   String toJson() {
     return jsonEncode({
       'id': id,
       'name': name,
-      'date': date,
+      'date': date?.toIso8601String(),
       'carbohydrate': carbohydrate,
       'lipid': lipid,
       'protein': protein,
       'calorie': calorie,
-      'user': user
+      'userId': userId
     });
   }
 }

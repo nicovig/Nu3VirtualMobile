@@ -36,7 +36,7 @@ class UserScreen extends StatelessWidget {
                     children: [
                       const CustomTitle(title: "Créer un compte"),
                       CustomFormField(
-                        handleOnSaved: (value) {
+                        onChanged: (value) {
                           if (value != null) lastname = value;
                         },
                         hintText: 'Nom',
@@ -53,7 +53,7 @@ class UserScreen extends StatelessWidget {
                         },
                       ),
                       CustomFormField(
-                        handleOnSaved: (value) {
+                        onChanged: (value) {
                           if (value != null) firstname = value;
                         },
                         hintText: 'Prénom',
@@ -70,7 +70,7 @@ class UserScreen extends StatelessWidget {
                         },
                       ),
                       CustomFormField(
-                        handleOnSaved: (value) {
+                        onChanged: (value) {
                           if (value != null) pseudo = value;
                         },
                         hintText: 'Pseudo',
@@ -86,7 +86,7 @@ class UserScreen extends StatelessWidget {
                         },
                       ),
                       CustomFormField(
-                        handleOnSaved: (value) {
+                        onChanged: (value) {
                           if (value != null) height = int.parse(value);
                         },
                         hintText: 'Taille (en cm)',
@@ -103,7 +103,7 @@ class UserScreen extends StatelessWidget {
                         },
                       ),
                       CustomFormField(
-                        handleOnSaved: (value) {
+                        onChanged: (value) {
                           if (value != null) weight = double.parse(value);
                         },
                         hintText: 'Poids (en kg)',
@@ -127,7 +127,7 @@ class UserScreen extends StatelessWidget {
                             if (value != null) birthday = value;
                           }),
                       CustomFormField(
-                        handleOnSaved: (value) {
+                        onChanged: (value) {
                           if (value != null) email = value;
                         },
                         hintText: 'Email',
@@ -139,7 +139,7 @@ class UserScreen extends StatelessWidget {
                         },
                       ),
                       CustomFormField(
-                        handleOnSaved: (value) {
+                        onChanged: (value) {
                           if (value != null) password = value;
                         },
                         hintText: 'Mot de passe',

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'package:nu3virtual/core/services/authentication/authentication_service.dart';
 import 'package:nu3virtual/service_locator.dart';
-import 'package:nu3virtual/ui/home_screen/home_screen.dart';
 import 'package:nu3virtual/ui/user_screen/user_screen.dart';
 
 class AuthenticationScreenViewModel extends ChangeNotifier {
@@ -14,10 +13,12 @@ class AuthenticationScreenViewModel extends ChangeNotifier {
 
   checkEmailOrPseudo(String input) {
     login = input;
+    notifyListeners();
   }
 
   checkPassword(String input) {
     password = input;
+    notifyListeners();
   }
 
   void createAccount(BuildContext context) {
@@ -29,11 +30,11 @@ class AuthenticationScreenViewModel extends ChangeNotifier {
   void connect(BuildContext context) async {
     if (login != '' && password != '') {
       bool isLoginOk = await _authenticationService.login(login, password);
-      if (isLoginOk)
+      if (isLoginOk) {
         Navigator.of(context)
             .pushNamedAndRemoveUntil('/home', (route) => false);
+      }
     }
-
     notifyListeners();
   }
 }

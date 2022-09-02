@@ -30,8 +30,8 @@ class AuthenticationServiceApi extends AuthenticationService {
   _saveAuthenticationResponse(String tokenModelString) {
     Map<String, dynamic> json = jsonDecode(tokenModelString);
     TokenModelResponse tokenModelResponse = TokenModelResponse.fromJson(json);
-    var test = UserModel.objectToString(tokenModelResponse.user);
+    var userModelToString = UserModel.objectToString(tokenModelResponse.user);
     _authenticationStore.saveToken(tokenModelResponse.token);
-    _userStore.saveCurrentUser(test);
+    _userStore.saveCurrentUser(userModelToString);
   }
 }

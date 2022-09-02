@@ -6,6 +6,12 @@ import 'package:nu3virtual/core/models/user_model.dart';
 
 class UserServiceStore extends UserStore {
   @override
+  Future<void> deleteCurrentUser() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('currentUser', '');
+  }
+
+  @override
   Future<UserModel> getCurrentUser() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     Map<String, dynamic> json =

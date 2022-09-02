@@ -5,7 +5,7 @@ class CustomFormField extends StatelessWidget {
   CustomFormField({
     Key? key,
     this.errorText,
-    required this.handleOnSaved,
+    this.handleOnSaved,
     this.hideInput,
     required this.hintText,
     this.inputFormatters,
@@ -16,7 +16,7 @@ class CustomFormField extends StatelessWidget {
   final String? errorText;
   final String hintText;
   final bool? hideInput;
-  final Function(String?) handleOnSaved;
+  final Function(String?)? handleOnSaved;
   final List<TextInputFormatter>? inputFormatters;
   final TextInputType? keyboardType;
   final Function(String?)? onChanged;
