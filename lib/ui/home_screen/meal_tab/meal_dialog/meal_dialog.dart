@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -13,6 +11,7 @@ class MealDialog extends StatelessWidget {
 
   String name = '';
   DateTime date = DateTime.now();
+  String timeLabel = 'Heure du repas';
   TimeOfDay time = TimeOfDay.now();
   int carbohydrate = 0;
   int lipid = 0;
@@ -44,8 +43,14 @@ class MealDialog extends StatelessWidget {
                 if (value != null) date = value;
               }),
           CustomFormFieldTime(
-              label: 'Heure du repas',
-              handleOnChanged: (value) => {if (value != null) time = value}),
+              label: timeLabel,
+              handleOnChanged: (value) => {
+                    if (value != null)
+                      {
+                        time = value,
+                        timeLabel = '${time.hour}h ${time.minute}min'
+                      }
+                  }),
           CustomFormField(
             hintText: 'Glucides',
             onChanged: (value) {

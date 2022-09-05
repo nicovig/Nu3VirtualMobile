@@ -4,20 +4,19 @@ import 'package:stacked/stacked.dart';
 
 import 'package:nu3virtual/ui/home_screen/meal_tab/meal_dialog/meal_dialog.dart';
 
-class MealTabScreen extends StatelessWidget {
-  //constructor
-  MealTabScreen({
-    Key? key,
-    required this.userId,
-  }) : super(key: key);
+class MealTabScreen extends StatefulWidget {
+  @override
+  _MealTabScreenState createState() => _MealTabScreenState();
+}
 
-  final int userId;
+class _MealTabScreenState extends State<MealTabScreen> {
+  DateTime date = DateTime.now();
 
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<MealTabViewModel>.reactive(
         viewModelBuilder: () => MealTabViewModel(),
-        onModelReady: (model) => model.loadData(),
+        onModelReady: (model) => model.loadData(date),
         builder: (context, model, child) => SingleChildScrollView(
               child: Column(
                 children: [
@@ -25,7 +24,8 @@ class MealTabScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       ElevatedButton(
-                          onPressed: null,
+                          onPressed: (() => date =
+                              DateTime(date.year, date.month, date.day - 1)),
                           style: ButtonStyle(
                               backgroundColor: MaterialStateProperty.all(
                                   Colors.blue.shade100),
@@ -38,7 +38,7 @@ class MealTabScreen extends StatelessWidget {
                           child: const Icon(Icons.arrow_back_ios,
                               color: Colors.blue)),
                       ElevatedButton(
-                          onPressed: null,
+                          onPressed: () => date = DateTime.now(),
                           style: ButtonStyle(
                               backgroundColor: MaterialStateProperty.all(
                                   Colors.blue.shade100),
@@ -53,7 +53,8 @@ class MealTabScreen extends StatelessWidget {
                             style: TextStyle(color: Colors.blue),
                           )),
                       ElevatedButton(
-                          onPressed: null,
+                          onPressed: () => date =
+                              DateTime(date.year, date.month, date.day + 1),
                           style: ButtonStyle(
                               backgroundColor: MaterialStateProperty.all(
                                   Colors.blue.shade100),
@@ -67,14 +68,21 @@ class MealTabScreen extends StatelessWidget {
                               color: Colors.blue)),
                     ],
                   ),
-                  const Text(
-                    "Date choisie",
-                    style: TextStyle(color: Colors.blue),
+                  Text(
+                    "Date : ${date.day} ${date.month} ${date.year}",
+                    style: const TextStyle(color: Colors.black),
                   ),
-                  const Text(
-                    "Liste ici",
-                    style: TextStyle(color: Colors.blue),
-                  ),
+                  ListView.builder(
+                      itemCount: model.meals.length,
+                      itemBuilder: (context, index) {
+                        final meal = model.meals[index];
+                        var subtitle =
+                            'P:${meal.protein} G:${meal.carbohydrate} C:${meal.calorie}';
+                        return ListTile(
+                          title: Text(meal.name ?? ''),
+                          subtitle: Text(subtitle),
+                        );
+                      }),
                   ElevatedButton(
                       style: ButtonStyle(
                           backgroundColor:
@@ -84,7 +92,7 @@ class MealTabScreen extends StatelessWidget {
                           context: context,
                           builder: (context) => MealDialog(
                               handleValidation: (meal, dialogContext) => {
-                                    meal.id = userId,
+                                    meal.userId = model.userId,
                                     model.addMeal(meal, dialogContext)
                                   }),
                         );

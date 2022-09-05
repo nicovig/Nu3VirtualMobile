@@ -4,17 +4,37 @@ import 'package:stacked/stacked.dart';
 
 import 'package:nu3virtual/ui/home_screen/home_screen_viewmodel.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   //constructor
-  const HomeScreen({Key? key, required this.title}) : super(key: key);
+  HomeScreen({Key? key}) : super(key: key);
 
-  final String title;
+  @override
+  _HomeScreenState createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  int userId = 0;
+  int selectedIndex = 0;
 
   @override
   Widget build(BuildContext context) {
+    final List<Widget> pages = <Widget>[
+      MealTabScreen(),
+      const Icon(Icons.sports_football_outlined),
+      const Icon(Icons.accessibility_new_outlined)
+    ];
+
     return ViewModelBuilder<HomeScreenViewModel>.reactive(
       viewModelBuilder: () => HomeScreenViewModel(),
-      onModelReady: (model) => model.loadData(),
+      onModelReady: (model) => {
+        model.loadData(),
+        if (model.user.id != null)
+          setState(() {
+            if (model.user.id != null) {
+              userId = model.user.id!;
+            }
+          })
+      },
       builder: (context, model, child) => DefaultTabController(
         length: 3,
         child: Scaffold(
@@ -31,21 +51,31 @@ class HomeScreen extends StatelessWidget {
                         size: 26.0,
                       ),
                     ))
-              ],
-              bottom: const TabBar(
-                indicatorPadding: EdgeInsets.all(5),
-                unselectedLabelColor: Colors.white30,
-                tabs: [
-                  Tab(icon: Icon(Icons.restaurant_menu_outlined)),
-                  Tab(icon: Icon(Icons.fitness_center_outlined)),
-                  Tab(icon: Icon(Icons.accessibility_new_outlined))
-                ],
-              )),
-          body: TabBarView(
-            children: [
-              MealTabScreen(userId: model.user.id ?? 0),
-              const Icon(Icons.sports_football_outlined),
-              const Icon(Icons.accessibility_new_outlined)
+              ]),
+          body: Container(
+            padding: const EdgeInsets.symmetric(vertical: 10),
+            child: pages.elementAt(selectedIndex),
+          ),
+          bottomNavigationBar: BottomNavigationBar(
+            onTap: (value) => {
+              setState(() {
+                selectedIndex = value;
+              })
+            },
+            currentIndex: selectedIndex,
+            items: const <BottomNavigationBarItem>[
+              BottomNavigationBarItem(
+                icon: Icon(Icons.restaurant_menu_outlined),
+                label: 'Repas',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.sports_football_outlined),
+                label: 'Sport',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.accessibility_new_outlined),
+                label: 'Infos',
+              ),
             ],
           ),
         ),

@@ -26,7 +26,9 @@ class MealModel {
     return MealModel(
         id: parsedJson['id'] ?? 0,
         name: parsedJson['name'] ?? "",
-        date: parsedJson['date'] ?? "",
+        date: parsedJson['date'] != null
+            ? DateTime.parse(parsedJson['date'])
+            : null,
         carbohydrate: parsedJson['carbohydrate'] ?? "",
         lipid: parsedJson['lipid'] ?? "",
         protein: parsedJson['protein'] ?? "",

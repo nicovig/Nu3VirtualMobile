@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
         theme:
             ThemeData(appBarTheme: const AppBarTheme(color: Colors.lightBlue)),
         home: AuthenticationScreen(title: 'NuVirtual'),
-        routes: {'/home': (context) => HomeScreen(title: 'Home')},
+        routes: {'/home': (context) => new HomeScreen()},
         color: Colors.white,
         debugShowCheckedModeBanner: false);
   }

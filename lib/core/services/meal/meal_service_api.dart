@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:http/http.dart' as http;
 
 import 'package:nu3virtual/core/models/meal_model.dart';
@@ -33,14 +35,23 @@ class MealServiceApi extends MealService {
 
   @override
   Future<List<MealModel>> getAllMealsByUserIdAndDate(
-      int userId, DateTime date) async {
-    url = Uri.https(
-        '$hostedDeviceLocalhost$apiUrl/$userId/$date', controllerName);
+      int? userId, DateTime date) async {
+    Map<String, String> headers = {
+      "Content-Type": "application/json",
+      "userId": "${userId.toString()}",
+      "date": "${date.toIso8601String()}"
+    };
+
     var response = await http.get(
       url,
       headers: headers,
     );
-    return [];
+
+    final List untypedObjects = jsonDecode(response.body);
+    final List<MealModel> mealList =
+        untypedObjects.map((e) => MealModel.fromJson(e)).toList();
+
+    return mealList;
   }
 
   @override
