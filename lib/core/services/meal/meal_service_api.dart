@@ -32,8 +32,14 @@ class MealServiceApi extends MealService {
   }
 
   @override
-  Future<List<MealModel>> getAllMealsByUserId(int userId) async {
-    var response = await http.get(url, headers: headers);
+  Future<List<MealModel>> getAllMealsByUserIdAndDate(
+      int userId, DateTime date) async {
+    url = Uri.https(
+        '$hostedDeviceLocalhost$apiUrl/$userId/$date', controllerName);
+    var response = await http.get(
+      url,
+      headers: headers,
+    );
     return [];
   }
 

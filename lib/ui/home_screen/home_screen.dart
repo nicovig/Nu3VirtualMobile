@@ -6,7 +6,7 @@ import 'package:nu3virtual/ui/home_screen/home_screen_viewmodel.dart';
 
 class HomeScreen extends StatelessWidget {
   //constructor
-  HomeScreen({Key? key, required this.title}) : super(key: key);
+  const HomeScreen({Key? key, required this.title}) : super(key: key);
 
   final String title;
 
@@ -19,7 +19,8 @@ class HomeScreen extends StatelessWidget {
         length: 3,
         child: Scaffold(
           appBar: AppBar(
-              title: Text('Bonjour ${model.user.firstName}'),
+              centerTitle: true,
+              title: Text('${model.user.firstName} - ${model.user.weight}kg'),
               actions: <Widget>[
                 Padding(
                     padding: const EdgeInsets.only(right: 20.0),
@@ -42,7 +43,7 @@ class HomeScreen extends StatelessWidget {
               )),
           body: TabBarView(
             children: [
-              MealTabScreen(),
+              MealTabScreen(userId: model.user.id ?? 0),
               const Icon(Icons.sports_football_outlined),
               const Icon(Icons.accessibility_new_outlined)
             ],
