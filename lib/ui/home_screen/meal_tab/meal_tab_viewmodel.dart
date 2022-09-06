@@ -16,7 +16,7 @@ class MealTabViewModel extends ChangeNotifier {
   Future loadData(DateTime date) async {
     UserModel user = await _userStore.getCurrentUser();
     userId = user.id ?? 0;
-    meals = await _mealService.getAllMealsByUserIdAndDate(userId, date);
+    await getMeals(DateTime.now());
     notifyListeners();
   }
 
@@ -24,5 +24,9 @@ class MealTabViewModel extends ChangeNotifier {
     bool isCreationOk = await _mealService.createMeal(meal);
     Navigator.pop(dialogContext, isCreationOk);
     notifyListeners();
+  }
+
+  getMeals(DateTime date) async {
+    meals = await _mealService.getAllMealsByUserIdAndDate(userId, date);
   }
 }

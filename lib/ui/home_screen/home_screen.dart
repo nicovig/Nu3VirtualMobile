@@ -45,7 +45,35 @@ class _HomeScreenState extends State<HomeScreen> {
                 Padding(
                     padding: const EdgeInsets.only(right: 20.0),
                     child: GestureDetector(
-                      onTap: () => model.disconnect(context),
+                      onTap: () {
+                        showDialog(
+                          context: context,
+                          builder: (context) => SimpleDialog(
+                            contentPadding: const EdgeInsets.all(20),
+                            title: const Text('Déconnexion'),
+                            children: [
+                              const Text(
+                                  "Êtes vous sûr de vouloir vous déconnecter ?"),
+                              const SizedBox(height: 20),
+                              Row(
+                                children: [
+                                  const Spacer(),
+                                  ElevatedButton(
+                                      onPressed: (() =>
+                                          model.disconnect(context)),
+                                      child: const Text('Oui')),
+                                  const Spacer(),
+                                  ElevatedButton(
+                                      onPressed: (() =>
+                                          Navigator.pop(context, true)),
+                                      child: const Text('Non')),
+                                  const Spacer()
+                                ],
+                              )
+                            ],
+                          ),
+                        );
+                      },
                       child: const Icon(
                         Icons.exit_to_app_sharp,
                         size: 26.0,
