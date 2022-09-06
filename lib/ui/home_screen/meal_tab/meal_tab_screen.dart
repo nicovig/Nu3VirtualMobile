@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nu3virtual/core/models/meal_model.dart';
 import 'package:nu3virtual/ui/home_screen/meal_tab/meal_tab_viewmodel.dart';
 import 'package:stacked/stacked.dart';
 
@@ -16,7 +17,9 @@ class _MealTabScreenState extends State<MealTabScreen> {
   Widget build(BuildContext context) {
     return ViewModelBuilder<MealTabViewModel>.reactive(
       viewModelBuilder: () => MealTabViewModel(),
-      onModelReady: (model) => model.loadData(date),
+      onModelReady: (model) {
+        model.loadData(date);
+      },
       builder: (context, model, child) => Column(
         children: [
           Row(
@@ -24,10 +27,11 @@ class _MealTabScreenState extends State<MealTabScreen> {
             children: [
               ElevatedButton(
                   onPressed: (() async {
+                    await model.getMeals(
+                        DateTime(date.year, date.month, date.day - 1));
                     setState(() {
                       date = DateTime(date.year, date.month, date.day - 1);
                     });
-                    await model.getMeals(date);
                   }),
                   style: ButtonStyle(
                       backgroundColor:
@@ -39,10 +43,10 @@ class _MealTabScreenState extends State<MealTabScreen> {
                   child: const Icon(Icons.arrow_back_ios, color: Colors.blue)),
               ElevatedButton(
                   onPressed: (() async {
+                    await model.getMeals(DateTime.now());
                     setState(() {
                       date = DateTime.now();
                     });
-                    await model.getMeals(date);
                   }),
                   style: ButtonStyle(
                       backgroundColor:
@@ -57,10 +61,11 @@ class _MealTabScreenState extends State<MealTabScreen> {
                   )),
               ElevatedButton(
                   onPressed: (() async {
+                    await model.getMeals(
+                        DateTime(date.year, date.month, date.day + 1));
                     setState(() {
                       date = DateTime(date.year, date.month, date.day + 1);
                     });
-                    await model.getMeals(date);
                   }),
                   style: ButtonStyle(
                       backgroundColor:
@@ -85,11 +90,12 @@ class _MealTabScreenState extends State<MealTabScreen> {
                 final meal = model.meals[index];
                 var subtitle =
                     'P: ${meal.protein} G: ${meal.carbohydrate} C: ${meal.calorie}';
-                return ListTile(
-                  title: Text(
-                      meal.name != null ? '${meal.name} ${meal.date}' : ''),
-                  subtitle: Text(subtitle),
-                );
+                return Dismissible(
+                    key: Key('meal $index'),
+                    child: ListTile(
+                      title: Text(meal.name ?? ''),
+                      subtitle: Text(subtitle),
+                    ));
               }),
           ElevatedButton(
               style: ButtonStyle(
@@ -98,15 +104,49 @@ class _MealTabScreenState extends State<MealTabScreen> {
               onPressed: () {
                 showDialog(
                   context: context,
-                  builder: (context) => MealDialog(
-                      handleValidation: (meal, dialogContext) => {
-                            meal.userId = model.userId,
-                            model.addMeal(meal, dialogContext)
-                          }),
+                  builder: (context) =>
+                      MealDialog(handleValidation: (meal, dialogContext) {
+                    meal.userId = model.userId;
+                    model.addMeal(meal, dialogContext);
+                    setState(() {});
+                  }),
                 );
               },
               child: const Text("Ajouter un repas",
-                  style: TextStyle(color: Colors.blue)))
+                  style: TextStyle(color: Colors.blue))),
+          ElevatedButton(
+              style: ButtonStyle(
+                  backgroundColor:
+                      MaterialStateProperty.all(Colors.red.shade400)),
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (context) => SimpleDialog(
+                    contentPadding: const EdgeInsets.all(20),
+                    title: const Text('Suppression'),
+                    children: [
+                      const Text(
+                          "Êtes vous sûr de vouloir supprimer le repas sélectionné ?"),
+                      const SizedBox(height: 20),
+                      Row(
+                        children: [
+                          const Spacer(),
+                          ElevatedButton(
+                              onPressed: (() async {}),
+                              child: const Text('Oui')),
+                          const Spacer(),
+                          ElevatedButton(
+                              onPressed: (() => Navigator.pop(context, true)),
+                              child: const Text('Non')),
+                          const Spacer()
+                        ],
+                      )
+                    ],
+                  ),
+                );
+              },
+              child: const Text('Supprimer les repas',
+                  style: TextStyle(color: Colors.white))),
         ],
       ),
     );

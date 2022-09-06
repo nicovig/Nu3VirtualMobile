@@ -17,12 +17,13 @@ class MealTabViewModel extends ChangeNotifier {
     UserModel user = await _userStore.getCurrentUser();
     userId = user.id ?? 0;
     await getMeals(DateTime.now());
+
     notifyListeners();
   }
 
   addMeal(MealModel meal, BuildContext dialogContext) async {
-    bool isCreationOk = await _mealService.createMeal(meal);
-    Navigator.pop(dialogContext, isCreationOk);
+    bool isCreateOk = await _mealService.createMeal(meal);
+    Navigator.pop(dialogContext, isCreateOk);
     notifyListeners();
   }
 

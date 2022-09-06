@@ -7,21 +7,37 @@ import 'package:nu3virtual/layouts/forms/custom_form_field_date.dart';
 import 'package:nu3virtual/layouts/forms/custom_form_field_time.dart';
 
 class MealDialog extends StatelessWidget {
-  MealDialog({Key? key, required this.handleValidation}) : super(key: key);
+  MealDialog({Key? key, required this.handleValidation, this.mealToUpdate})
+      : super(key: key);
 
+  MealModel? mealToUpdate = MealModel();
   String name = '';
   DateTime date = DateTime.now();
-  String timeLabel = 'Heure du repas';
   TimeOfDay time = TimeOfDay.now();
   int carbohydrate = 0;
   int lipid = 0;
   int protein = 0;
   int calorie = 0;
 
+  String timeLabel = 'Heure du repas';
+
   final Function(MealModel, BuildContext) handleValidation;
 
   @override
   Widget build(BuildContext context) {
+    final mealToUpdate = this.mealToUpdate;
+    if (mealToUpdate != null) {
+      name = mealToUpdate.name ?? '';
+      date = mealToUpdate.date ?? DateTime.now();
+      time = mealToUpdate.date != null
+          ? TimeOfDay(hour: date.hour, minute: date.minute)
+          : TimeOfDay.now();
+      carbohydrate = mealToUpdate.carbohydrate ?? 0;
+      lipid = mealToUpdate.lipid ?? 0;
+      protein = mealToUpdate.protein ?? 0;
+      calorie = mealToUpdate.calorie ?? 0;
+    }
+
     return SimpleDialog(
         title: const Text(
           "Créer un repas",
