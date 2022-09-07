@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class CustomFormFieldTime extends StatelessWidget {
   CustomFormFieldTime(
       {Key? key,
+      this.initialValue,
       required this.handleOnChanged,
       required this.label,
       required this.labelColor})
@@ -10,6 +11,7 @@ class CustomFormFieldTime extends StatelessWidget {
 
   final Function(TimeOfDay?) handleOnChanged;
   final String label;
+  final String? initialValue;
   final Color labelColor;
 
   @override
@@ -19,6 +21,7 @@ class CustomFormFieldTime extends StatelessWidget {
         child: TextFormField(
             showCursor: true,
             readOnly: true,
+            initialValue: initialValue,
             decoration: InputDecoration(
                 hintText: label,
                 hintStyle: TextStyle(color: labelColor),

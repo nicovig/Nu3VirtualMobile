@@ -5,6 +5,7 @@ class CustomFormField extends StatelessWidget {
   CustomFormField({
     Key? key,
     this.errorText,
+    this.initialValue,
     this.handleOnSaved,
     this.hideInput,
     required this.hintText,
@@ -14,6 +15,7 @@ class CustomFormField extends StatelessWidget {
     this.validator,
   }) : super(key: key);
   final String? errorText;
+  final String? initialValue;
   final String hintText;
   final bool? hideInput;
   final Function(String?)? handleOnSaved;
@@ -27,6 +29,7 @@ class CustomFormField extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: TextFormField(
+        initialValue: initialValue,
         onSaved: handleOnSaved,
         inputFormatters: inputFormatters,
         keyboardType: keyboardType,

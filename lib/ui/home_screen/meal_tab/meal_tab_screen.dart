@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:nu3virtual/core/models/meal_model.dart';
 import 'package:nu3virtual/ui/home_screen/meal_tab/meal_tab_viewmodel.dart';
 import 'package:stacked/stacked.dart';
 
@@ -139,12 +138,14 @@ class _MealTabScreenState extends State<MealTabScreen> {
                             showDialog(
                                 context: context,
                                 builder: (BuildContext context) {
-                                  return MealDialog(handleValidation:
-                                      (mealUpdated, dialogContext) async {
-                                    await model.updateMeal(
-                                        mealUpdated, dialogContext);
-                                    await model.getMeals(date);
-                                  });
+                                  return MealDialog(
+                                      mealToUpdate: meal,
+                                      handleValidation:
+                                          (mealUpdated, dialogContext) async {
+                                        await model.updateMeal(
+                                            mealUpdated, dialogContext);
+                                        await model.getMeals(date);
+                                      });
                                 });
                           },
                           backgroundColor: Color(0xFF7BC043),

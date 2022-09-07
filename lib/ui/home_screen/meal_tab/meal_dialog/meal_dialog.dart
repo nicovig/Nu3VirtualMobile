@@ -29,7 +29,8 @@ class _MealDialogState extends State<MealDialog> {
   String timeLabel = 'Heure du repas';
 
   @override
-  Widget build(BuildContext context) {
+  initState() {
+    super.initState();
     final mealToUpdate = widget.mealToUpdate;
     if (mealToUpdate != null) {
       name = mealToUpdate.name ?? '';
@@ -42,7 +43,10 @@ class _MealDialogState extends State<MealDialog> {
       protein = mealToUpdate.protein ?? 0;
       calorie = mealToUpdate.calorie ?? 0;
     }
+  }
 
+  @override
+  Widget build(BuildContext context) {
     return SimpleDialog(
         title: const Text(
           "Créer un repas",
@@ -53,8 +57,10 @@ class _MealDialogState extends State<MealDialog> {
               onChanged: (value) {
                 if (value != null) name = value;
               },
+              initialValue: name != '' ? name : '',
               hintText: 'Nom'),
           CustomFormFieldDate(
+              initialValue: date,
               firstDate: DateTime(DateTime.now().year, DateTime.now().month - 1,
                   DateTime.now().day),
               label: 'Date du repas',
@@ -64,6 +70,7 @@ class _MealDialogState extends State<MealDialog> {
                 if (value != null) date = value;
               }),
           CustomFormFieldTime(
+              initialValue: '${time.hour}h ${time.minute}min',
               label: timeLabel,
               labelColor: timeLabel == '${time.hour}h ${time.minute}min'
                   ? Colors.black
@@ -77,6 +84,8 @@ class _MealDialogState extends State<MealDialog> {
               }),
           CustomFormField(
             hintText: 'Glucides',
+            initialValue:
+                carbohydrate.toString() != '0' ? carbohydrate.toString() : '',
             onChanged: (value) {
               if (value != null) carbohydrate = int.parse(value);
             },
@@ -89,6 +98,7 @@ class _MealDialogState extends State<MealDialog> {
           ),
           CustomFormField(
             hintText: 'Lipides',
+            initialValue: lipid.toString() != '0' ? lipid.toString() : '',
             onChanged: (value) {
               if (value != null) lipid = int.parse(value);
             },
@@ -101,6 +111,7 @@ class _MealDialogState extends State<MealDialog> {
           ),
           CustomFormField(
             hintText: 'Protéines',
+            initialValue: protein.toString() != '0' ? protein.toString() : '',
             onChanged: (value) {
               if (value != null) protein = int.parse(value);
             },
@@ -113,6 +124,7 @@ class _MealDialogState extends State<MealDialog> {
           ),
           CustomFormField(
             hintText: 'Calories',
+            initialValue: calorie.toString() != '0' ? calorie.toString() : '',
             onChanged: (value) {
               if (value != null) calorie = int.parse(value);
             },
@@ -130,6 +142,7 @@ class _MealDialogState extends State<MealDialog> {
                   date = DateTime(
                       date.year, date.month, date.day, time.hour, time.minute);
                   MealModel meal = MealModel(
+                    id: widget.mealToUpdate?.id,
                     name: name,
                     date: date,
                     carbohydrate: carbohydrate,

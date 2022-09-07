@@ -6,6 +6,7 @@ class CustomFormFieldDate extends StatelessWidget {
   CustomFormFieldDate(
       {Key? key,
       this.firstDate,
+      this.initialValue,
       this.lastDate,
       required this.handleOnSaved,
       required this.label})
@@ -15,12 +16,14 @@ class CustomFormFieldDate extends StatelessWidget {
   final DateTime? firstDate;
   final String label;
   final DateTime? lastDate;
+  final DateTime? initialValue;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: DateTimeFormField(
+        initialValue: initialValue,
         onDateSelected: handleOnSaved,
         dateFormat: DateFormat('dd MM yyyy'),
         firstDate: firstDate,
