@@ -6,11 +6,18 @@ import 'package:nu3virtual/layouts/forms/custom_form_field.dart';
 import 'package:nu3virtual/layouts/forms/custom_form_field_date.dart';
 import 'package:nu3virtual/layouts/forms/custom_form_field_time.dart';
 
-class MealDialog extends StatelessWidget {
+class MealDialog extends StatefulWidget {
+  final Function(MealModel, BuildContext) handleValidation;
+  MealModel? mealToUpdate = MealModel();
+
   MealDialog({Key? key, required this.handleValidation, this.mealToUpdate})
       : super(key: key);
 
-  MealModel? mealToUpdate = MealModel();
+  @override
+  _MealDialogState createState() => _MealDialogState();
+}
+
+class _MealDialogState extends State<MealDialog> {
   String name = '';
   DateTime date = DateTime.now();
   TimeOfDay time = TimeOfDay.now();
@@ -21,11 +28,9 @@ class MealDialog extends StatelessWidget {
 
   String timeLabel = 'Heure du repas';
 
-  final Function(MealModel, BuildContext) handleValidation;
-
   @override
   Widget build(BuildContext context) {
-    final mealToUpdate = this.mealToUpdate;
+    final mealToUpdate = widget.mealToUpdate;
     if (mealToUpdate != null) {
       name = mealToUpdate.name ?? '';
       date = mealToUpdate.date ?? DateTime.now();
@@ -60,13 +65,16 @@ class MealDialog extends StatelessWidget {
               }),
           CustomFormFieldTime(
               label: timeLabel,
-              handleOnChanged: (value) => {
-                    if (value != null)
-                      {
-                        time = value,
-                        timeLabel = '${time.hour}h ${time.minute}min'
-                      }
-                  }),
+              labelColor: timeLabel == '${time.hour}h ${time.minute}min'
+                  ? Colors.black
+                  : Colors.grey.shade600,
+              handleOnChanged: (value) {
+                if (value != null) {
+                  time = value;
+                  timeLabel = '${time.hour}h ${time.minute}min';
+                  setState(() {});
+                }
+              }),
           CustomFormField(
             hintText: 'Glucides',
             onChanged: (value) {
@@ -129,7 +137,7 @@ class MealDialog extends StatelessWidget {
                     protein: protein,
                     calorie: calorie,
                   );
-                  handleValidation(meal, context);
+                  widget.handleValidation(meal, context);
                 },
                 child: const Text("Ajouter")),
           ),

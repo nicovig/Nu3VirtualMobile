@@ -2,11 +2,15 @@ import 'package:flutter/material.dart';
 
 class CustomFormFieldTime extends StatelessWidget {
   CustomFormFieldTime(
-      {Key? key, required this.handleOnChanged, required this.label})
+      {Key? key,
+      required this.handleOnChanged,
+      required this.label,
+      required this.labelColor})
       : super(key: key);
 
   final Function(TimeOfDay?) handleOnChanged;
   final String label;
+  final Color labelColor;
 
   @override
   Widget build(BuildContext context) {
@@ -17,6 +21,7 @@ class CustomFormFieldTime extends StatelessWidget {
             readOnly: true,
             decoration: InputDecoration(
                 hintText: label,
+                hintStyle: TextStyle(color: labelColor),
                 suffixIcon: const Icon(Icons.access_time_rounded)),
             onTap: (() async {
               final time = await _pickTime(context);
