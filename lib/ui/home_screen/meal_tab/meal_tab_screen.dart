@@ -105,48 +105,16 @@ class _MealTabScreenState extends State<MealTabScreen> {
                 showDialog(
                   context: context,
                   builder: (context) =>
-                      MealDialog(handleValidation: (meal, dialogContext) {
+                      MealDialog(handleValidation: (meal, dialogContext) async {
                     meal.userId = model.userId;
-                    model.addMeal(meal, dialogContext);
+                    await model.addMeal(meal, dialogContext);
+                    await model.getMeals(date);
                     setState(() {});
                   }),
                 );
               },
               child: const Text("Ajouter un repas",
-                  style: TextStyle(color: Colors.blue))),
-          ElevatedButton(
-              style: ButtonStyle(
-                  backgroundColor:
-                      MaterialStateProperty.all(Colors.red.shade400)),
-              onPressed: () {
-                showDialog(
-                  context: context,
-                  builder: (context) => SimpleDialog(
-                    contentPadding: const EdgeInsets.all(20),
-                    title: const Text('Suppression'),
-                    children: [
-                      const Text(
-                          "Êtes vous sûr de vouloir supprimer le repas sélectionné ?"),
-                      const SizedBox(height: 20),
-                      Row(
-                        children: [
-                          const Spacer(),
-                          ElevatedButton(
-                              onPressed: (() async {}),
-                              child: const Text('Oui')),
-                          const Spacer(),
-                          ElevatedButton(
-                              onPressed: (() => Navigator.pop(context, true)),
-                              child: const Text('Non')),
-                          const Spacer()
-                        ],
-                      )
-                    ],
-                  ),
-                );
-              },
-              child: const Text('Supprimer les repas',
-                  style: TextStyle(color: Colors.white))),
+                  style: TextStyle(color: Colors.blue)))
         ],
       ),
     );
