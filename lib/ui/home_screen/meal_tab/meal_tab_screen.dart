@@ -85,13 +85,40 @@ class _MealTabScreenState extends State<MealTabScreen> {
           ListView.builder(
               scrollDirection: Axis.vertical,
               shrinkWrap: true,
-              itemCount: model.meals.length,
+              itemCount: model.mealsDisplayed.length,
               itemBuilder: (context, index) {
-                final meal = model.meals[index];
+                final meal = model.mealsDisplayed[index];
                 var subtitle =
                     'P: ${meal.protein} G: ${meal.carbohydrate} C: ${meal.calorie}';
                 return Dismissible(
                     key: Key('meal $index'),
+                    background: Container(color: Colors.red),
+                    confirmDismiss: (DismissDirection direction) async {
+                      return await showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: const Text("Supprimer"),
+                            content: Text(
+                                'Êtes vous sûr de vouloir supprimer le repas "${meal.name}"'),
+                            actions: <Widget>[
+                              ElevatedButton(
+                                  onPressed: () async {
+                                    await model.deleteMeal(
+                                        meal.id ?? 0, context);
+                                    await model.getMeals(date);
+                                  },
+                                  child: const Text("Oui")),
+                              ElevatedButton(
+                                onPressed: () =>
+                                    Navigator.of(context).pop(false),
+                                child: const Text("Non"),
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    },
                     child: ListTile(
                       title: Text(meal.name ?? ''),
                       subtitle: Text(subtitle),

@@ -11,6 +11,7 @@ class MealTabViewModel extends ChangeNotifier {
   final UserStore _userStore = getIt<UserStore>();
 
   List<MealModel> meals = [];
+  List<MealModel> mealsDisplayed = [];
   int? userId = 0;
 
   Future loadData(DateTime date) async {
@@ -27,7 +28,15 @@ class MealTabViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future deleteMeal(int mealId, BuildContext dialogContext) async {
+    bool isDeleteOk = await _mealService.deleteMeal(mealId);
+    Navigator.of(dialogContext).pop(isDeleteOk);
+    notifyListeners();
+  }
+
   Future getMeals(DateTime date) async {
     meals = await _mealService.getAllMealsByUserIdAndDate(userId, date);
+    mealsDisplayed = meals;
+    notifyListeners();
   }
 }

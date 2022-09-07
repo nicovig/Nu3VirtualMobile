@@ -21,8 +21,10 @@ class MealServiceApi extends MealService {
   }
 
   @override
-  Future<bool> deleteMeals(List<int> mealIds) async {
-    var response = await http.delete(url, headers: headers, body: mealIds);
+  Future<bool> deleteMeal(int mealId) async {
+    Uri customUrl = Uri.https(
+        hostedDeviceLocalhost + apiUrl, '$controllerName/${mealId.toString()}');
+    var response = await http.delete(customUrl, headers: headers);
     return response.statusCode == 200 || response.statusCode == 204;
   }
 
