@@ -39,4 +39,10 @@ class MealTabViewModel extends ChangeNotifier {
     mealsDisplayed = meals;
     notifyListeners();
   }
+
+  Future updateMeal(MealModel meal, BuildContext dialogContext) async {
+    bool isUpdateOk = await _mealService.updateMeal(meal);
+    Navigator.pop(dialogContext, isUpdateOk);
+    notifyListeners();
+  }
 }

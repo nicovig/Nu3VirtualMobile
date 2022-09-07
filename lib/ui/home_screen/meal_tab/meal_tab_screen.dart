@@ -131,11 +131,22 @@ class _MealTabScreenState extends State<MealTabScreen> {
                         )
                       ],
                     ),
-                    endActionPane: const ActionPane(
-                      motion: ScrollMotion(),
+                    endActionPane: ActionPane(
+                      motion: const ScrollMotion(),
                       children: [
                         SlidableAction(
-                          onPressed: null,
+                          onPressed: (BuildContext context) {
+                            showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return MealDialog(handleValidation:
+                                      (mealUpdated, dialogContext) async {
+                                    await model.updateMeal(
+                                        mealUpdated, dialogContext);
+                                    await model.getMeals(date);
+                                  });
+                                });
+                          },
                           backgroundColor: Color(0xFF7BC043),
                           foregroundColor: Colors.white,
                           icon: Icons.update,
