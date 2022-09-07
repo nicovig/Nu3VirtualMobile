@@ -39,6 +39,7 @@ dependencies:
   stacked:
   shared_preferences:
   get_it:
+  flutter_slidable:
 
 dev_dependencies:
   flutter_test:
