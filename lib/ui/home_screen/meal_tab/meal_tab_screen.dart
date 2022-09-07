@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:nu3virtual/ui/home_screen/meal_tab/meal_tab_viewmodel.dart';
 import 'package:stacked/stacked.dart';
 
+import 'package:nu3virtual/layouts/screen_layouts/change_date_buttons.dart';
+import 'package:nu3virtual/ui/home_screen/meal_tab/meal_tab_viewmodel.dart';
 import 'package:nu3virtual/ui/home_screen/meal_tab/meal_dialog/meal_dialog.dart';
 
 class MealTabScreen extends StatefulWidget {
@@ -22,62 +23,22 @@ class _MealTabScreenState extends State<MealTabScreen> {
       },
       builder: (context, model, child) => Column(
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              ElevatedButton(
-                  onPressed: (() async {
-                    await model.getMeals(
-                        DateTime(date.year, date.month, date.day - 1));
-                    setState(() {
-                      date = DateTime(date.year, date.month, date.day - 1);
-                    });
-                  }),
-                  style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all(Colors.blue.shade100),
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                          RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(18.0),
-                              side: BorderSide(color: Colors.blue.shade50)))),
-                  child: const Icon(Icons.arrow_back_ios, color: Colors.blue)),
-              ElevatedButton(
-                  onPressed: (() async {
-                    await model.getMeals(DateTime.now());
-                    setState(() {
-                      date = DateTime.now();
-                    });
-                  }),
-                  style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all(Colors.blue.shade100),
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                          RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(18.0),
-                              side: BorderSide(color: Colors.blue.shade50)))),
-                  child: const Text(
-                    "Aujourd'hui",
-                    style: TextStyle(color: Colors.blue),
-                  )),
-              ElevatedButton(
-                  onPressed: (() async {
-                    await model.getMeals(
-                        DateTime(date.year, date.month, date.day + 1));
-                    setState(() {
-                      date = DateTime(date.year, date.month, date.day + 1);
-                    });
-                  }),
-                  style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all(Colors.blue.shade100),
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                          RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(18.0),
-                              side: BorderSide(color: Colors.blue.shade50)))),
-                  child:
-                      const Icon(Icons.arrow_forward_ios, color: Colors.blue)),
-            ],
-          ),
+          ChangeDateButtons(handleOnPressedLeftButton: (() async {
+            await model.getMeals(DateTime(date.year, date.month, date.day - 1));
+            setState(() {
+              date = DateTime(date.year, date.month, date.day - 1);
+            });
+          }), handleOnPressedMiddleButton: (() async {
+            await model.getMeals(DateTime.now());
+            setState(() {
+              date = DateTime.now();
+            });
+          }), handleOnPressedRightButton: (() async {
+            await model.getMeals(DateTime(date.year, date.month, date.day + 1));
+            setState(() {
+              date = DateTime(date.year, date.month, date.day + 1);
+            });
+          })),
           Text(
             "Date : ${date.day} ${date.month} ${date.year}",
             style: const TextStyle(color: Colors.black),
@@ -123,7 +84,7 @@ class _MealTabScreenState extends State<MealTabScreen> {
                                   );
                                 });
                           },
-                          backgroundColor: Color(0xFFFE4A49),
+                          backgroundColor: const Color(0xFFFE4A49),
                           foregroundColor: Colors.white,
                           icon: Icons.delete,
                           label: 'Supprimer',
@@ -148,7 +109,7 @@ class _MealTabScreenState extends State<MealTabScreen> {
                                       });
                                 });
                           },
-                          backgroundColor: Color(0xFF7BC043),
+                          backgroundColor: const Color(0xFF7BC043),
                           foregroundColor: Colors.white,
                           icon: Icons.update,
                           label: 'Modifier',
