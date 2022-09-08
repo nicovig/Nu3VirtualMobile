@@ -23,15 +23,20 @@ class MainScreenViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  addOneDayOnDate() {
+  void addOneDayOnDate() {
     streamController.add((DateTime(date.year, date.month, date.day + 1)));
-    streamController.stream.listen((event) {
-      date = event;
-    });
   }
 
   void disconnect(BuildContext context) async {
     await _userStore.deleteCurrentUser();
     Navigator.of(context).pushNamedAndRemoveUntil('/', (route) => false);
+  }
+
+  void minusOneDayOnDate() {
+    streamController.add((DateTime(date.year, date.month, date.day - 1)));
+  }
+
+  void todayOnDate() {
+    streamController.add((DateTime.now()));
   }
 }

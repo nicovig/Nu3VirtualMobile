@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:stacked/stacked.dart';
@@ -7,12 +9,25 @@ import 'package:nu3virtual/ui/main_screen/meal_tab/meal_tab_viewmodel.dart';
 import 'package:nu3virtual/ui/main_screen/meal_tab/meal_dialog/meal_dialog.dart';
 
 class MealTabScreen extends StatefulWidget {
+  MealTabScreen({Key? key, required this.streamController}) : super(key: key);
   @override
   _MealTabScreenState createState() => _MealTabScreenState();
+
+  StreamController<DateTime> streamController = StreamController.broadcast();
 }
 
 class _MealTabScreenState extends State<MealTabScreen> {
   DateTime date = DateTime.now();
+
+  @override
+  void initState() {
+    widget.streamController.stream.listen((event) {
+      date = event;
+      setState(() {});
+    });
+    // TODO: implement initState
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,6 +38,7 @@ class _MealTabScreenState extends State<MealTabScreen> {
       },
       builder: (context, model, child) => Column(
         children: [
+          Text('Date depuis MealTabScreen $date'),
           ListView.builder(
               scrollDirection: Axis.vertical,
               shrinkWrap: true,

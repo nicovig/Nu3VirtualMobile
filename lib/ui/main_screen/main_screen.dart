@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:nu3virtual/layouts/screen_layouts/change_date_buttons.dart';
 import 'package:nu3virtual/ui/main_screen/meal_tab/meal_tab_screen.dart';
@@ -17,10 +19,12 @@ class _MainScreenState extends State<MainScreen> {
   int userId = 0;
   int selectedIndex = 0;
 
+  StreamController<DateTime> streamController = StreamController.broadcast();
+
   @override
   Widget build(BuildContext context) {
     final List<Widget> pages = <Widget>[
-      MealTabScreen(),
+      MealTabScreen(streamController: streamController),
       const Icon(Icons.sports_football_outlined),
       const Icon(Icons.accessibility_new_outlined)
     ];
@@ -34,6 +38,7 @@ class _MainScreenState extends State<MainScreen> {
             if (model.user.id != null) {
               userId = model.user.id!;
             }
+            streamController = model.streamController;
           })
       },
       builder: (context, model, child) => DefaultTabController(
@@ -83,11 +88,15 @@ class _MainScreenState extends State<MainScreen> {
               ]),
           body: Column(children: [
             ChangeDateButtons(handleOnPressedLeftButton: (() async {
+              model.minusOneDayOnDate();
+              setState(() {});
               // await model.getMeals(DateTime(date.year, date.month, date.day - 1));
               // setState(() {
               //   date = DateTime(date.year, date.month, date.day - 1);
               // });
             }), handleOnPressedMiddleButton: (() async {
+              model.todayOnDate();
+              setState(() {});
               // await model.getMeals(DateTime.now());
               // setState(() {
               //   date = DateTime.now();
