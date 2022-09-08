@@ -92,15 +92,17 @@ class _MainScreenState extends State<MainScreen> {
               // setState(() {
               //   date = DateTime.now();
               // });
-            }), handleOnPressedRightButton: (() async {
+            }), handleOnPressedRightButton: (() {
+              model.addOneDayOnDate();
+              setState(() {});
               // await model.getMeals(DateTime(date.year, date.month, date.day + 1));
               // setState(() {
               //   date = DateTime(date.year, date.month, date.day + 1);
               // });
             })),
-            const Text(
-              "Date",
-              style: TextStyle(color: Colors.black),
+            Text(
+              "Date ${model.date.day} ${model.date.month} ${model.date.year}",
+              style: const TextStyle(color: Colors.black),
             ),
             Container(
               padding: const EdgeInsets.symmetric(vertical: 10),
