@@ -4,7 +4,7 @@ import 'package:nu3virtual/core/models/user_model.dart';
 import 'package:nu3virtual/core/services/user/user_service_class.dart';
 import 'package:nu3virtual/service_locator.dart';
 
-class HomeScreenViewModel extends ChangeNotifier {
+class MainScreenViewModel extends ChangeNotifier {
   final UserStore _userStore = getIt<UserStore>();
 
   late UserModel user = UserModel();

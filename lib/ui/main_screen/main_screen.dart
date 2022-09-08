@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:nu3virtual/ui/home_screen/meal_tab/meal_tab_screen.dart';
+import 'package:nu3virtual/ui/main_screen/meal_tab/meal_tab_screen.dart';
 import 'package:stacked/stacked.dart';
 
-import 'package:nu3virtual/ui/home_screen/home_screen_viewmodel.dart';
+import 'package:nu3virtual/ui/main_screen/main_screen_viewmodel.dart';
 
-class HomeScreen extends StatefulWidget {
+class MainScreen extends StatefulWidget {
   //constructor
-  HomeScreen({Key? key}) : super(key: key);
+  MainScreen({Key? key}) : super(key: key);
 
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  _MainScreenState createState() => _MainScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _MainScreenState extends State<MainScreen> {
   int userId = 0;
   int selectedIndex = 0;
 
@@ -24,8 +24,8 @@ class _HomeScreenState extends State<HomeScreen> {
       const Icon(Icons.accessibility_new_outlined)
     ];
 
-    return ViewModelBuilder<HomeScreenViewModel>.reactive(
-      viewModelBuilder: () => HomeScreenViewModel(),
+    return ViewModelBuilder<MainScreenViewModel>.reactive(
+      viewModelBuilder: () => MainScreenViewModel(),
       onModelReady: (model) => {
         model.loadData(),
         if (model.user.id != null)

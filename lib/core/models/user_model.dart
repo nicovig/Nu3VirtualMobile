@@ -24,8 +24,6 @@ class UserModel {
       this.password});
 
   factory UserModel.fromJson(Map<String, dynamic> parsedJson) {
-    var birthdayFromJSON = DateTime.parse(parsedJson['birthday']);
-    log(birthdayFromJSON.toString());
     return UserModel(
         id: parsedJson['id'] ?? 0,
         pseudo: parsedJson['pseudo'] ?? "",
