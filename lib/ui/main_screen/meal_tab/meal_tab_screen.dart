@@ -23,26 +23,6 @@ class _MealTabScreenState extends State<MealTabScreen> {
       },
       builder: (context, model, child) => Column(
         children: [
-          ChangeDateButtons(handleOnPressedLeftButton: (() async {
-            await model.getMeals(DateTime(date.year, date.month, date.day - 1));
-            setState(() {
-              date = DateTime(date.year, date.month, date.day - 1);
-            });
-          }), handleOnPressedMiddleButton: (() async {
-            await model.getMeals(DateTime.now());
-            setState(() {
-              date = DateTime.now();
-            });
-          }), handleOnPressedRightButton: (() async {
-            await model.getMeals(DateTime(date.year, date.month, date.day + 1));
-            setState(() {
-              date = DateTime(date.year, date.month, date.day + 1);
-            });
-          })),
-          Text(
-            "Date : ${date.day} ${date.month} ${date.year}",
-            style: const TextStyle(color: Colors.black),
-          ),
           ListView.builder(
               scrollDirection: Axis.vertical,
               shrinkWrap: true,

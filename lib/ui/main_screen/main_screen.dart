@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nu3virtual/layouts/screen_layouts/change_date_buttons.dart';
 import 'package:nu3virtual/ui/main_screen/meal_tab/meal_tab_screen.dart';
 import 'package:stacked/stacked.dart';
 
@@ -80,10 +81,32 @@ class _MainScreenState extends State<MainScreen> {
                       ),
                     ))
               ]),
-          body: Container(
-            padding: const EdgeInsets.symmetric(vertical: 10),
-            child: pages.elementAt(selectedIndex),
-          ),
+          body: Column(children: [
+            ChangeDateButtons(handleOnPressedLeftButton: (() async {
+              // await model.getMeals(DateTime(date.year, date.month, date.day - 1));
+              // setState(() {
+              //   date = DateTime(date.year, date.month, date.day - 1);
+              // });
+            }), handleOnPressedMiddleButton: (() async {
+              // await model.getMeals(DateTime.now());
+              // setState(() {
+              //   date = DateTime.now();
+              // });
+            }), handleOnPressedRightButton: (() async {
+              // await model.getMeals(DateTime(date.year, date.month, date.day + 1));
+              // setState(() {
+              //   date = DateTime(date.year, date.month, date.day + 1);
+              // });
+            })),
+            const Text(
+              "Date",
+              style: TextStyle(color: Colors.black),
+            ),
+            Container(
+              padding: const EdgeInsets.symmetric(vertical: 10),
+              child: pages.elementAt(selectedIndex),
+            ),
+          ]),
           bottomNavigationBar: BottomNavigationBar(
             onTap: (value) => {
               setState(() {
