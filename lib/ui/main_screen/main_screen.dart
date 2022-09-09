@@ -104,7 +104,6 @@ class _MainScreenState extends State<MainScreen> {
                     padding: const EdgeInsets.symmetric(vertical: 10),
                     child: TabList(
                       tabSelected: selectedIndex,
-                      dateSnapshot: snapshot,
                     ),
                   ),
                 ]);

@@ -9,8 +9,7 @@ import 'package:nu3virtual/ui/main_screen/meal_tab/meal_tab_viewmodel.dart';
 import 'package:nu3virtual/ui/main_screen/meal_tab/meal_dialog/meal_dialog.dart';
 
 class MealTabScreen extends StatefulWidget {
-  AsyncSnapshot<DateTime> dateSnapshot;
-  MealTabScreen({Key? key, required this.dateSnapshot}) : super(key: key);
+  MealTabScreen({Key? key}) : super(key: key);
 
   @override
   _MealTabScreenState createState() => _MealTabScreenState();
@@ -30,6 +29,15 @@ class _MealTabScreenState extends State<MealTabScreen> {
     return ViewModelBuilder<MealTabViewModel>.reactive(
       viewModelBuilder: () => MealTabViewModel(),
       onModelReady: (model) {
+        // widget.stream.listen((event) {
+        //   date = widget.dateSnapshot.data!;
+        //   setState(() {});
+        // });
+
+        // if (widget.dateSnapshot.data != null) {
+        //   date = widget.dateSnapshot.data!;
+        //   setState(() {});
+        // }
         model.loadData(date);
 
         // await model.getMeals(DateTime(date.year, date.month, date.day - 1));
