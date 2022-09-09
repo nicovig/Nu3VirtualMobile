@@ -30,7 +30,6 @@ class _MealDialogState extends State<MealDialog> {
 
   @override
   initState() {
-    super.initState();
     final mealToUpdate = widget.mealToUpdate;
     if (mealToUpdate != null) {
       name = mealToUpdate.name ?? '';
@@ -43,6 +42,7 @@ class _MealDialogState extends State<MealDialog> {
       protein = mealToUpdate.protein ?? 0;
       calorie = mealToUpdate.calorie ?? 0;
     }
+    super.initState();
   }
 
   @override

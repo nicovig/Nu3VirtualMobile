@@ -9,11 +9,11 @@ import 'package:nu3virtual/ui/main_screen/meal_tab/meal_tab_viewmodel.dart';
 import 'package:nu3virtual/ui/main_screen/meal_tab/meal_dialog/meal_dialog.dart';
 
 class MealTabScreen extends StatefulWidget {
-  MealTabScreen({Key? key, required this.streamController}) : super(key: key);
+  AsyncSnapshot<DateTime> dateSnapshot;
+  MealTabScreen({Key? key, required this.dateSnapshot}) : super(key: key);
+
   @override
   _MealTabScreenState createState() => _MealTabScreenState();
-
-  StreamController<DateTime> streamController = StreamController.broadcast();
 }
 
 class _MealTabScreenState extends State<MealTabScreen> {
@@ -21,10 +21,6 @@ class _MealTabScreenState extends State<MealTabScreen> {
 
   @override
   void initState() {
-    widget.streamController.stream.listen((event) {
-      date = event;
-      setState(() {});
-    });
     // TODO: implement initState
     super.initState();
   }
@@ -35,6 +31,21 @@ class _MealTabScreenState extends State<MealTabScreen> {
       viewModelBuilder: () => MealTabViewModel(),
       onModelReady: (model) {
         model.loadData(date);
+
+        // await model.getMeals(DateTime(date.year, date.month, date.day - 1));
+        // setState(() {
+        //   date = DateTime(date.year, date.month, date.day - 1);
+        // });
+
+        // await model.getMeals(DateTime.now());
+        // setState(() {
+        //   date = DateTime(DateTime.now());
+        // });
+
+        // await model.getMeals(DateTime(date.year, date.month, date.day + 1));
+        // setState(() {
+        //   date = DateTime(date.year, date.month, date.day + 1);
+        // });
       },
       builder: (context, model, child) => Column(
         children: [

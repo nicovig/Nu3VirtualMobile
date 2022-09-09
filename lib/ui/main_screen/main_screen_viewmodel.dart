@@ -15,10 +15,10 @@ class MainScreenViewModel extends ChangeNotifier {
   late DateTime date = DateTime.now();
 
   Future loadData() async {
-    streamController.add((date));
     streamController.stream.listen((event) {
       date = event;
     });
+
     user = await _userStore.getCurrentUser();
     notifyListeners();
   }
