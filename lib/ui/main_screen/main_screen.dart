@@ -1,8 +1,5 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:nu3virtual/layouts/screen_layouts/change_date_buttons.dart';
-import 'package:nu3virtual/layouts/screen_layouts/tab_list.dart';
 import 'package:nu3virtual/ui/main_screen/meal_tab/meal_tab_screen.dart';
 import 'package:stacked/stacked.dart';
 
@@ -20,10 +17,16 @@ class _MainScreenState extends State<MainScreen> {
   int userId = 0;
   int selectedIndex = 0;
 
-  StreamController<DateTime> streamController = StreamController.broadcast();
+  DateTime date = DateTime.now();
 
   @override
   Widget build(BuildContext context) {
+    final List<Widget> pages = <Widget>[
+      MealTabScreen(date: date),
+      const Icon(Icons.sports_football_outlined),
+      const Icon(Icons.accessibility_new_outlined)
+    ];
+
     return ViewModelBuilder<MainScreenViewModel>.reactive(
       viewModelBuilder: () => MainScreenViewModel(),
       onModelReady: (model) => {
@@ -33,7 +36,6 @@ class _MainScreenState extends State<MainScreen> {
             if (model.user.id != null) {
               userId = model.user.id!;
             }
-            streamController = model.streamController;
           })
       },
       builder: (context, model, child) => DefaultTabController(
@@ -81,33 +83,31 @@ class _MainScreenState extends State<MainScreen> {
                       ),
                     ))
               ]),
-          body: StreamBuilder<DateTime>(
-              initialData: DateTime.now(),
-              stream: model.streamController.stream,
-              builder: (context, snapshot) {
-                return Column(children: [
-                  ChangeDateButtons(handleOnPressedLeftButton: (() async {
-                    model.minusOneDayOnDate();
-                    setState(() {});
-                  }), handleOnPressedMiddleButton: (() async {
-                    model.todayOnDate();
-                    setState(() {});
-                  }), handleOnPressedRightButton: (() {
-                    model.addOneDayOnDate();
-                    setState(() {});
-                  })),
-                  Text(
-                    "Date ${model.date.day} ${model.date.month} ${model.date.year}",
-                    style: const TextStyle(color: Colors.black),
-                  ),
-                  Container(
-                    padding: const EdgeInsets.symmetric(vertical: 10),
-                    child: TabList(
-                      tabSelected: selectedIndex,
-                    ),
-                  ),
-                ]);
-              }),
+          body: Column(children: [
+            Text('Date sur main screen : ${date.toString()}'),
+            ChangeDateButtons(handleOnPressedLeftButton: (() async {
+              setState(() {
+                date = DateTime(date.year, date.month, date.day - 1);
+              });
+              mealTabScreenState.setState(() {});
+            }), handleOnPressedMiddleButton: (() async {
+              setState(() {
+                date = DateTime.now();
+              });
+            }), handleOnPressedRightButton: (() async {
+              setState(() {
+                date = DateTime(date.year, date.month, date.day + 1);
+              });
+            })),
+            const Text(
+              "Date",
+              style: TextStyle(color: Colors.black),
+            ),
+            Container(
+              padding: const EdgeInsets.symmetric(vertical: 10),
+              child: pages.elementAt(selectedIndex),
+            ),
+          ]),
           bottomNavigationBar: BottomNavigationBar(
             onTap: (value) => {
               setState(() {

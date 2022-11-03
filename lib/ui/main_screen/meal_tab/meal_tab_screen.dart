@@ -1,4 +1,4 @@
-import 'dart:async';
+// ignore_for_file: library_private_types_in_public_api
 
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -8,56 +8,34 @@ import 'package:nu3virtual/layouts/screen_layouts/change_date_buttons.dart';
 import 'package:nu3virtual/ui/main_screen/meal_tab/meal_tab_viewmodel.dart';
 import 'package:nu3virtual/ui/main_screen/meal_tab/meal_dialog/meal_dialog.dart';
 
+_MealTabScreenState mealTabScreenState = _MealTabScreenState();
+
 class MealTabScreen extends StatefulWidget {
-  MealTabScreen({Key? key}) : super(key: key);
+  const MealTabScreen({super.key, required this.date});
 
   @override
-  _MealTabScreenState createState() => _MealTabScreenState();
+  // ignore: no_logic_in_create_state
+  _MealTabScreenState createState() {
+    mealTabScreenState = _MealTabScreenState();
+    return mealTabScreenState;
+  }
+
+  final DateTime date;
 }
 
 class _MealTabScreenState extends State<MealTabScreen> {
-  DateTime date = DateTime.now();
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-  }
+  //DateTime date = DateTime.now();
 
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<MealTabViewModel>.reactive(
       viewModelBuilder: () => MealTabViewModel(),
       onModelReady: (model) {
-        // widget.stream.listen((event) {
-        //   date = widget.dateSnapshot.data!;
-        //   setState(() {});
-        // });
-
-        // if (widget.dateSnapshot.data != null) {
-        //   date = widget.dateSnapshot.data!;
-        //   setState(() {});
-        // }
-        model.loadData(date);
-
-        // await model.getMeals(DateTime(date.year, date.month, date.day - 1));
-        // setState(() {
-        //   date = DateTime(date.year, date.month, date.day - 1);
-        // });
-
-        // await model.getMeals(DateTime.now());
-        // setState(() {
-        //   date = DateTime(DateTime.now());
-        // });
-
-        // await model.getMeals(DateTime(date.year, date.month, date.day + 1));
-        // setState(() {
-        //   date = DateTime(date.year, date.month, date.day + 1);
-        // });
+        model.loadData(widget.date);
       },
       builder: (context, model, child) => Column(
         children: [
-          Text('Date depuis MealTabScreen $date'),
+          Text('Date sur meal tab : ${widget.date}'),
           ListView.builder(
               scrollDirection: Axis.vertical,
               shrinkWrap: true,
@@ -87,7 +65,7 @@ class _MealTabScreenState extends State<MealTabScreen> {
                                           onPressed: () async {
                                             await model.deleteMeal(
                                                 meal.id ?? 0, context);
-                                            await model.getMeals(date);
+                                            await model.getMeals(widget.date);
                                           },
                                           child: const Text("Oui")),
                                       ElevatedButton(
@@ -120,7 +98,7 @@ class _MealTabScreenState extends State<MealTabScreen> {
                                           (mealUpdated, dialogContext) async {
                                         await model.updateMeal(
                                             mealUpdated, dialogContext);
-                                        await model.getMeals(date);
+                                        await model.getMeals(widget.date);
                                       });
                                 });
                           },
@@ -147,7 +125,7 @@ class _MealTabScreenState extends State<MealTabScreen> {
                       MealDialog(handleValidation: (meal, dialogContext) async {
                     meal.userId = model.userId;
                     await model.addMeal(meal, dialogContext);
-                    await model.getMeals(date);
+                    await model.getMeals(widget.date);
                     setState(() {});
                   }),
                 );

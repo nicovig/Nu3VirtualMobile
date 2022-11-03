@@ -26,7 +26,7 @@ class AuthenticationScreen extends StatelessWidget {
                   key: _formKey,
                   child: Column(
                     children: [
-                      const CustomTitle(title: "Créer un compte"),
+                      const CustomTitle(title: "Se connecter"),
                       CustomFormField(
                           onChanged: (value) =>
                               model.checkEmailOrPseudo(value ?? ''),
