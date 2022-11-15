@@ -11,21 +11,14 @@ import 'package:nu3virtual/ui/main_screen/meal_tab/meal_dialog/meal_dialog.dart'
 _MealTabScreenState mealTabScreenState = _MealTabScreenState();
 
 class MealTabScreen extends StatefulWidget {
-  MealTabScreen({
-    super.key,
-    required this.date,
-    required this.handleOnPressedLeftButton,
-    required this.handleOnPressedMiddleButton,
-    required this.handleOnPressedRightButton,
-  });
+  MealTabScreen(
+      {super.key, required this.date, required this.handleOnPressedDateButton});
 
   @override
   _MealTabScreenState createState() => _MealTabScreenState();
 
   DateTime date;
-  final Function(num type) handleOnPressedLeftButton;
-  final Function() handleOnPressedMiddleButton;
-  final Function() handleOnPressedRightButton;
+  final Function(ChangeDateButtonTypeEnum type) handleOnPressedDateButton;
 }
 
 class _MealTabScreenState extends State<MealTabScreen> {
@@ -43,18 +36,18 @@ class _MealTabScreenState extends State<MealTabScreen> {
               widget.date = DateTime(
                   widget.date.year, widget.date.month, widget.date.day - 1);
             });
-            widget.handleOnPressedLeftButton(0);
+            widget.handleOnPressedDateButton(ChangeDateButtonTypeEnum.left);
           }), handleOnPressedMiddleButton: (() async {
             setState(() {
               widget.date = DateTime.now();
             });
-            widget.handleOnPressedMiddleButton();
+            widget.handleOnPressedDateButton(ChangeDateButtonTypeEnum.middle);
           }), handleOnPressedRightButton: (() async {
             setState(() {
               widget.date = DateTime(
                   widget.date.year, widget.date.month, widget.date.day + 1);
             });
-            widget.handleOnPressedRightButton();
+            widget.handleOnPressedDateButton(ChangeDateButtonTypeEnum.right);
           })),
           ListView.builder(
               scrollDirection: Axis.vertical,
@@ -157,3 +150,5 @@ class _MealTabScreenState extends State<MealTabScreen> {
     );
   }
 }
+
+enum ChangeDateButtonTypeEnum { left, middle, right }

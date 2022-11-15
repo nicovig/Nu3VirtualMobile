@@ -25,22 +25,23 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     final List<Widget> pages = <Widget>[
       MealTabScreen(
-          date: date,
-          handleOnPressedLeftButton: ((num type) async {
-            setState(() {
-              date = DateTime(date.year, date.month, date.day - 1);
-            });
-          }),
-          handleOnPressedMiddleButton: (() async {
-            setState(() {
-              date = DateTime.now();
-            });
-          }),
-          handleOnPressedRightButton: (() async {
-            setState(() {
-              date = DateTime(date.year, date.month, date.day + 1);
-            });
-          })),
+        date: date,
+        handleOnPressedDateButton: ((ChangeDateButtonTypeEnum type) async {
+          setState(() {
+            switch (type) {
+              case ChangeDateButtonTypeEnum.left:
+                date = DateTime(date.year, date.month, date.day - 1);
+                break;
+              case ChangeDateButtonTypeEnum.middle:
+                date = DateTime.now();
+                break;
+              case ChangeDateButtonTypeEnum.right:
+                date = DateTime(date.year, date.month, date.day + 1);
+                break;
+            }
+          });
+        }),
+      ),
       const Icon(Icons.sports_football_outlined),
       const Icon(Icons.accessibility_new_outlined)
     ];
