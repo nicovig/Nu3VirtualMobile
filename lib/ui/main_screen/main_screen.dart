@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:nu3virtual/layouts/screen_layouts/change_date_buttons.dart';
 import 'package:nu3virtual/ui/main_screen/meal_tab/meal_tab_screen.dart';
 import 'package:stacked/stacked.dart';
+import 'package:intl/intl.dart';
 
 import 'package:nu3virtual/ui/main_screen/main_screen_viewmodel.dart';
 
@@ -103,9 +104,8 @@ class _MainScreenState extends State<MainScreen> {
                     ))
               ]),
           body: Column(children: [
-            Text('Date sur main screen : ${date.toString()}'),
-            const Text(
-              "Date",
+            Text(
+              _getDateHeaderBanner(date),
               style: TextStyle(color: Colors.black),
             ),
             Container(
@@ -126,7 +126,7 @@ class _MainScreenState extends State<MainScreen> {
                 label: 'Repas',
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.sports_football_outlined),
+                icon: Icon(Icons.fitness_center),
                 label: 'Sport',
               ),
               BottomNavigationBarItem(
@@ -139,4 +139,21 @@ class _MainScreenState extends State<MainScreen> {
       ),
     );
   }
+}
+
+String _getDateHeaderBanner(DateTime date, context) {
+  return 'Semaine ${_getWeekNumber(date)} - ${DateFormat('EEEE d MMMM yyyy').format(date)}';
+}
+
+num _getWeekNumber(DateTime date) {
+  final startOfYear = DateTime(date.year, 1, 1, 0, 0);
+  final firstMonday = startOfYear.weekday;
+  final daysInFirstWeek = 8 - firstMonday;
+  final diff = date.difference(startOfYear);
+  var weeks = ((diff.inDays - daysInFirstWeek) / 7).ceil();
+// It might differ how you want to treat the first week
+  if (daysInFirstWeek > 3) {
+    weeks += 1;
+  }
+  return weeks;
 }

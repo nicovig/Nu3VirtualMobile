@@ -36,17 +36,20 @@ class _MealTabScreenState extends State<MealTabScreen> {
               widget.date = DateTime(
                   widget.date.year, widget.date.month, widget.date.day - 1);
             });
+            await model.getMeals(widget.date);
             widget.handleOnPressedDateButton(ChangeDateButtonTypeEnum.left);
           }), handleOnPressedMiddleButton: (() async {
             setState(() {
               widget.date = DateTime.now();
             });
+            await model.getMeals(widget.date);
             widget.handleOnPressedDateButton(ChangeDateButtonTypeEnum.middle);
           }), handleOnPressedRightButton: (() async {
             setState(() {
               widget.date = DateTime(
                   widget.date.year, widget.date.month, widget.date.day + 1);
             });
+            await model.getMeals(widget.date);
             widget.handleOnPressedDateButton(ChangeDateButtonTypeEnum.right);
           })),
           ListView.builder(
