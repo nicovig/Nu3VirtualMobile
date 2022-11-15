@@ -8,6 +8,8 @@ import 'package:intl/intl.dart';
 
 import 'package:nu3virtual/ui/main_screen/main_screen_viewmodel.dart';
 
+import 'disconnection_dialog/disconnection_dialog.dart';
+
 class MainScreen extends StatefulWidget {
   //constructor
   MainScreen({Key? key}) : super(key: key);
@@ -70,32 +72,10 @@ class _MainScreenState extends State<MainScreen> {
                     child: GestureDetector(
                       onTap: () {
                         showDialog(
-                          context: context,
-                          builder: (context) => SimpleDialog(
-                            contentPadding: const EdgeInsets.all(20),
-                            title: const Text('Déconnexion'),
-                            children: [
-                              const Text(
-                                  "Êtes vous sûr de vouloir vous déconnecter ?"),
-                              const SizedBox(height: 20),
-                              Row(
-                                children: [
-                                  const Spacer(),
-                                  ElevatedButton(
-                                      onPressed: (() =>
-                                          model.disconnect(context)),
-                                      child: const Text('Oui')),
-                                  const Spacer(),
-                                  ElevatedButton(
-                                      onPressed: (() =>
-                                          Navigator.pop(context, true)),
-                                      child: const Text('Non')),
-                                  const Spacer()
-                                ],
-                              )
-                            ],
-                          ),
-                        );
+                            context: context,
+                            builder: (context) => DisconnectionDialog(
+                                handleOnPressedDisconnectButton: () =>
+                                    {model.disconnect(context)}));
                       },
                       child: const Icon(
                         Icons.exit_to_app_sharp,
@@ -104,12 +84,50 @@ class _MainScreenState extends State<MainScreen> {
                     ))
               ]),
           body: Column(children: [
-            Text(
-              _getDateHeaderBanner(date),
-              style: TextStyle(color: Colors.black),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(10, 10, 10, 5),
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                height: 100.0,
+                decoration: BoxDecoration(
+                    color: Colors.blue.shade100,
+                    border: Border.all(
+                      color: Colors.blue.shade200,
+                      width: 0.8,
+                    ),
+                    borderRadius: BorderRadius.circular(10.0)),
+                child: Column(children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    child: Text(
+                      _getMonitoringDate(date),
+                      style: const TextStyle(fontSize: 18),
+                    ),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const [
+                      Text("Calories : 500", style: TextStyle(fontSize: 17)),
+                    ],
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(30, 10, 30, 5),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        Text("Glucides : 500", style: TextStyle(fontSize: 16)),
+                        Spacer(),
+                        Text("Lipides : 500", style: TextStyle(fontSize: 16)),
+                        Spacer(),
+                        Text("Protéines : 500", style: TextStyle(fontSize: 16)),
+                      ],
+                    ),
+                  ),
+                ]),
+              ),
             ),
             Container(
-              padding: const EdgeInsets.symmetric(vertical: 10),
+              //height: MediaQuery.of(context).size.height, <-- avoid error with no height define (needed when try to put the "add" button on bottom list)
               child: pages.elementAt(selectedIndex),
             ),
           ]),
@@ -141,7 +159,7 @@ class _MainScreenState extends State<MainScreen> {
   }
 }
 
-String _getDateHeaderBanner(DateTime date, context) {
+String _getMonitoringDate(DateTime date) {
   return 'Semaine ${_getWeekNumber(date)} - ${DateFormat('EEEE d MMMM yyyy').format(date)}';
 }
 

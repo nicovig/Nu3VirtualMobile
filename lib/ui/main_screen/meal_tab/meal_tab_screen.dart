@@ -147,7 +147,7 @@ class _MealTabScreenState extends State<MealTabScreen> {
                 );
               },
               child: const Text("Ajouter un repas",
-                  style: TextStyle(color: Colors.blue)))
+                  style: TextStyle(color: Colors.blue))),
         ],
       ),
     );
