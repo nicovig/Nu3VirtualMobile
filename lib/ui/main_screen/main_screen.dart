@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:nu3virtual/layouts/screen_layouts/change_date_buttons.dart';
 import 'package:nu3virtual/ui/main_screen/meal_tab/meal_tab_screen.dart';
@@ -22,7 +24,23 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     final List<Widget> pages = <Widget>[
-      MealTabScreen(date: date),
+      MealTabScreen(
+          date: date,
+          handleOnPressedLeftButton: ((num type) async {
+            setState(() {
+              date = DateTime(date.year, date.month, date.day - 1);
+            });
+          }),
+          handleOnPressedMiddleButton: (() async {
+            setState(() {
+              date = DateTime.now();
+            });
+          }),
+          handleOnPressedRightButton: (() async {
+            setState(() {
+              date = DateTime(date.year, date.month, date.day + 1);
+            });
+          })),
       const Icon(Icons.sports_football_outlined),
       const Icon(Icons.accessibility_new_outlined)
     ];
@@ -85,20 +103,6 @@ class _MainScreenState extends State<MainScreen> {
               ]),
           body: Column(children: [
             Text('Date sur main screen : ${date.toString()}'),
-            ChangeDateButtons(handleOnPressedLeftButton: (() async {
-              setState(() {
-                date = DateTime(date.year, date.month, date.day - 1);
-              });
-              mealTabScreenState.setState(() {});
-            }), handleOnPressedMiddleButton: (() async {
-              setState(() {
-                date = DateTime.now();
-              });
-            }), handleOnPressedRightButton: (() async {
-              setState(() {
-                date = DateTime(date.year, date.month, date.day + 1);
-              });
-            })),
             const Text(
               "Date",
               style: TextStyle(color: Colors.black),

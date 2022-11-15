@@ -11,21 +11,24 @@ import 'package:nu3virtual/ui/main_screen/meal_tab/meal_dialog/meal_dialog.dart'
 _MealTabScreenState mealTabScreenState = _MealTabScreenState();
 
 class MealTabScreen extends StatefulWidget {
-  const MealTabScreen({super.key, required this.date});
+  MealTabScreen({
+    super.key,
+    required this.date,
+    required this.handleOnPressedLeftButton,
+    required this.handleOnPressedMiddleButton,
+    required this.handleOnPressedRightButton,
+  });
 
   @override
-  // ignore: no_logic_in_create_state
-  _MealTabScreenState createState() {
-    mealTabScreenState = _MealTabScreenState();
-    return mealTabScreenState;
-  }
+  _MealTabScreenState createState() => _MealTabScreenState();
 
-  final DateTime date;
+  DateTime date;
+  final Function(num type) handleOnPressedLeftButton;
+  final Function() handleOnPressedMiddleButton;
+  final Function() handleOnPressedRightButton;
 }
 
 class _MealTabScreenState extends State<MealTabScreen> {
-  //DateTime date = DateTime.now();
-
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<MealTabViewModel>.reactive(
@@ -35,7 +38,24 @@ class _MealTabScreenState extends State<MealTabScreen> {
       },
       builder: (context, model, child) => Column(
         children: [
-          Text('Date sur meal tab : ${widget.date}'),
+          ChangeDateButtons(handleOnPressedLeftButton: (() async {
+            setState(() {
+              widget.date = DateTime(
+                  widget.date.year, widget.date.month, widget.date.day - 1);
+            });
+            widget.handleOnPressedLeftButton(0);
+          }), handleOnPressedMiddleButton: (() async {
+            setState(() {
+              widget.date = DateTime.now();
+            });
+            widget.handleOnPressedMiddleButton();
+          }), handleOnPressedRightButton: (() async {
+            setState(() {
+              widget.date = DateTime(
+                  widget.date.year, widget.date.month, widget.date.day + 1);
+            });
+            widget.handleOnPressedRightButton();
+          })),
           ListView.builder(
               scrollDirection: Axis.vertical,
               shrinkWrap: true,
