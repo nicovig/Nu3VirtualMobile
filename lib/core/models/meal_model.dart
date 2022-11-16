@@ -1,7 +1,5 @@
 import 'dart:convert';
 
-import 'package:nu3virtual/core/models/user_model.dart';
-
 class MealModel {
   int? id;
   String? name;
