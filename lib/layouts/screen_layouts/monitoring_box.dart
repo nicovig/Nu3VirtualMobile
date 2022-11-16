@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:nu3virtual/core/helpers/helpers.dart';
+import 'package:nu3virtual/core/models/monitoring_model.dart';
 
 class MonitoringBox extends StatelessWidget {
   MonitoringBox({
@@ -9,7 +10,7 @@ class MonitoringBox extends StatelessWidget {
     required this.monitoring,
   }) : super(key: key);
   final DateTime date;
-  final String monitoring;
+  final MonitoringModel monitoring;
 
   @override
   Widget build(BuildContext context) {
@@ -33,20 +34,24 @@ class MonitoringBox extends StatelessWidget {
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: const [
-            Text("Calories consommées : 500", style: TextStyle(fontSize: 17)),
+          children: [
+            Text("Calories consommées : ${monitoring.caloriesConsumed}",
+                style: const TextStyle(fontSize: 17)),
           ],
         ),
         Padding(
           padding: const EdgeInsets.fromLTRB(30, 10, 30, 5),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: const [
-              Text("Glucides : 500", style: TextStyle(fontSize: 16)),
-              Spacer(),
-              Text("Lipides : 500", style: TextStyle(fontSize: 16)),
-              Spacer(),
-              Text("Protéines : 500", style: TextStyle(fontSize: 16)),
+            children: [
+              Text("Glucides : ${monitoring.carbohydrate}",
+                  style: const TextStyle(fontSize: 16)),
+              const Spacer(),
+              Text("Lipides : ${monitoring.lipid}",
+                  style: const TextStyle(fontSize: 16)),
+              const Spacer(),
+              Text("Protéines : ${monitoring.protein}",
+                  style: const TextStyle(fontSize: 16)),
             ],
           ),
         ),

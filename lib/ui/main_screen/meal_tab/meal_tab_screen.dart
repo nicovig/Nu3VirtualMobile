@@ -29,7 +29,7 @@ class _MealTabScreenState extends State<MealTabScreen> {
     return ViewModelBuilder<MealTabViewModel>.reactive(
       viewModelBuilder: () => MealTabViewModel(),
       onModelReady: (model) {
-        model.loadData(widget.date);
+        model.initData();
       },
       builder: (context, model, child) => Column(
         children: [
@@ -41,25 +41,26 @@ class _MealTabScreenState extends State<MealTabScreen> {
               widget.date = DateTime(
                   widget.date.year, widget.date.month, widget.date.day - 1);
             });
-            await model.getMeals(widget.date);
+            await model.loadData(widget.date);
             widget.handleOnPressedDateButton(ChangeDateButtonTypeEnum.left);
           }), handleOnPressedMiddleButton: (() async {
             setState(() {
               widget.date = DateTime.now();
             });
-            await model.getMeals(widget.date);
+            await model.loadData(widget.date);
             widget.handleOnPressedDateButton(ChangeDateButtonTypeEnum.middle);
           }), handleOnPressedRightButton: (() async {
             setState(() {
               widget.date = DateTime(
                   widget.date.year, widget.date.month, widget.date.day + 1);
             });
-            await model.getMeals(widget.date);
+            await model.loadData(widget.date);
             widget.handleOnPressedDateButton(ChangeDateButtonTypeEnum.right);
           })),
           Padding(
               padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
-              child: MonitoringBox(date: widget.date, monitoring: '')),
+              child: MonitoringBox(
+                  date: widget.date, monitoring: model.monitoringDisplayed)),
           ListView.builder(
               scrollDirection: Axis.vertical,
               shrinkWrap: true,
@@ -89,7 +90,7 @@ class _MealTabScreenState extends State<MealTabScreen> {
                                           onPressed: () async {
                                             await model.deleteMeal(
                                                 meal.id ?? 0, context);
-                                            await model.getMeals(widget.date);
+                                            await model.loadData(widget.date);
                                           },
                                           child: const Text("Oui")),
                                       ElevatedButton(
@@ -122,7 +123,7 @@ class _MealTabScreenState extends State<MealTabScreen> {
                                           (mealUpdated, dialogContext) async {
                                         await model.updateMeal(
                                             mealUpdated, dialogContext);
-                                        await model.getMeals(widget.date);
+                                        await model.loadData(widget.date);
                                       });
                                 });
                           },
@@ -149,7 +150,7 @@ class _MealTabScreenState extends State<MealTabScreen> {
                       MealDialog(handleValidation: (meal, dialogContext) async {
                     meal.userId = model.userId;
                     await model.addMeal(meal, dialogContext);
-                    await model.getMeals(widget.date);
+                    await model.loadData(widget.date);
                     setState(() {});
                   }),
                 );

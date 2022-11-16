@@ -1,24 +1,27 @@
 import 'package:flutter/widgets.dart';
 
 import 'package:nu3virtual/core/models/meal_model.dart';
+import 'package:nu3virtual/core/models/monitoring_model.dart';
 import 'package:nu3virtual/core/models/user_model.dart';
 import 'package:nu3virtual/core/services/meal/meal_service.dart';
+import 'package:nu3virtual/core/services/monitoring/monitoring_service.dart';
 import 'package:nu3virtual/core/services/user/user_service_class.dart';
 import 'package:nu3virtual/service_locator.dart';
 
 class MealTabViewModel extends ChangeNotifier {
   final MealService _mealService = getIt<MealService>();
+  final MonitoringService _monitoringService = getIt<MonitoringService>();
   final UserStore _userStore = getIt<UserStore>();
 
   List<MealModel> meals = [];
   List<MealModel> mealsDisplayed = [];
+  MonitoringModel monitoringDisplayed = MonitoringModel();
   int? userId = 0;
 
-  Future loadData(DateTime date) async {
+  Future initData() async {
     UserModel user = await _userStore.getCurrentUser();
     userId = user.id ?? 0;
-    await getMeals(DateTime.now());
-
+    await loadData(DateTime.now());
     notifyListeners();
   }
 
@@ -34,15 +37,27 @@ class MealTabViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future getMeals(DateTime date) async {
-    meals = await _mealService.getAllMealsByUserIdAndDate(userId, date);
-    mealsDisplayed = meals;
+  Future loadData(DateTime date) async {
+    await _getMeals(date);
+    await _getMonitoring(date);
     notifyListeners();
   }
 
   Future updateMeal(MealModel meal, BuildContext dialogContext) async {
     bool isUpdateOk = await _mealService.updateMeal(meal);
     Navigator.pop(dialogContext, isUpdateOk);
+    notifyListeners();
+  }
+
+  Future _getMeals(DateTime date) async {
+    meals = await _mealService.getAllMealsByUserIdAndDate(userId, date);
+    mealsDisplayed = meals;
+    notifyListeners();
+  }
+
+  Future _getMonitoring(DateTime date) async {
+    monitoringDisplayed =
+        await _monitoringService.getMonitoringByUserIdAndDate(userId, date);
     notifyListeners();
   }
 }
