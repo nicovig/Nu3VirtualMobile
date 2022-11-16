@@ -4,12 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:stacked/stacked.dart';
 
+import 'package:nu3virtual/core/helpers/helpers.dart';
 import 'package:nu3virtual/layouts/screen_layouts/change_date_buttons.dart';
 import 'package:nu3virtual/ui/main_screen/meal_tab/meal_tab_viewmodel.dart';
 import 'package:nu3virtual/ui/main_screen/meal_tab/meal_dialog/meal_dialog.dart';
 
 _MealTabScreenState mealTabScreenState = _MealTabScreenState();
 
+// ignore: must_be_immutable
 class MealTabScreen extends StatefulWidget {
   MealTabScreen(
       {super.key, required this.date, required this.handleOnPressedDateButton});
@@ -31,6 +33,9 @@ class _MealTabScreenState extends State<MealTabScreen> {
       },
       builder: (context, model, child) => Column(
         children: [
+          const Padding(
+            padding: EdgeInsets.fromLTRB(10, 0, 10, 5),
+          ),
           ChangeDateButtons(handleOnPressedLeftButton: (() async {
             setState(() {
               widget.date = DateTime(
@@ -52,6 +57,49 @@ class _MealTabScreenState extends State<MealTabScreen> {
             await model.getMeals(widget.date);
             widget.handleOnPressedDateButton(ChangeDateButtonTypeEnum.right);
           })),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
+            child: Container(
+              width: MediaQuery.of(context).size.width,
+              height: 100.0,
+              decoration: BoxDecoration(
+                  color: Colors.blue.shade100,
+                  border: Border.all(
+                    color: Colors.blue.shade200,
+                    width: 0.8,
+                  ),
+                  borderRadius: BorderRadius.circular(10.0)),
+              child: Column(children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 10),
+                  child: Text(
+                    getMonitoringDate(widget.date),
+                    style: const TextStyle(fontSize: 18),
+                  ),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: const [
+                    Text("Calories consommées : 500",
+                        style: TextStyle(fontSize: 17)),
+                  ],
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(30, 10, 30, 5),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const [
+                      Text("Glucides : 500", style: TextStyle(fontSize: 16)),
+                      Spacer(),
+                      Text("Lipides : 500", style: TextStyle(fontSize: 16)),
+                      Spacer(),
+                      Text("Protéines : 500", style: TextStyle(fontSize: 16)),
+                    ],
+                  ),
+                ),
+              ]),
+            ),
+          ),
           ListView.builder(
               scrollDirection: Axis.vertical,
               shrinkWrap: true,

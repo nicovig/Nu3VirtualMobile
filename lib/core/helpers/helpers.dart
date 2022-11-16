@@ -1,29 +1,19 @@
-String toIso8601String(
-    {year,
-    month,
-    day,
-    hour,
-    minute,
-    second,
-    millisecond,
-    microsecond,
-    twoDigits,
-    threeDigits,
-    fourDigits,
-    sixDigits,
-    isUtc}) {
-  String y =
-      (year >= -9999 && year <= 9999) ? fourDigits(year) : sixDigits(year);
-  String m = twoDigits(month);
-  String d = twoDigits(day);
-  String h = twoDigits(hour);
-  String min = twoDigits(minute);
-  String sec = twoDigits(second);
-  String ms = threeDigits(millisecond);
-  String us = microsecond == 0 ? "" : threeDigits(microsecond);
-  if (isUtc) {
-    return "$y-$m-${d}T$h:$min:$sec.$ms${us}Z";
-  } else {
-    return "$y-$m-${d}T$h:$min:$sec.$ms$us";
+// ignore: depend_on_referenced_packages
+import 'package:intl/intl.dart';
+
+String getMonitoringDate(DateTime date) {
+  return 'Semaine ${_getWeekNumber(date)} - ${DateFormat('EEEE d MMMM yyyy').format(date)}';
+}
+
+num _getWeekNumber(DateTime date) {
+  final startOfYear = DateTime(date.year, 1, 1, 0, 0);
+  final firstMonday = startOfYear.weekday;
+  final daysInFirstWeek = 8 - firstMonday;
+  final diff = date.difference(startOfYear);
+  var weeks = ((diff.inDays - daysInFirstWeek) / 7).ceil();
+// It might differ how you want to treat the first week
+  if (daysInFirstWeek > 3) {
+    weeks += 1;
   }
+  return weeks;
 }

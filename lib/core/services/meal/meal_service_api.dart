@@ -33,8 +33,8 @@ class MealServiceApi extends MealService {
       int? userId, DateTime date) async {
     Map<String, String> headers = {
       "Content-Type": "application/json",
-      "userId": "${userId.toString()}",
-      "date": "${date.toIso8601String()}"
+      "userId": userId.toString(),
+      "date": date.toIso8601String()
     };
 
     var response = await http.get(

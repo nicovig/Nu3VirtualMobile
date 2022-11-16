@@ -16,6 +16,7 @@ class MainScreenViewModel extends ChangeNotifier {
 
   void disconnect(BuildContext context) async {
     await _userStore.deleteCurrentUser();
+    // ignore: use_build_context_synchronously
     Navigator.of(context).pushNamedAndRemoveUntil('/', (route) => false);
   }
 }
