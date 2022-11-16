@@ -2,39 +2,39 @@ import 'dart:convert';
 
 class WorkoutModel {
   int? id;
-  String? label;
+  String? name;
   DateTime? date;
   int? timeInSeconds;
-  int? caloriesConsumed;
+  int? caloriesBurned;
   int? userId;
 
   WorkoutModel(
       {this.id,
-      this.label,
+      this.name,
       this.date,
       this.timeInSeconds,
-      this.caloriesConsumed,
+      this.caloriesBurned,
       this.userId});
 
   factory WorkoutModel.fromJson(Map<String, dynamic> parsedJson) {
     return WorkoutModel(
         id: parsedJson['id'] ?? 0,
-        label: parsedJson['label'] ?? "",
+        name: parsedJson['name'] ?? "",
         date: parsedJson['date'] != null
             ? DateTime.parse(parsedJson['date'])
             : null,
         timeInSeconds: parsedJson['timeInSeconds'] ?? "",
-        caloriesConsumed: parsedJson['caloriesConsumed'] ?? "",
+        caloriesBurned: parsedJson['caloriesBurned'] ?? "",
         userId: parsedJson['userId'] ?? 0);
   }
 
   String toJson() {
     return jsonEncode({
       'id': id,
-      'name': label,
+      'name': name,
       'date': date?.toIso8601String(),
       'timeInSeconds': timeInSeconds,
-      'caloriesConsumed': caloriesConsumed,
+      'caloriesBurned': caloriesBurned,
       'userId': userId
     });
   }
