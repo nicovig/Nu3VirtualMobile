@@ -54,3 +54,5 @@ class ChangeDateButtons extends StatelessWidget {
     );
   }
 }
+
+enum ChangeDateButtonTypeEnum { left, middle, right }

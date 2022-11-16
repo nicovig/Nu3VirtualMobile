@@ -62,7 +62,11 @@ class _WorkoutDialogState extends State<WorkoutDialog> {
               handleOnSaved: (value) {
                 if (value != null) date = value;
               }),
-          const Text('Durée'),
+          const SizedBox(
+            width: 60,
+            height: 60,
+            child: Text('Durée'),
+          ),
           Row(
             children: [
               CustomFormField(

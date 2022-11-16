@@ -9,8 +9,6 @@ import 'package:nu3virtual/layouts/screen_layouts/change_date_buttons.dart';
 import 'package:nu3virtual/ui/main_screen/meal_tab/meal_tab_viewmodel.dart';
 import 'package:nu3virtual/ui/main_screen/meal_tab/meal_dialog/meal_dialog.dart';
 
-_MealTabScreenState mealTabScreenState = _MealTabScreenState();
-
 // ignore: must_be_immutable
 class MealTabScreen extends StatefulWidget {
   MealTabScreen(
@@ -162,5 +160,3 @@ class _MealTabScreenState extends State<MealTabScreen> {
     );
   }
 }
-
-enum ChangeDateButtonTypeEnum { left, middle, right }

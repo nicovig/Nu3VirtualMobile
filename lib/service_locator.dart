@@ -10,6 +10,8 @@ import 'package:nu3virtual/core/services/monitoring/monitoring_service_api.dart'
 import 'package:nu3virtual/core/services/user/user_service_api.dart';
 import 'package:nu3virtual/core/services/user/user_service_class.dart';
 import 'package:nu3virtual/core/services/user/user_service_store.dart';
+import 'package:nu3virtual/core/services/workout/workout_service.dart';
+import 'package:nu3virtual/core/services/workout/workout_service_api.dart';
 
 final getIt = GetIt.instance;
 
@@ -26,4 +28,5 @@ setupServiceLocator() {
   getIt.registerLazySingleton<MonitoringService>(() => MonitoringServiceApi());
   getIt.registerLazySingleton<UserService>(() => UserServiceApi());
   getIt.registerLazySingleton<UserStore>(() => UserServiceStore());
+  getIt.registerLazySingleton<WorkoutService>(() => WorkoutServiceApi());
 }

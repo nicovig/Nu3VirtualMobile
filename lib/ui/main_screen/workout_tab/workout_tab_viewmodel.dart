@@ -1,20 +1,20 @@
 import 'package:flutter/widgets.dart';
 
-import 'package:nu3virtual/core/models/meal_model.dart';
 import 'package:nu3virtual/core/models/monitoring_model.dart';
 import 'package:nu3virtual/core/models/user_model.dart';
-import 'package:nu3virtual/core/services/meal/meal_service.dart';
+import 'package:nu3virtual/core/models/workout_model.dart';
 import 'package:nu3virtual/core/services/monitoring/monitoring_service.dart';
 import 'package:nu3virtual/core/services/user/user_service_class.dart';
+import 'package:nu3virtual/core/services/workout/workout_service.dart';
 import 'package:nu3virtual/service_locator.dart';
 
-class MealTabViewModel extends ChangeNotifier {
-  final MealService _mealService = getIt<MealService>();
+class WorkoutTabViewModel extends ChangeNotifier {
   final MonitoringService _monitoringService = getIt<MonitoringService>();
   final UserStore _userStore = getIt<UserStore>();
+  final WorkoutService _workoutService = getIt<WorkoutService>();
 
-  List<MealModel> meals = [];
-  List<MealModel> mealsDisplayed = [];
+  List<WorkoutModel> workouts = [];
+  List<WorkoutModel> workoutsDisplayed = [];
   MonitoringModel monitoringDisplayed = MonitoringModel();
   int? userId = 0;
 
@@ -25,39 +25,40 @@ class MealTabViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future addMeal(MealModel meal, BuildContext dialogContext) async {
-    bool isCreateOk = await _mealService.createMeal(meal);
+  Future addWorkout(WorkoutModel workout, BuildContext dialogContext) async {
+    bool isCreateOk = await _workoutService.createWorkout(workout);
     Navigator.pop(dialogContext, isCreateOk);
     notifyListeners();
   }
 
-  Future deleteMeal(int mealId, BuildContext dialogContext) async {
-    bool isDeleteOk = await _mealService.deleteMeal(mealId);
+  Future deleteWorkout(int workoutId, BuildContext dialogContext) async {
+    bool isDeleteOk = await _workoutService.deleteWorkout(workoutId);
     Navigator.of(dialogContext).pop(isDeleteOk);
     notifyListeners();
   }
 
   Future loadData(DateTime date) async {
-    await _getMeals(date);
+    await _getWorkouts(date);
     await _getMonitoring(date);
     notifyListeners();
   }
 
-  Future updateMeal(MealModel meal, BuildContext dialogContext) async {
-    bool isUpdateOk = await _mealService.updateMeal(meal);
+  Future updateWorkout(WorkoutModel workout, BuildContext dialogContext) async {
+    bool isUpdateOk = await _workoutService.updateWorkout(workout);
     Navigator.pop(dialogContext, isUpdateOk);
-    notifyListeners();
-  }
-
-  Future _getMeals(DateTime date) async {
-    meals = await _mealService.getAllMealsByUserIdAndDate(userId, date);
-    mealsDisplayed = meals;
     notifyListeners();
   }
 
   Future _getMonitoring(DateTime date) async {
     monitoringDisplayed =
         await _monitoringService.getMonitoringByUserIdAndDate(userId, date);
+    notifyListeners();
+  }
+
+  Future _getWorkouts(DateTime date) async {
+    workouts =
+        await _workoutService.getAllWorkoutsByUserIdAndDate(userId, date);
+    workoutsDisplayed = workouts;
     notifyListeners();
   }
 }

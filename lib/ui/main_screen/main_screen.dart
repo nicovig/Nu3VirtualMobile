@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:nu3virtual/layouts/screen_layouts/change_date_buttons.dart';
 import 'package:nu3virtual/ui/main_screen/meal_tab/meal_tab_screen.dart';
+import 'package:nu3virtual/ui/main_screen/workout_tab/workout_tab_screen.dart';
 import 'package:stacked/stacked.dart';
 
 import 'package:nu3virtual/ui/main_screen/main_screen_viewmodel.dart';
@@ -41,7 +43,24 @@ class _MainScreenState extends State<MainScreen> {
           });
         }),
       ),
-      const Icon(Icons.sports_football_outlined),
+      WorkoutTabScreen(
+        date: date,
+        handleOnPressedDateButton: ((ChangeDateButtonTypeEnum type) async {
+          setState(() {
+            switch (type) {
+              case ChangeDateButtonTypeEnum.left:
+                date = DateTime(date.year, date.month, date.day - 1);
+                break;
+              case ChangeDateButtonTypeEnum.middle:
+                date = DateTime.now();
+                break;
+              case ChangeDateButtonTypeEnum.right:
+                date = DateTime(date.year, date.month, date.day + 1);
+                break;
+            }
+          });
+        }),
+      ),
       const Icon(Icons.accessibility_new_outlined)
     ];
 

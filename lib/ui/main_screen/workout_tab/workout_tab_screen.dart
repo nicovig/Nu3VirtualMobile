@@ -3,31 +3,29 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:nu3virtual/layouts/screen_layouts/monitoring_box.dart';
+import 'package:nu3virtual/ui/main_screen/workout_tab/workout_dialog/workout_dialog.dart';
+import 'package:nu3virtual/ui/main_screen/workout_tab/workout_tab_viewmodel.dart';
 import 'package:stacked/stacked.dart';
 
 import 'package:nu3virtual/layouts/screen_layouts/change_date_buttons.dart';
-import 'package:nu3virtual/ui/main_screen/meal_tab/meal_tab_viewmodel.dart';
-import 'package:nu3virtual/ui/main_screen/meal_tab/meal_dialog/meal_dialog.dart';
-
-_MealTabScreenState mealTabScreenState = _MealTabScreenState();
 
 // ignore: must_be_immutable
-class MealTabScreen extends StatefulWidget {
-  MealTabScreen(
+class WorkoutTabScreen extends StatefulWidget {
+  WorkoutTabScreen(
       {super.key, required this.date, required this.handleOnPressedDateButton});
 
   @override
-  _MealTabScreenState createState() => _MealTabScreenState();
+  _WorkoutTabScreenState createState() => _WorkoutTabScreenState();
 
   DateTime date;
   final Function(ChangeDateButtonTypeEnum type) handleOnPressedDateButton;
 }
 
-class _MealTabScreenState extends State<MealTabScreen> {
+class _WorkoutTabScreenState extends State<WorkoutTabScreen> {
   @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder<MealTabViewModel>.reactive(
-      viewModelBuilder: () => MealTabViewModel(),
+    return ViewModelBuilder<WorkoutTabViewModel>.reactive(
+      viewModelBuilder: () => WorkoutTabViewModel(),
       onModelReady: (model) {
         model.initData();
       },
@@ -64,13 +62,12 @@ class _MealTabScreenState extends State<MealTabScreen> {
           ListView.builder(
               scrollDirection: Axis.vertical,
               shrinkWrap: true,
-              itemCount: model.mealsDisplayed.length,
+              itemCount: model.workoutsDisplayed.length,
               itemBuilder: (context, index) {
-                final meal = model.mealsDisplayed[index];
-                var subtitle =
-                    'P: ${meal.protein} G: ${meal.carbohydrate} C: ${meal.calorie}';
+                final workout = model.workoutsDisplayed[index];
+                var subtitle = workout.name ?? '';
                 return Slidable(
-                    key: Key('meal-index-$index'),
+                    key: Key('workout-index-$index'),
                     // The start action pane is the one at the left or the top side.
                     startActionPane: ActionPane(
                       // A motion is a widget used to control how the pane animates.
@@ -84,12 +81,12 @@ class _MealTabScreenState extends State<MealTabScreen> {
                                   return AlertDialog(
                                     title: const Text("Supprimer"),
                                     content: Text(
-                                        'Êtes vous sûr de vouloir supprimer le repas "${meal.name}"'),
+                                        'Êtes vous sûr de vouloir supprimer la séance "${workout.name}"'),
                                     actions: <Widget>[
                                       ElevatedButton(
                                           onPressed: () async {
-                                            await model.deleteMeal(
-                                                meal.id ?? 0, context);
+                                            await model.deleteWorkout(
+                                                workout.id ?? 0, context);
                                             await model.loadData(widget.date);
                                           },
                                           child: const Text("Oui")),
@@ -117,12 +114,12 @@ class _MealTabScreenState extends State<MealTabScreen> {
                             showDialog(
                                 context: context,
                                 builder: (BuildContext context) {
-                                  return MealDialog(
-                                      mealToUpdate: meal,
-                                      handleValidation:
-                                          (mealUpdated, dialogContext) async {
-                                        await model.updateMeal(
-                                            mealUpdated, dialogContext);
+                                  return WorkoutDialog(
+                                      workoutToUpdate: workout,
+                                      handleValidation: (workoutUpdated,
+                                          dialogContext) async {
+                                        await model.updateWorkout(
+                                            workoutUpdated, dialogContext);
                                         await model.loadData(widget.date);
                                       });
                                 });
@@ -135,7 +132,7 @@ class _MealTabScreenState extends State<MealTabScreen> {
                       ],
                     ),
                     child: ListTile(
-                      title: Text(meal.name ?? ''),
+                      title: Text(workout.name ?? ''),
                       subtitle: Text(subtitle),
                     ));
               }),
@@ -146,21 +143,19 @@ class _MealTabScreenState extends State<MealTabScreen> {
               onPressed: () {
                 showDialog(
                   context: context,
-                  builder: (context) =>
-                      MealDialog(handleValidation: (meal, dialogContext) async {
-                    meal.userId = model.userId;
-                    await model.addMeal(meal, dialogContext);
+                  builder: (context) => WorkoutDialog(
+                      handleValidation: (workout, dialogContext) async {
+                    workout.userId = model.userId;
+                    await model.addWorkout(workout, dialogContext);
                     await model.loadData(widget.date);
                     setState(() {});
                   }),
                 );
               },
-              child: const Text("Ajouter un repas",
+              child: const Text("Ajouter une séance",
                   style: TextStyle(color: Colors.blue))),
         ],
       ),
     );
   }
 }
-
-enum ChangeDateButtonTypeEnum { left, middle, right }
