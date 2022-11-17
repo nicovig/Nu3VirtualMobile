@@ -32,7 +32,10 @@ class _WorkoutDialogState extends State<WorkoutDialog> {
       name = workoutToUpdate.name ?? '';
       date = workoutToUpdate.date ?? DateTime.now();
       minutes = Duration(seconds: workoutToUpdate.timeInSeconds ?? 0).inMinutes;
-      seconds = workoutToUpdate.timeInSeconds ?? 0 % 60;
+      seconds = workoutToUpdate.timeInSeconds != null &&
+              workoutToUpdate.timeInSeconds != 0
+          ? _getWorkoutSeconds(workoutToUpdate.timeInSeconds)
+          : 0;
       caloriesBurned = workoutToUpdate.caloriesBurned ?? 0;
     }
     super.initState();
@@ -70,6 +73,7 @@ class _WorkoutDialogState extends State<WorkoutDialog> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Expanded(
+                flex: 2,
                 child: CustomFormField(
                   hintText: 'Minutes',
                   initialValue:
@@ -85,7 +89,9 @@ class _WorkoutDialogState extends State<WorkoutDialog> {
                   keyboardType: TextInputType.number,
                 ),
               ),
+              const Expanded(child: Text('min')),
               Expanded(
+                flex: 2,
                 child: CustomFormField(
                   hintText: 'Secondes',
                   initialValue:
@@ -101,6 +107,7 @@ class _WorkoutDialogState extends State<WorkoutDialog> {
                   keyboardType: TextInputType.number,
                 ),
               ),
+              const Expanded(child: Text('sec'))
             ],
           ),
           CustomFormField(
@@ -137,4 +144,8 @@ class _WorkoutDialogState extends State<WorkoutDialog> {
           ),
         ]);
   }
+}
+
+int _getWorkoutSeconds(timeInSeconds) {
+  return timeInSeconds % 60;
 }
