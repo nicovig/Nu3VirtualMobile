@@ -62,48 +62,53 @@ class _WorkoutDialogState extends State<WorkoutDialog> {
               handleOnSaved: (value) {
                 if (value != null) date = value;
               }),
-          const SizedBox(
-            width: 60,
-            height: 60,
-            child: Text('Durée'),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: const [Text('Durée')],
           ),
           Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              CustomFormField(
-                hintText: 'Minutes',
-                initialValue:
-                    minutes.toString() != '0' ? minutes.toString() : '',
-                onChanged: (value) {
-                  if (value != null) minutes = int.parse(value);
-                },
-                inputFormatters: [
-                  FilteringTextInputFormatter.allow(
-                    RegExp(r"[0-9\.-]"),
-                  )
-                ],
-                keyboardType: TextInputType.number,
+              Expanded(
+                child: CustomFormField(
+                  hintText: 'Minutes',
+                  initialValue:
+                      minutes.toString() != '0' ? minutes.toString() : '',
+                  onChanged: (value) {
+                    if (value != null) minutes = int.parse(value);
+                  },
+                  inputFormatters: [
+                    FilteringTextInputFormatter.allow(
+                      RegExp(r"[0-9\.-]"),
+                    )
+                  ],
+                  keyboardType: TextInputType.number,
+                ),
               ),
-              CustomFormField(
-                hintText: 'Secondes',
-                initialValue:
-                    seconds.toString() != '0' ? seconds.toString() : '',
-                onChanged: (value) {
-                  if (value != null) seconds = int.parse(value);
-                },
-                inputFormatters: [
-                  FilteringTextInputFormatter.allow(
-                    RegExp(r"[0-9\.-]"),
-                  )
-                ],
-                keyboardType: TextInputType.number,
+              Expanded(
+                child: CustomFormField(
+                  hintText: 'Secondes',
+                  initialValue:
+                      seconds.toString() != '0' ? seconds.toString() : '',
+                  onChanged: (value) {
+                    if (value != null) seconds = int.parse(value);
+                  },
+                  inputFormatters: [
+                    FilteringTextInputFormatter.allow(
+                      RegExp(r"[0-9\.-]"),
+                    )
+                  ],
+                  keyboardType: TextInputType.number,
+                ),
               ),
             ],
           ),
           CustomFormField(
             hintText: 'Calories ',
-            initialValue: caloriesBurned.toString() != '0'
-                ? caloriesBurned.toString()
-                : '',
+            initialValue:
+                caloriesBurned.toString() != '0' && caloriesBurned != null
+                    ? caloriesBurned.toString()
+                    : '',
             onChanged: (value) {
               if (value != null) caloriesBurned = int.parse(value);
             },
