@@ -1,6 +1,7 @@
 // ignore_for_file: library_private_types_in_public_api
 
 import 'package:flutter/material.dart';
+import 'package:graphic/graphic.dart';
 import 'package:stacked/stacked.dart';
 
 import 'package:nu3virtual/layouts/screen_layouts/change_date_buttons.dart';
@@ -52,6 +53,32 @@ class _InformationsTabScreenState extends State<InformationsTabScreen> {
             await model.loadData(widget.date);
             widget.handleOnPressedDateButton(ChangeDateButtonTypeEnum.right);
           })),
+          Container(
+            height: 100,
+            width: 100,
+            child: Chart(
+              data: const [
+                {'genre': 'Sports', 'sold': 275},
+                {'genre': 'Strategy', 'sold': 115},
+                {'genre': 'Action', 'sold': 120},
+                {'genre': 'Shooter', 'sold': 350},
+                {'genre': 'Other', 'sold': 150},
+              ],
+              variables: {
+                'genre': Variable(
+                  accessor: (Map map) => map['genre'] as String,
+                ),
+                'sold': Variable(
+                  accessor: (Map map) => map['sold'] as num,
+                ),
+              },
+              elements: [IntervalElement()],
+              axes: [
+                Defaults.horizontalAxis,
+                Defaults.verticalAxis,
+              ],
+            ),
+          )
         ],
       ),
     );
