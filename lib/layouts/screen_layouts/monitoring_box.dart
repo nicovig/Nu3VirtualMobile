@@ -28,14 +28,14 @@ class MonitoringBox extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 10),
           child: Text(
-            getMonitoringDate(date),
+            getMonitoringDate(date, context),
             style: const TextStyle(fontSize: 18),
           ),
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text("Calories consommées : ${monitoring.caloriesConsumed}",
+            Text("Calories consommées : ${monitoring.caloriesConsumed ?? 0}",
                 style: const TextStyle(fontSize: 17)),
           ],
         ),
@@ -44,13 +44,13 @@ class MonitoringBox extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text("Glucides : ${monitoring.carbohydrate}",
+              Text("Glucides : ${monitoring.carbohydrate ?? 0}",
                   style: const TextStyle(fontSize: 16)),
               const Spacer(),
-              Text("Lipides : ${monitoring.lipid}",
+              Text("Lipides : ${monitoring.lipid ?? 0}",
                   style: const TextStyle(fontSize: 16)),
               const Spacer(),
-              Text("Protéines : ${monitoring.protein}",
+              Text("Protéines : ${monitoring.protein ?? 0}",
                   style: const TextStyle(fontSize: 16)),
             ],
           ),

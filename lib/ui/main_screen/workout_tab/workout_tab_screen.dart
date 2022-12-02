@@ -2,12 +2,12 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:nu3virtual/layouts/screen_layouts/monitoring_box.dart';
-import 'package:nu3virtual/ui/main_screen/workout_tab/workout_dialog/workout_dialog.dart';
-import 'package:nu3virtual/ui/main_screen/workout_tab/workout_tab_viewmodel.dart';
 import 'package:stacked/stacked.dart';
 
 import 'package:nu3virtual/layouts/screen_layouts/change_date_buttons.dart';
+import 'package:nu3virtual/layouts/screen_layouts/monitoring_box.dart';
+import 'package:nu3virtual/ui/main_screen/workout_tab/workout_dialog/workout_dialog.dart';
+import 'package:nu3virtual/ui/main_screen/workout_tab/workout_tab_viewmodel.dart';
 
 // ignore: must_be_immutable
 class WorkoutTabScreen extends StatefulWidget {

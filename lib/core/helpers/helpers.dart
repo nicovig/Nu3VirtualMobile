@@ -1,8 +1,10 @@
 // ignore: depend_on_referenced_packages
+import 'dart:ui';
+
 import 'package:intl/intl.dart';
 
-String getMonitoringDate(DateTime date) {
-  return 'Semaine ${_getWeekNumber(date)} - ${DateFormat('EEEE d MMMM yyyy').format(date)}';
+String getMonitoringDate(DateTime date, context) {
+  return 'Semaine ${_getWeekNumber(date)} - ${DateFormat('EEEE d MMMM yyyy').format(date)}'; //mecredi 30 novembre 2022
 }
 
 num _getWeekNumber(DateTime date) {
