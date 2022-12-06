@@ -22,3 +22,15 @@ class TokenModelResponse {
     return '{"user": {}, "token": ""}';
   }
 }
+
+class AuthenticationResponse {
+  bool isAuthenticationOk;
+  String error;
+
+  AuthenticationResponse(
+      {required this.isAuthenticationOk, required this.error});
+
+  String invalidCredentialsResponse() {
+    return 'Invalid credentials';
+  }
+}

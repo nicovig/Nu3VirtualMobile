@@ -20,11 +20,19 @@ class AuthenticationServiceApi extends AuthenticationService {
   static Uri url = Uri.https(hostedDeviceLocalhost + apiUrl, controllerName);
 
   @override
-  Future<bool> login(String login, String password) async {
+  Future<AuthenticationResponse> login(String login, String password) async {
     var response = await http.post(url,
         headers: headers, body: '{"login": "$login", "password": "$password"}');
-    _saveAuthenticationResponse(response.body);
-    return response.statusCode == 200 || response.statusCode == 204;
+    try {
+      _saveAuthenticationResponse(response.body);
+      return AuthenticationResponse(
+          isAuthenticationOk:
+              response.statusCode == 200 || response.statusCode == 204,
+          error: '');
+    } catch (e) {
+      return AuthenticationResponse(
+          isAuthenticationOk: false, error: response.body);
+    }
   }
 
   _saveAuthenticationResponse(String tokenModelString) {

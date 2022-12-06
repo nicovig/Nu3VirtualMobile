@@ -43,9 +43,13 @@ class AuthenticationScreen extends StatelessWidget {
                       SizedBox(
                         width: MediaQuery.of(context).size.width * 0.9,
                         child: ElevatedButton(
-                          onPressed: () {
+                          onPressed: () async {
                             if (_formKey.currentState!.validate()) {
-                              model.connect(context);
+                              var message = await model.connect(context);
+                              if (message != '') {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(content: Text(message)));
+                              }
                             }
                           },
                           child: const Text('Se connecter'),
