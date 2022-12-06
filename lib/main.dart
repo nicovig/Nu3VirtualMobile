@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 import 'package:nu3virtual/service_locator.dart';
 import 'package:nu3virtual/ui/authentication_screen/authentication_screen.dart';
@@ -14,7 +15,6 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -24,7 +24,8 @@ class MyApp extends StatelessWidget {
         home: AuthenticationScreen(title: 'NuVirtual'),
         routes: {'/home': (context) => MainScreen()},
         color: Colors.white,
-        debugShowCheckedModeBanner: false);
+        debugShowCheckedModeBanner: false,
+        builder: EasyLoading.init());
   }
 }
 
@@ -32,8 +33,20 @@ class MyApp extends StatelessWidget {
 class MyHttpOverrides extends HttpOverrides {
   @override
   HttpClient createHttpClient(SecurityContext? context) {
+    //configEasyLoading();
     return super.createHttpClient(context)
       ..badCertificateCallback =
           (X509Certificate cert, String host, int port) => true;
   }
+}
+
+void configEasyLoading() {
+  EasyLoading.instance
+    ..indicatorType = EasyLoadingIndicatorType.threeBounce
+    ..progressColor = Colors.white
+    ..boxShadow = <BoxShadow>[] // removes black background
+    ..loadingStyle = EasyLoadingStyle.light
+    ..textColor = Colors.black
+    ..indicatorColor = Colors.blue // color of animated loader
+    ..backgroundColor = Colors.transparent;
 }

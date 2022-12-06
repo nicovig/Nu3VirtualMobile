@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:nu3virtual/ui/authentication_screen/authentication_screen_viewmodel.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:stacked/stacked.dart';
 
+import 'package:nu3virtual/ui/authentication_screen/authentication_screen_viewmodel.dart';
 import 'package:nu3virtual/layouts/screen_layouts/custom_title.dart';
 import 'package:nu3virtual/layouts/forms/custom_form_field.dart';
 
@@ -14,6 +15,7 @@ class AuthenticationScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    configEasyLoading();
     return ViewModelBuilder<AuthenticationScreenViewModel>.reactive(
         viewModelBuilder: () => AuthenticationScreenViewModel(),
         builder: (context, model, child) => Scaffold(
@@ -44,11 +46,12 @@ class AuthenticationScreen extends StatelessWidget {
                         width: MediaQuery.of(context).size.width * 0.9,
                         child: ElevatedButton(
                           onPressed: () async {
+                            EasyLoading.show();
                             if (_formKey.currentState!.validate()) {
                               var message = await model.connect(context);
+                              EasyLoading.dismiss();
                               if (message != '') {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(content: Text(message)));
+                                EasyLoading.showError(message);
                               }
                             }
                           },
