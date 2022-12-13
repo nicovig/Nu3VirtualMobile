@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:pie_chart/pie_chart.dart';
 import 'package:stacked/stacked.dart';
 
 import 'package:nu3virtual/layouts/screen_layouts/change_date_buttons.dart';
@@ -62,22 +61,32 @@ class _InformationsTabScreenState extends State<InformationsTabScreen> {
             widget.handleOnPressedDateButton(ChangeDateButtonTypeEnum.right);
             EasyLoading.dismiss(animation: false);
           })),
-          Center(
-              child: PieChart(
-            dataMap: model.dataGoals,
-            chartRadius: MediaQuery.of(context).size.width / 1.5,
-            legendOptions: const LegendOptions(
-                legendPosition: LegendPosition.bottom, showLegendsInRow: true),
-          )),
-          Center(
-              child: PieChart(
-            dataMap: model.dataGoals,
-            chartRadius: MediaQuery.of(context).size.width / 1.5,
-            legendOptions: const LegendOptions(
-                legendPosition: LegendPosition.bottom, showLegendsInRow: true),
-          )),
+          Padding(
+            padding: const EdgeInsets.only(top: 20),
+            child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: getDataGoalsWidgetList(model)),
+          ),
         ],
       ),
     );
   }
+}
+
+List<Widget> getDataGoalsWidgetList(InformationsTabViewModel model) {
+  List<Widget> list = [];
+  for (var informationGoal in model.informationGoals) {
+    {
+      list.add(Column(children: [
+        CircularProgressIndicator(
+          value: informationGoal.value ?? 0,
+          backgroundColor: Colors.red,
+          valueColor: const AlwaysStoppedAnimation<Color>(Colors.green),
+        ),
+        const SizedBox(height: 20),
+        Text(informationGoal.name ?? '')
+      ]));
+    }
+  }
+  return list;
 }
