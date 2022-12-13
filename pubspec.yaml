@@ -35,7 +35,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   # If version is empty, latest stable version will be installing
   date_field: ^3.0.0
-  graphic: ^1.0.0
+  pie_chart: ^5.3.2
   flutter_easyloading: ^3.0.0
   http:
   stacked:

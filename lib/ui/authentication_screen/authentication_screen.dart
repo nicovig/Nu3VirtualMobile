@@ -21,6 +21,7 @@ class AuthenticationScreen extends StatelessWidget {
         viewModelBuilder: () => AuthenticationScreenViewModel(),
         builder: (context, model, child) => Scaffold(
             appBar: AppBar(
+              centerTitle: true,
               title: Text(title),
             ),
             body: SingleChildScrollView(
@@ -45,11 +46,11 @@ class AuthenticationScreen extends StatelessWidget {
                         width: MediaQuery.of(context).size.width * 0.9,
                         child: ElevatedButton(
                           onPressed: () async {
-                            EasyLoading.show();
                             if (_formKey.currentState!.validate()) {
+                              EasyLoading.show();
                               var message = await model.connect(context);
-                              EasyLoading.dismiss();
                               if (message != '') {
+                                EasyLoading.dismiss(animation: false);
                                 EasyLoading.showError(message);
                               }
                             }

@@ -1,6 +1,7 @@
 // ignore_for_file: library_private_types_in_public_api
 
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:stacked/stacked.dart';
 
@@ -27,7 +28,9 @@ class _MealTabScreenState extends State<MealTabScreen> {
     return ViewModelBuilder<MealTabViewModel>.reactive(
       viewModelBuilder: () => MealTabViewModel(),
       onModelReady: (model) {
+        EasyLoading.show();
         model.initData();
+        EasyLoading.dismiss(animation: false);
       },
       builder: (context, model, child) => Column(
         children: [
@@ -35,25 +38,31 @@ class _MealTabScreenState extends State<MealTabScreen> {
             padding: EdgeInsets.fromLTRB(10, 0, 10, 5),
           ),
           ChangeDateButtons(handleOnPressedLeftButton: (() async {
+            EasyLoading.show();
             setState(() {
               widget.date = DateTime(
                   widget.date.year, widget.date.month, widget.date.day - 1);
             });
             await model.loadData(widget.date);
             widget.handleOnPressedDateButton(ChangeDateButtonTypeEnum.left);
+            EasyLoading.dismiss(animation: false);
           }), handleOnPressedMiddleButton: (() async {
+            EasyLoading.show();
             setState(() {
               widget.date = DateTime.now();
             });
             await model.loadData(widget.date);
             widget.handleOnPressedDateButton(ChangeDateButtonTypeEnum.middle);
+            EasyLoading.dismiss(animation: false);
           }), handleOnPressedRightButton: (() async {
+            EasyLoading.show();
             setState(() {
               widget.date = DateTime(
                   widget.date.year, widget.date.month, widget.date.day + 1);
             });
             await model.loadData(widget.date);
             widget.handleOnPressedDateButton(ChangeDateButtonTypeEnum.right);
+            EasyLoading.dismiss(animation: false);
           })),
           Padding(
               padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),

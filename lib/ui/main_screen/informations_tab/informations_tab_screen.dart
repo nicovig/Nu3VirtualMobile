@@ -1,7 +1,8 @@
 // ignore_for_file: library_private_types_in_public_api
 
 import 'package:flutter/material.dart';
-import 'package:graphic/graphic.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:pie_chart/pie_chart.dart';
 import 'package:stacked/stacked.dart';
 
 import 'package:nu3virtual/layouts/screen_layouts/change_date_buttons.dart';
@@ -25,7 +26,9 @@ class _InformationsTabScreenState extends State<InformationsTabScreen> {
     return ViewModelBuilder<InformationsTabViewModel>.reactive(
       viewModelBuilder: () => InformationsTabViewModel(),
       onModelReady: (model) {
+        EasyLoading.show();
         model.initData();
+        EasyLoading.dismiss(animation: false);
       },
       builder: (context, model, child) => Column(
         children: [
@@ -33,52 +36,46 @@ class _InformationsTabScreenState extends State<InformationsTabScreen> {
             padding: EdgeInsets.fromLTRB(10, 0, 10, 5),
           ),
           ChangeDateButtons(handleOnPressedLeftButton: (() async {
+            EasyLoading.show();
             setState(() {
               widget.date = DateTime(
                   widget.date.year, widget.date.month, widget.date.day - 1);
             });
             await model.loadData(widget.date);
             widget.handleOnPressedDateButton(ChangeDateButtonTypeEnum.left);
+            EasyLoading.dismiss(animation: false);
           }), handleOnPressedMiddleButton: (() async {
+            EasyLoading.show();
             setState(() {
               widget.date = DateTime.now();
             });
             await model.loadData(widget.date);
             widget.handleOnPressedDateButton(ChangeDateButtonTypeEnum.middle);
+            EasyLoading.dismiss(animation: false);
           }), handleOnPressedRightButton: (() async {
+            EasyLoading.show();
             setState(() {
               widget.date = DateTime(
                   widget.date.year, widget.date.month, widget.date.day + 1);
             });
             await model.loadData(widget.date);
             widget.handleOnPressedDateButton(ChangeDateButtonTypeEnum.right);
+            EasyLoading.dismiss(animation: false);
           })),
-          Container(
-            height: 100,
-            width: 100,
-            child: Chart(
-              data: const [
-                {'genre': 'Sports', 'sold': 275},
-                {'genre': 'Strategy', 'sold': 115},
-                {'genre': 'Action', 'sold': 120},
-                {'genre': 'Shooter', 'sold': 350},
-                {'genre': 'Other', 'sold': 150},
-              ],
-              variables: {
-                'genre': Variable(
-                  accessor: (Map map) => map['genre'] as String,
-                ),
-                'sold': Variable(
-                  accessor: (Map map) => map['sold'] as num,
-                ),
-              },
-              elements: [IntervalElement()],
-              axes: [
-                Defaults.horizontalAxis,
-                Defaults.verticalAxis,
-              ],
-            ),
-          )
+          Center(
+              child: PieChart(
+            dataMap: model.dataGoals,
+            chartRadius: MediaQuery.of(context).size.width / 1.5,
+            legendOptions: const LegendOptions(
+                legendPosition: LegendPosition.bottom, showLegendsInRow: true),
+          )),
+          Center(
+              child: PieChart(
+            dataMap: model.dataGoals,
+            chartRadius: MediaQuery.of(context).size.width / 1.5,
+            legendOptions: const LegendOptions(
+                legendPosition: LegendPosition.bottom, showLegendsInRow: true),
+          )),
         ],
       ),
     );

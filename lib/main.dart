@@ -8,6 +8,7 @@ import 'package:nu3virtual/ui/authentication_screen/authentication_screen.dart';
 import 'package:nu3virtual/ui/main_screen/main_screen.dart';
 
 void main() {
+  configEasyLoading();
   setupServiceLocator();
   HttpOverrides.global = MyHttpOverrides();
   runApp(MyApp());
@@ -33,7 +34,6 @@ class MyApp extends StatelessWidget {
 class MyHttpOverrides extends HttpOverrides {
   @override
   HttpClient createHttpClient(SecurityContext? context) {
-    configEasyLoading();
     return super.createHttpClient(context)
       ..badCertificateCallback =
           (X509Certificate cert, String host, int port) => true;
@@ -42,11 +42,12 @@ class MyHttpOverrides extends HttpOverrides {
 
 void configEasyLoading() {
   EasyLoading.instance
-    ..indicatorType = EasyLoadingIndicatorType.threeBounce
+    ..indicatorType = EasyLoadingIndicatorType.doubleBounce
     ..progressColor = Colors.white
     ..boxShadow = <BoxShadow>[] // removes black background
     ..loadingStyle = EasyLoadingStyle.light
     ..textColor = Colors.black
     ..indicatorColor = Colors.blue // color of animated loader
+    ..lineWidth = 20
     ..backgroundColor = Colors.transparent;
 }

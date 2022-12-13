@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:stacked/stacked.dart';
 
 import 'package:nu3virtual/layouts/screen_layouts/change_date_buttons.dart';
@@ -45,14 +46,17 @@ class _MainScreenState extends State<MainScreen> {
 
     return ViewModelBuilder<MainScreenViewModel>.reactive(
       viewModelBuilder: () => MainScreenViewModel(),
-      onModelReady: (model) => {
-        model.loadData(),
-        if (model.user.id != null)
+      onModelReady: (model) {
+        EasyLoading.show();
+        model.loadData();
+        if (model.user.id != null) {
           setState(() {
             if (model.user.id != null) {
               userId = model.user.id!;
             }
-          })
+          });
+        }
+        EasyLoading.dismiss(animation: false);
       },
       builder: (context, model, child) => DefaultTabController(
         length: 3,
@@ -77,12 +81,9 @@ class _MainScreenState extends State<MainScreen> {
                       ),
                     ))
               ]),
-          body: Column(children: [
-            Container(
-              //height: MediaQuery.of(context).size.height, <-- avoid error with no height define (needed when try to put the "add" button on bottom list)
-              child: pages.elementAt(selectedIndex),
-            ),
-          ]),
+          body: SingleChildScrollView(
+            child: pages.elementAt(selectedIndex),
+          ),
           bottomNavigationBar: BottomNavigationBar(
             onTap: (value) => {
               setState(() {
