@@ -1,4 +1,4 @@
-import 'package:nu3virtual/core/services/response_models/authentication_response_models.dart';
+import 'package:nu3virtual/core/services/authentication/models/authentication_response_models.dart';
 
 abstract class AuthenticationService {
   Future<AuthenticationResponse> login(String login, String password);

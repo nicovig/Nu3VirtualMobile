@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 
 import 'package:nu3virtual/service_locator.dart';
 import 'package:nu3virtual/core/models/user_model.dart';
-import 'package:nu3virtual/core/services/response_models/authentication_response_models.dart';
+import 'package:nu3virtual/core/services/authentication/models/authentication_response_models.dart';
 import 'package:nu3virtual/core/services/authentication/authentication_service.dart';
 import 'package:nu3virtual/core/services/user/user_service_class.dart';
 
