@@ -25,7 +25,7 @@ class _InformationsTabScreenState extends State<InformationsTabScreen> {
       viewModelBuilder: () => InformationsTabViewModel(),
       onModelReady: (model) {
         EasyLoading.show();
-        model.initData();
+        model.initData(widget.date);
         EasyLoading.dismiss(animation: false);
       },
       builder: (context, model, child) => Column(
@@ -78,7 +78,7 @@ List<Widget> getDataGoalsWidgetList(InformationsTabViewModel model) {
     {
       list.add(Column(children: [
         CircularProgressIndicator(
-          value: informationGoal.goalAchievedRatio ?? 0,
+          value: informationGoal.achievedRatio ?? 0,
           backgroundColor: Colors.red,
           valueColor: const AlwaysStoppedAnimation<Color>(Colors.green),
         ),

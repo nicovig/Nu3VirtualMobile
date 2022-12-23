@@ -29,7 +29,7 @@ class _MealTabScreenState extends State<MealTabScreen> {
       viewModelBuilder: () => MealTabViewModel(),
       onModelReady: (model) {
         EasyLoading.show();
-        model.initData();
+        model.initData(widget.date);
         EasyLoading.dismiss(animation: false);
       },
       builder: (context, model, child) => Column(

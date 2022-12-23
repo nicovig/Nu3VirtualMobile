@@ -1,48 +1,34 @@
 import 'package:flutter/widgets.dart';
 
-import 'package:nu3virtual/core/models/nutrition_goals_model.dart';
+import 'package:nu3virtual/core/models/nutrition_goal_model.dart';
+import 'package:nu3virtual/core/models/user_model.dart';
+import 'package:nu3virtual/core/services/nutrition_goal/nutrition_goal_service.dart';
+import 'package:nu3virtual/core/services/user/user_service_class.dart';
+import 'package:nu3virtual/service_locator.dart';
 
 class InformationsTabViewModel extends ChangeNotifier {
-  List<NutritionGoalsModel> informationGoals = [
-    NutritionGoalsModel(
-        id: 1,
-        order: 1,
-        name: 'Calories',
-        date: DateTime.now(),
-        goalAchievedValue: 1400,
-        goalTotalValue: 1750,
-        goalAchievedRatio: 0.87),
-    NutritionGoalsModel(
-        id: 2,
-        order: 2,
-        name: 'Glucides',
-        date: DateTime.now(),
-        goalAchievedValue: 1400,
-        goalTotalValue: 1750,
-        goalAchievedRatio: 0.87),
-    NutritionGoalsModel(
-        id: 3,
-        order: 3,
-        name: 'Lipides',
-        date: DateTime.now(),
-        goalAchievedValue: 1400,
-        goalTotalValue: 1750,
-        goalAchievedRatio: 0.87),
-    NutritionGoalsModel(
-        id: 4,
-        order: 4,
-        name: 'Protéines',
-        date: DateTime.now(),
-        goalAchievedValue: 1400,
-        goalTotalValue: 1750,
-        goalAchievedRatio: 0.87),
-  ];
+  final NutritionGoalService _nutritionGoalService =
+      getIt<NutritionGoalService>();
 
-  Future initData() async {
+  final UserStore _userStore = getIt<UserStore>();
+
+  List<NutritionGoalModel> informationGoals = [];
+  int? userId = 0;
+
+  Future initData(DateTime date) async {
+    UserModel user = await _userStore.getCurrentUser();
+    userId = user.id ?? 0;
+    loadData(date);
     notifyListeners();
   }
 
   Future loadData(DateTime date) async {
+    await _getNutritionGoals(date);
     notifyListeners();
+  }
+
+  Future _getNutritionGoals(date) async {
+    informationGoals = await _nutritionGoalService
+        .getAllNutritionGoalsByUserIdAndDate(userId, date);
   }
 }

@@ -21,8 +21,16 @@ class AuthenticationServiceApi extends AuthenticationService {
 
   @override
   Future<AuthenticationResponse> login(String login, String password) async {
-    var response = await http.post(url,
-        headers: headers, body: '{"login": "$login", "password": "$password"}');
+    Map<String, String> headers = {
+      "Content-Type": "application/json",
+      "login": login,
+      "password": password
+    };
+
+    var response = await http.post(
+      url,
+      headers: headers,
+    );
     try {
       _saveAuthenticationResponse(response.body);
       return AuthenticationResponse(

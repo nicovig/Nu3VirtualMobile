@@ -18,10 +18,10 @@ class MealTabViewModel extends ChangeNotifier {
   MonitoringModel monitoringDisplayed = MonitoringModel();
   int? userId = 0;
 
-  Future initData() async {
+  Future initData(DateTime date) async {
     UserModel user = await _userStore.getCurrentUser();
     userId = user.id ?? 0;
-    await loadData(DateTime.now());
+    await loadData(date);
     notifyListeners();
   }
 

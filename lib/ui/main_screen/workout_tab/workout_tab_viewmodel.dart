@@ -14,14 +14,13 @@ class WorkoutTabViewModel extends ChangeNotifier {
   final WorkoutService _workoutService = getIt<WorkoutService>();
 
   List<WorkoutModel> workouts = [];
-  List<WorkoutModel> workoutsDisplayed = [];
   MonitoringModel monitoringDisplayed = MonitoringModel();
   int? userId = 0;
 
-  Future initData() async {
+  Future initData(DateTime date) async {
     UserModel user = await _userStore.getCurrentUser();
     userId = user.id ?? 0;
-    await loadData(DateTime.now());
+    await loadData(date);
     notifyListeners();
   }
 
@@ -58,7 +57,6 @@ class WorkoutTabViewModel extends ChangeNotifier {
   Future _getWorkouts(DateTime date) async {
     workouts =
         await _workoutService.getAllWorkoutsByUserIdAndDate(userId, date);
-    workoutsDisplayed = workouts;
     notifyListeners();
   }
 }

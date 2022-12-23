@@ -29,7 +29,7 @@ class _WorkoutTabScreenState extends State<WorkoutTabScreen> {
       viewModelBuilder: () => WorkoutTabViewModel(),
       onModelReady: (model) {
         EasyLoading.show();
-        model.initData();
+        model.initData(widget.date);
         EasyLoading.dismiss(animation: false);
       },
       builder: (context, model, child) => Column(
@@ -71,9 +71,9 @@ class _WorkoutTabScreenState extends State<WorkoutTabScreen> {
           ListView.builder(
               scrollDirection: Axis.vertical,
               shrinkWrap: true,
-              itemCount: model.workoutsDisplayed.length,
+              itemCount: model.workouts.length,
               itemBuilder: (context, index) {
-                final workout = model.workoutsDisplayed[index];
+                final workout = model.workouts[index];
                 var subtitle = workout.name ?? '';
                 return Slidable(
                     key: Key('workout-index-$index'),

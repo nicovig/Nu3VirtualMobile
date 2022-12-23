@@ -7,6 +7,8 @@ import 'package:nu3virtual/core/services/meal/meal_service.dart';
 import 'package:nu3virtual/core/services/meal/meal_service_api.dart';
 import 'package:nu3virtual/core/services/monitoring/monitoring_service.dart';
 import 'package:nu3virtual/core/services/monitoring/monitoring_service_api.dart';
+import 'package:nu3virtual/core/services/nutrition_goal/nutrition_goal_service.dart';
+import 'package:nu3virtual/core/services/nutrition_goal/nutrition_goal_service_api.dart';
 import 'package:nu3virtual/core/services/user/user_service_api.dart';
 import 'package:nu3virtual/core/services/user/user_service_class.dart';
 import 'package:nu3virtual/core/services/user/user_service_store.dart';
@@ -26,6 +28,8 @@ setupServiceLocator() {
       () => AuthenticationServiceStore());
   getIt.registerLazySingleton<MealService>(() => MealServiceApi());
   getIt.registerLazySingleton<MonitoringService>(() => MonitoringServiceApi());
+  getIt
+      .registerLazySingleton<NutritionGoalService>(() => NutritionServiceApi());
   getIt.registerLazySingleton<UserService>(() => UserServiceApi());
   getIt.registerLazySingleton<UserStore>(() => UserServiceStore());
   getIt.registerLazySingleton<WorkoutService>(() => WorkoutServiceApi());
