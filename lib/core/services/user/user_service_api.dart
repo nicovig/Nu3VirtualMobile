@@ -17,7 +17,7 @@ class UserServiceApi extends UserService {
   };
   static const hostedDeviceLocalhost =
       '10.0.2.2:'; //not localhost : https://stackoverflow.com/a/55786011/20009977
-  static const apiUrl = '44383';
+  static const apiUrl = '7251'; //NuVirtualApi url (not ISS server)
   static const controllerName = 'User';
   static Uri url = Uri.https(hostedDeviceLocalhost + apiUrl, controllerName);
 

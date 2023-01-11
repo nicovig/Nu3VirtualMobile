@@ -51,7 +51,7 @@ class _WorkoutDialogState extends State<WorkoutDialog> {
         children: [
           CustomFormField(
               onChanged: (value) {
-                if (value != null) name = value;
+                if (value != null && value != "") name = value;
               },
               initialValue: name != '' ? name : '',
               hintText: 'Nom'),
@@ -63,7 +63,7 @@ class _WorkoutDialogState extends State<WorkoutDialog> {
               lastDate: DateTime(DateTime.now().year, DateTime.now().month + 1,
                   DateTime.now().day),
               handleOnSaved: (value) {
-                if (value != null) date = value;
+                if (value != null && value != "") date = value;
               }),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -79,7 +79,8 @@ class _WorkoutDialogState extends State<WorkoutDialog> {
                   initialValue:
                       minutes.toString() != '0' ? minutes.toString() : '',
                   onChanged: (value) {
-                    if (value != null) minutes = int.parse(value);
+                    if (value != null && value != "")
+                      minutes = int.parse(value);
                   },
                   inputFormatters: [
                     FilteringTextInputFormatter.allow(
@@ -97,7 +98,8 @@ class _WorkoutDialogState extends State<WorkoutDialog> {
                   initialValue:
                       seconds.toString() != '0' ? seconds.toString() : '',
                   onChanged: (value) {
-                    if (value != null) seconds = int.parse(value);
+                    if (value != null && value != "")
+                      seconds = int.parse(value);
                   },
                   inputFormatters: [
                     FilteringTextInputFormatter.allow(
@@ -117,7 +119,8 @@ class _WorkoutDialogState extends State<WorkoutDialog> {
                     ? caloriesBurned.toString()
                     : '',
             onChanged: (value) {
-              if (value != null) caloriesBurned = int.parse(value);
+              if (value != null && value != "")
+                caloriesBurned = int.parse(value);
             },
             inputFormatters: [
               FilteringTextInputFormatter.allow(

@@ -40,7 +40,7 @@ class UserScreen extends StatelessWidget {
                       const CustomTitle(title: "Créer un compte"),
                       CustomFormField(
                         onChanged: (value) {
-                          if (value != null) lastname = value;
+                          if (value != null && value != "") lastname = value;
                         },
                         hintText: 'Nom',
                         inputFormatters: [
@@ -57,7 +57,7 @@ class UserScreen extends StatelessWidget {
                       ),
                       CustomFormField(
                         onChanged: (value) {
-                          if (value != null) firstname = value;
+                          if (value != null && value != "") firstname = value;
                         },
                         hintText: 'Prénom',
                         inputFormatters: [
@@ -74,7 +74,7 @@ class UserScreen extends StatelessWidget {
                       ),
                       CustomFormField(
                         onChanged: (value) {
-                          if (value != null) pseudo = value;
+                          if (value != null && value != "") pseudo = value;
                         },
                         hintText: 'Pseudo',
                         inputFormatters: [
@@ -90,7 +90,9 @@ class UserScreen extends StatelessWidget {
                       ),
                       CustomFormField(
                         onChanged: (value) {
-                          if (value != null) height = int.parse(value);
+                          if (value != null && value != "") {
+                            height = int.parse(value);
+                          }
                         },
                         hintText: 'Taille (en cm)',
                         inputFormatters: [
@@ -107,7 +109,9 @@ class UserScreen extends StatelessWidget {
                       ),
                       CustomFormField(
                         onChanged: (value) {
-                          if (value != null) weight = double.parse(value);
+                          if (value != null && value != "") {
+                            weight = double.parse(value);
+                          }
                         },
                         hintText: 'Poids (en kg)',
                         inputFormatters: [
@@ -127,14 +131,14 @@ class UserScreen extends StatelessWidget {
                           label: 'Date de naissance',
                           lastDate: DateTime.now(),
                           handleOnSaved: (value) {
-                            if (value != null) birthday = value;
+                            if (value != null && value != "") birthday = value;
                           }),
                       CustomFormFieldGender(
                           handleOnPressedRadioButton: (GenderEnum gender) =>
                               gender = gender),
                       CustomFormField(
                         onChanged: (value) {
-                          if (value != null) email = value;
+                          if (value != null && value != "") email = value;
                         },
                         hintText: 'Email',
                         keyboardType: TextInputType.emailAddress,
@@ -146,7 +150,7 @@ class UserScreen extends StatelessWidget {
                       ),
                       CustomFormField(
                         onChanged: (value) {
-                          if (value != null) password = value;
+                          if (value != null && value != "") password = value;
                         },
                         hintText: 'Mot de passe',
                       ),

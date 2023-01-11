@@ -55,7 +55,7 @@ class _MealDialogState extends State<MealDialog> {
         children: [
           CustomFormField(
               onChanged: (value) {
-                if (value != null) name = value;
+                if (value != null && value != "") name = value;
               },
               initialValue: name != '' ? name : '',
               hintText: 'Nom'),
@@ -67,7 +67,7 @@ class _MealDialogState extends State<MealDialog> {
               lastDate: DateTime(DateTime.now().year, DateTime.now().month + 1,
                   DateTime.now().day),
               handleOnSaved: (value) {
-                if (value != null) date = value;
+                if (value != null && value != "") date = value;
               }),
           CustomFormFieldTime(
               initialValue: '${time.hour}h ${time.minute}min',
@@ -76,7 +76,7 @@ class _MealDialogState extends State<MealDialog> {
                   ? Colors.black
                   : Colors.grey.shade600,
               handleOnChanged: (value) {
-                if (value != null) {
+                if (value != null && value != "") {
                   time = value;
                   timeLabel = '${time.hour}h ${time.minute}min';
                   setState(() {});
@@ -87,7 +87,7 @@ class _MealDialogState extends State<MealDialog> {
             initialValue:
                 carbohydrate.toString() != '0' ? carbohydrate.toString() : '',
             onChanged: (value) {
-              if (value != null) carbohydrate = int.parse(value);
+              if (value != null && value != "") carbohydrate = int.parse(value);
             },
             inputFormatters: [
               FilteringTextInputFormatter.allow(
@@ -100,7 +100,7 @@ class _MealDialogState extends State<MealDialog> {
             hintText: 'Lipides',
             initialValue: lipid.toString() != '0' ? lipid.toString() : '',
             onChanged: (value) {
-              if (value != null) lipid = int.parse(value);
+              if (value != null && value != "") lipid = int.parse(value);
             },
             inputFormatters: [
               FilteringTextInputFormatter.allow(
@@ -113,7 +113,7 @@ class _MealDialogState extends State<MealDialog> {
             hintText: 'Protéines',
             initialValue: protein.toString() != '0' ? protein.toString() : '',
             onChanged: (value) {
-              if (value != null) protein = int.parse(value);
+              if (value != null && value != "") protein = int.parse(value);
             },
             inputFormatters: [
               FilteringTextInputFormatter.allow(
@@ -126,7 +126,7 @@ class _MealDialogState extends State<MealDialog> {
             hintText: 'Calories',
             initialValue: calorie.toString() != '0' ? calorie.toString() : '',
             onChanged: (value) {
-              if (value != null) calorie = int.parse(value);
+              if (value != null && value != "") calorie = int.parse(value);
             },
             inputFormatters: [
               FilteringTextInputFormatter.allow(

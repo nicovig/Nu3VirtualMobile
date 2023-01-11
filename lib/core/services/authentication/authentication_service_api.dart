@@ -16,7 +16,7 @@ class AuthenticationServiceApi extends AuthenticationService {
   };
   static const hostedDeviceLocalhost =
       '10.0.2.2:'; //not localhost : https://stackoverflow.com/a/55786011/20009977
-  static const apiUrl = '44383';
+  static const apiUrl = '7251'; //NuVirtualApi url (not ISS server)
   static const controllerName = 'Authentication';
   static Uri url = Uri.https(hostedDeviceLocalhost + apiUrl, controllerName);
 
@@ -28,11 +28,7 @@ class AuthenticationServiceApi extends AuthenticationService {
       "password": password
     };
 
-    var response = await http.post(
-      url,
-      headers: headers,
-      body: "{}"
-    );
+    var response = await http.post(url, headers: headers);
     try {
       _saveAuthenticationResponse(response.body);
       return AuthenticationResponse(
