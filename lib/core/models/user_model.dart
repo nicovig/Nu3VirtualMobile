@@ -5,6 +5,7 @@ class UserModel {
   String? pseudo;
   String? firstName;
   String? lastName;
+  GenderEnum? gender;
   DateTime? birthday;
   int? height;
   double? weight;
@@ -16,6 +17,7 @@ class UserModel {
       this.pseudo,
       this.firstName,
       this.lastName,
+      this.gender,
       this.birthday,
       this.height,
       this.weight,
@@ -28,6 +30,7 @@ class UserModel {
         pseudo: parsedJson['pseudo'] ?? "",
         firstName: parsedJson['firstName'] ?? "",
         lastName: parsedJson['lastName'] ?? "",
+        gender: parsedJson['gender'] ?? "",
         height: parsedJson['height'] ?? "",
         weight: parsedJson['weight'] ?? "",
         email: parsedJson['email'] ?? "",
@@ -43,6 +46,7 @@ class UserModel {
       'pseudo': pseudo,
       'firstName': firstName,
       'lastName': lastName,
+      'gender': gender,
       'birthday': birthday?.toIso8601String(),
       'height': height,
       'weight': weight,
@@ -52,10 +56,12 @@ class UserModel {
   }
 
   static String objectToString(UserModel user) {
-    return '{"id": ${user.id}, "pseudo": "${user.pseudo}", "firstName": "${user.firstName}", "lastName": "${user.lastName}", "birthday": "${user.birthday}", "height": ${user.height}, "weight": ${user.weight}, "email": "${user.email}", "password": "${user.password}"}';
+    return '{"id": ${user.id}, "pseudo": "${user.pseudo}", "firstName": "${user.firstName}", "lastName": "${user.lastName}", "gender": "${user.gender}" ,"birthday": "${user.birthday}", "height": ${user.height}, "weight": ${user.weight}, "email": "${user.email}", "password": "${user.password}"}';
   }
 
   String jsonString() {
-    return '{"id": 0, "pseudo": "", "firstName": "", "lastName": "", "birthday": null, "height": 0, "weight": 0, "email": "", "password": ""}';
+    return '{"id": 0, "pseudo": "", "firstName": "", "lastName": "", "gender": 0, "birthday": null, "height": 0, "weight": 0, "email": "", "password": ""}';
   }
 }
+
+enum GenderEnum { unknown, male, female, other }

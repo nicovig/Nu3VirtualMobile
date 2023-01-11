@@ -15,7 +15,8 @@ class UserServiceApi extends UserService {
   static const Map<String, String> headers = {
     "Content-Type": "application/json"
   };
-  static const hostedDeviceLocalhost = '10.0.2.2:';
+  static const hostedDeviceLocalhost =
+      '10.0.2.2:'; //not localhost : https://stackoverflow.com/a/55786011/20009977
   static const apiUrl = '44383';
   static const controllerName = 'User';
   static Uri url = Uri.https(hostedDeviceLocalhost + apiUrl, controllerName);
@@ -29,6 +30,14 @@ class UserServiceApi extends UserService {
 
     var response =
         await http.post(url, headers: headers, body: userToCreate.toJson());
+    _saveCreateResponse(response.body);
+    return response.statusCode == 200 || response.statusCode == 204;
+  }
+
+  @override
+  Future<bool> update(UserModel userToUpdate) async {
+    var response =
+        await http.put(url, headers: headers, body: userToUpdate.toJson());
     _saveCreateResponse(response.body);
     return response.statusCode == 200 || response.statusCode == 204;
   }

@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:nu3virtual/layouts/forms/custom_form_field_date.dart';
+import 'package:nu3virtual/layouts/forms/custom_form_field_gender.dart';
 import 'package:stacked/stacked.dart';
 
+import 'package:nu3virtual/core/helpers/ext-classes.dart';
+import 'package:nu3virtual/core/models/user_model.dart';
+import 'package:nu3virtual/layouts/forms/custom_form_field.dart';
+import 'package:nu3virtual/layouts/forms/custom_form_field_date.dart';
 import 'package:nu3virtual/layouts/screen_layouts/custom_title.dart';
 import 'package:nu3virtual/ui/user_screen/user_screen_viewmodel.dart';
-import 'package:nu3virtual/core/helpers/ext-classes.dart';
-import 'package:nu3virtual/layouts/forms/custom_form_field.dart';
 
 class UserScreen extends StatelessWidget {
   final formKey = GlobalKey<FormState>();
@@ -16,6 +18,7 @@ class UserScreen extends StatelessWidget {
   String pseudo = '';
   int height = 0;
   double weight = 0;
+  GenderEnum gender = GenderEnum.male;
   String email = '';
   String password = '';
   DateTime birthday = DateTime.now();
@@ -126,6 +129,9 @@ class UserScreen extends StatelessWidget {
                           handleOnSaved: (value) {
                             if (value != null) birthday = value;
                           }),
+                      CustomFormFieldGender(
+                          handleOnPressedRadioButton: (GenderEnum gender) =>
+                              gender = gender),
                       CustomFormField(
                         onChanged: (value) {
                           if (value != null) email = value;

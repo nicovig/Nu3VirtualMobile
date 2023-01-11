@@ -48,4 +48,24 @@ class NutritionGoalModel {
   }
 }
 
+class UpdateNutritionGoalRequest {
+  int id;
+  int order;
+  int totalValue;
+
+  UpdateNutritionGoalRequest(
+      {required this.id, required this.order, required this.totalValue});
+
+  factory UpdateNutritionGoalRequest.fromJson(Map<String, dynamic> parsedJson) {
+    return UpdateNutritionGoalRequest(
+        id: parsedJson['id'] ?? 0,
+        order: parsedJson['order'] ?? 0,
+        totalValue: parsedJson['totalValue'] ?? 0);
+  }
+
+  String toJson() {
+    return jsonEncode({'id': id, 'order': order, 'totalValue': totalValue});
+  }
+}
+
 enum MacronutrientTypeEnum { carbohydrate, lipid, protein, calorie }

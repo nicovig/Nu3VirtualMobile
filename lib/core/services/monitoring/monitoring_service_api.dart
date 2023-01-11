@@ -9,7 +9,8 @@ class MonitoringServiceApi extends MonitoringService {
   static const Map<String, String> headers = {
     "Content-Type": "application/json"
   };
-  static const hostedDeviceLocalhost = '10.0.2.2:';
+  static const hostedDeviceLocalhost =
+      '10.0.2.2:'; //not localhost : https://stackoverflow.com/a/55786011/20009977
   static const apiUrl = '44383';
   static const controllerName = 'Monitoring';
   static Uri url = Uri.https(hostedDeviceLocalhost + apiUrl, controllerName);

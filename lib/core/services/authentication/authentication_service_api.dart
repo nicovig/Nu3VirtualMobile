@@ -14,7 +14,8 @@ class AuthenticationServiceApi extends AuthenticationService {
   static const Map<String, String> headers = {
     "Content-Type": "application/json"
   };
-  static const hostedDeviceLocalhost = '10.0.2.2:';
+  static const hostedDeviceLocalhost =
+      '10.0.2.2:'; //not localhost : https://stackoverflow.com/a/55786011/20009977
   static const apiUrl = '44383';
   static const controllerName = 'Authentication';
   static Uri url = Uri.https(hostedDeviceLocalhost + apiUrl, controllerName);
@@ -23,13 +24,14 @@ class AuthenticationServiceApi extends AuthenticationService {
   Future<AuthenticationResponse> login(String login, String password) async {
     Map<String, String> headers = {
       "Content-Type": "application/json",
-      "login": login,
+      "mail": login,
       "password": password
     };
 
     var response = await http.post(
       url,
       headers: headers,
+      body: "{}"
     );
     try {
       _saveAuthenticationResponse(response.body);
