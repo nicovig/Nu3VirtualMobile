@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:nu3virtual/core/models/meal_model.dart';
 import 'package:nu3virtual/layouts/forms/custom_form_field.dart';
 import 'package:nu3virtual/layouts/forms/custom_form_field_date.dart';
+import 'package:nu3virtual/layouts/forms/custom_form_field_radio_buttons/custom_form_field_meal_type.dart';
 import 'package:nu3virtual/layouts/forms/custom_form_field_time.dart';
 
 class MealDialog extends StatefulWidget {
@@ -19,6 +20,7 @@ class MealDialog extends StatefulWidget {
 
 class _MealDialogState extends State<MealDialog> {
   String name = '';
+  MealTypeEnum mealType = MealTypeEnum.snack;
   DateTime date = DateTime.now();
   TimeOfDay time = TimeOfDay.now();
   int carbohydrate = 0;
@@ -59,6 +61,9 @@ class _MealDialogState extends State<MealDialog> {
               },
               initialValue: name != '' ? name : '',
               hintText: 'Nom'),
+          CustomFormFieldMealType(
+              handleOnPressedRadioButton: (MealTypeEnum value) =>
+                  mealType = value),
           CustomFormFieldDate(
               initialValue: date,
               firstDate: DateTime(DateTime.now().year, DateTime.now().month - 1,
@@ -153,7 +158,7 @@ class _MealDialogState extends State<MealDialog> {
                   widget.handleValidation(meal, context);
                 },
                 child: const Text("Ajouter")),
-          ),
+          )
         ]);
   }
 }

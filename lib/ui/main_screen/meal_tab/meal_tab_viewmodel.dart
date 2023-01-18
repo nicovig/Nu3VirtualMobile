@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'package:nu3virtual/core/const/routes.dart';
 
 import 'package:nu3virtual/core/models/meal_model.dart';
 import 'package:nu3virtual/core/models/monitoring_model.dart';
@@ -23,6 +24,14 @@ class MealTabViewModel extends ChangeNotifier {
     userId = user.id ?? 0;
     await loadData(date);
     notifyListeners();
+  }
+
+  addMealScreen(BuildContext context) {
+    Navigator.pushNamed(
+      context,
+      mealRoute,
+      arguments: 0,
+    );
   }
 
   Future addMeal(MealModel meal, BuildContext dialogContext) async {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:nu3virtual/layouts/forms/custom_form_field_gender.dart';
+import 'package:nu3virtual/layouts/forms/custom_form_field_radio_buttons/custom_form_field_gender.dart';
 import 'package:stacked/stacked.dart';
 
 import 'package:nu3virtual/core/helpers/ext-classes.dart';
@@ -131,11 +131,11 @@ class UserScreen extends StatelessWidget {
                           label: 'Date de naissance',
                           lastDate: DateTime.now(),
                           handleOnSaved: (value) {
-                            if (value != null && value != "") birthday = value;
+                            if (value != null) birthday = value;
                           }),
                       CustomFormFieldGender(
-                          handleOnPressedRadioButton: (GenderEnum gender) =>
-                              gender = gender),
+                          handleOnPressedRadioButton: (GenderEnum value) =>
+                              gender = value),
                       CustomFormField(
                         onChanged: (value) {
                           if (value != null && value != "") email = value;
@@ -164,6 +164,7 @@ class UserScreen extends StatelessWidget {
                                 height: height,
                                 weight: weight,
                                 birthday: birthday,
+                                gender: gender,
                                 email: email,
                                 password: password,
                                 context: context);

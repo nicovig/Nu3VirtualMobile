@@ -24,7 +24,7 @@ class AuthenticationServiceApi extends AuthenticationService {
   Future<AuthenticationResponse> login(String login, String password) async {
     Map<String, String> headers = {
       "Content-Type": "application/json",
-      "mail": login,
+      "login": login,
       "password": password
     };
 

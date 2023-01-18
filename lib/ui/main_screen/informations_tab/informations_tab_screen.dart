@@ -78,7 +78,7 @@ List<Widget> getDataGoalsWidgetList(InformationsTabViewModel model) {
     {
       list.add(Column(children: [
         CircularProgressIndicator(
-          value: informationGoal.achievedRatio ?? 0,
+          value: double.parse((informationGoal.achievedRatio ?? 0).toString()),
           backgroundColor: Colors.red,
           valueColor: const AlwaysStoppedAnimation<Color>(Colors.green),
         ),

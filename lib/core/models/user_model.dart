@@ -1,14 +1,16 @@
 import 'dart:convert';
 
+import 'package:nu3virtual/core/helpers/helpers.dart';
+
 class UserModel {
   int? id;
   String? pseudo;
   String? firstName;
   String? lastName;
-  GenderEnum? gender;
+  int? gender;
   DateTime? birthday;
   int? height;
-  double? weight;
+  num? weight;
   String? email;
   String? password;
 
@@ -30,9 +32,9 @@ class UserModel {
         pseudo: parsedJson['pseudo'] ?? "",
         firstName: parsedJson['firstName'] ?? "",
         lastName: parsedJson['lastName'] ?? "",
-        gender: parsedJson['gender'] ?? "",
-        height: parsedJson['height'] ?? "",
-        weight: parsedJson['weight'] ?? "",
+        gender: parsedJson['gender'] ?? 0,
+        height: parsedJson['height'] ?? 0,
+        weight: parsedJson['weight'] ?? 0,
         email: parsedJson['email'] ?? "",
         password: parsedJson['password'] ?? "",
         birthday: parsedJson['birthday'] != null
@@ -56,7 +58,7 @@ class UserModel {
   }
 
   static String objectToString(UserModel user) {
-    return '{"id": ${user.id}, "pseudo": "${user.pseudo}", "firstName": "${user.firstName}", "lastName": "${user.lastName}", "gender": "${user.gender}" ,"birthday": "${user.birthday}", "height": ${user.height}, "weight": ${user.weight}, "email": "${user.email}", "password": "${user.password}"}';
+    return '{"id": ${user.id}, "pseudo": "${user.pseudo}", "firstName": "${user.firstName}", "lastName": "${user.lastName}", "gender": ${user.gender} ,"birthday": "${user.birthday}", "height": ${user.height}, "weight": ${user.weight}, "email": "${user.email}", "password": "${user.password}"}';
   }
 
   String jsonString() {

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nu3virtual/core/const/routes.dart';
 
 import 'package:nu3virtual/core/models/user_model.dart';
 import 'package:nu3virtual/core/services/user/user_service_class.dart';
@@ -14,6 +15,7 @@ class UserScreenViewModel extends ChangeNotifier {
       required int height,
       required double weight,
       required DateTime birthday,
+      required GenderEnum gender,
       required String email,
       required String password,
       required BuildContext context}) async {
@@ -26,11 +28,13 @@ class UserScreenViewModel extends ChangeNotifier {
         password: password,
         pseudo: pseudo,
         weight: weight,
-        birthday: birthday);
+        birthday: birthday,
+        gender: gender.index);
     bool isCreationOk = await _userService.create(user, password);
-    if (isCreationOk)
-      Navigator.of(context).pushNamedAndRemoveUntil('/home', (route) => false);
-
+    if (isCreationOk) {
+      Navigator.of(context)
+          .pushNamedAndRemoveUntil(homeRoute, (route) => false);
+    }
     notifyListeners();
   }
 }

@@ -151,16 +151,17 @@ class _MealTabScreenState extends State<MealTabScreen> {
                   backgroundColor:
                       MaterialStateProperty.all(Colors.blue.shade100)),
               onPressed: () {
-                showDialog(
-                  context: context,
-                  builder: (context) =>
-                      MealDialog(handleValidation: (meal, dialogContext) async {
-                    meal.userId = model.userId;
-                    await model.addMeal(meal, dialogContext);
-                    await model.loadData(widget.date);
-                    setState(() {});
-                  }),
-                );
+                model.addMealScreen(context);
+                // showDialog(
+                //   context: context,
+                //   builder: (context) =>
+                //       MealDialog(handleValidation: (meal, dialogContext) async {
+                //     meal.userId = model.userId;
+                //     await model.addMeal(meal, dialogContext);
+                //     await model.loadData(widget.date);
+                //     setState(() {});
+                //   }),
+                // );
               },
               child: const Text("Ajouter un repas",
                   style: TextStyle(color: Colors.blue))),

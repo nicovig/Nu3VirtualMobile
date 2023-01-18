@@ -27,7 +27,6 @@ class UserServiceApi extends UserService {
       "Content-Type": "application/json",
       "password": password
     };
-
     var response =
         await http.post(url, headers: headers, body: userToCreate.toJson());
     _saveCreateResponse(response.body);

@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:nu3virtual/core/const/routes.dart';
 
 import 'package:nu3virtual/core/services/authentication/authentication_service.dart';
 import 'package:nu3virtual/core/services/authentication/models/authentication_response_models.dart';
@@ -36,7 +37,7 @@ class AuthenticationScreenViewModel extends ChangeNotifier {
           await _authenticationService.login(login, password);
       if (response.isAuthenticationOk) {
         Navigator.of(context)
-            .pushNamedAndRemoveUntil('/home', (route) => false);
+            .pushNamedAndRemoveUntil(homeRoute, (route) => false);
         return '';
       } else {
         return response.error == response.invalidCredentialsResponse()

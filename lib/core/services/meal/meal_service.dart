@@ -5,5 +5,6 @@ abstract class MealService {
   Future<bool> deleteMeal(int mealId);
   Future<List<MealModel>> getAllMealsByUserIdAndDate(
       int? userId, DateTime date);
+  Future<MealModel> getMealById(int mealId);
   Future<bool> updateMeal(MealModel meal);
 }

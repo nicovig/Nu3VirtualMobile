@@ -3,9 +3,11 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
+import 'package:nu3virtual/core/const/routes.dart';
 import 'package:nu3virtual/service_locator.dart';
 import 'package:nu3virtual/ui/authentication_screen/authentication_screen.dart';
 import 'package:nu3virtual/ui/main_screen/main_screen.dart';
+import 'package:nu3virtual/ui/main_screen/meal_tab/meal_creation/meal_creation_screen.dart';
 
 void main() {
   configEasyLoading();
@@ -23,7 +25,10 @@ class MyApp extends StatelessWidget {
         theme:
             ThemeData(appBarTheme: const AppBarTheme(color: Colors.lightBlue)),
         home: AuthenticationScreen(title: 'NuVirtual'),
-        routes: {'/home': (context) => MainScreen()},
+        routes: {
+          homeRoute: (context) => MainScreen(),
+          mealRoute: (context) => MealCreationScreen()
+        },
         color: Colors.white,
         debugShowCheckedModeBanner: false,
         builder: EasyLoading.init());

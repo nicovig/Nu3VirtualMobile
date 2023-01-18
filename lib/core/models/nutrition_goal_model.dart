@@ -4,10 +4,10 @@ class NutritionGoalModel {
   int? id;
   int? order;
   String? name;
-  MacronutrientTypeEnum? type;
+  int? type;
   DateTime? date;
   int? achievedValue;
-  double? achievedRatio;
+  num? achievedRatio;
   int? totalValue;
 
   NutritionGoalModel(

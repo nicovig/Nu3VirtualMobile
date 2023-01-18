@@ -51,6 +51,26 @@ class MealServiceApi extends MealService {
   }
 
   @override
+  Future<MealModel> getMealById(
+    int mealId,
+  ) async {
+    Map<String, String> headers = {
+      "Content-Type": "application/json",
+      "mealId": mealId.toString()
+    };
+
+    var response = await http.get(
+      url,
+      headers: headers,
+    );
+
+    final Map<String, dynamic> untypedObject = jsonDecode(response.body);
+    final MealModel meal = MealModel.fromJson(untypedObject);
+
+    return meal;
+  }
+
+  @override
   Future<bool> updateMeal(MealModel meal) async {
     var response = await http.put(url, headers: headers, body: meal.toJson());
     return response.statusCode == 200 || response.statusCode == 204;
