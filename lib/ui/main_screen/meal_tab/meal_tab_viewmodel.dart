@@ -26,18 +26,12 @@ class MealTabViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  addMealScreen(BuildContext context) {
+  openMealScreen(BuildContext context, int? mealId) {
     Navigator.pushNamed(
       context,
       mealRoute,
-      arguments: 0,
+      arguments: mealId ?? 0,
     );
-  }
-
-  Future addMeal(MealModel meal, BuildContext dialogContext) async {
-    bool isCreateOk = await _mealService.createMeal(meal);
-    Navigator.pop(dialogContext, isCreateOk);
-    notifyListeners();
   }
 
   Future deleteMeal(int mealId, BuildContext dialogContext) async {

@@ -120,20 +120,8 @@ class _MealTabScreenState extends State<MealTabScreen> {
                       motion: const ScrollMotion(),
                       children: [
                         SlidableAction(
-                          onPressed: (BuildContext context) {
-                            showDialog(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return MealDialog(
-                                      mealToUpdate: meal,
-                                      handleValidation:
-                                          (mealUpdated, dialogContext) async {
-                                        await model.updateMeal(
-                                            mealUpdated, dialogContext);
-                                        await model.loadData(widget.date);
-                                      });
-                                });
-                          },
+                          onPressed: (BuildContext context) =>
+                              model.openMealScreen(context, meal.id),
                           backgroundColor: const Color(0xFF7BC043),
                           foregroundColor: Colors.white,
                           icon: Icons.update,
@@ -150,19 +138,7 @@ class _MealTabScreenState extends State<MealTabScreen> {
               style: ButtonStyle(
                   backgroundColor:
                       MaterialStateProperty.all(Colors.blue.shade100)),
-              onPressed: () {
-                model.addMealScreen(context);
-                // showDialog(
-                //   context: context,
-                //   builder: (context) =>
-                //       MealDialog(handleValidation: (meal, dialogContext) async {
-                //     meal.userId = model.userId;
-                //     await model.addMeal(meal, dialogContext);
-                //     await model.loadData(widget.date);
-                //     setState(() {});
-                //   }),
-                // );
-              },
+              onPressed: () => model.openMealScreen(context, null),
               child: const Text("Ajouter un repas",
                   style: TextStyle(color: Colors.blue))),
         ],

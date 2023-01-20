@@ -30,7 +30,7 @@ class MealModel {
     return MealModel(
         id: parsedJson['id'] ?? 0,
         name: parsedJson['name'] ?? "",
-        type: parsedJson['type'] ?? MealTypeEnum.lunch,
+        type: MealTypeEnum.values[parsedJson['type']],
         isFavorite: parsedJson['isFavorite'] ?? false,
         date: parsedJson['date'] != null
             ? DateTime.parse(parsedJson['date'])
@@ -47,7 +47,7 @@ class MealModel {
     return jsonEncode({
       'id': id,
       'name': name,
-      'type': type,
+      'type': type?.index,
       'isFavorite': isFavorite,
       'date': date?.toIso8601String(),
       'carbohydrate': carbohydrate,

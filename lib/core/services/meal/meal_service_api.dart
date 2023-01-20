@@ -54,13 +54,10 @@ class MealServiceApi extends MealService {
   Future<MealModel> getMealById(
     int mealId,
   ) async {
-    Map<String, String> headers = {
-      "Content-Type": "application/json",
-      "mealId": mealId.toString()
-    };
-
+    Uri newUrl = Uri.https(
+        hostedDeviceLocalhost + apiUrl, '$controllerName/meal/$mealId');
     var response = await http.get(
-      url,
+      newUrl,
       headers: headers,
     );
 

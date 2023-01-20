@@ -26,34 +26,27 @@ class MonitoringBox extends StatelessWidget {
           borderRadius: BorderRadius.circular(10.0)),
       child: Column(children: [
         Padding(
-          padding: const EdgeInsets.symmetric(vertical: 10),
-          child: Text(
-            getMonitoringDate(date, context),
-            style: const TextStyle(fontSize: 18),
-          ),
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text("Calories consommées : ${monitoring.caloriesConsumed ?? 0}",
-                style: const TextStyle(fontSize: 17)),
-          ],
-        ),
+            padding: const EdgeInsets.symmetric(vertical: 10),
+            child: Text(
+              getMonitoringDate(date, context),
+              style: const TextStyle(fontSize: 18),
+            )),
+        Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+          Text("Calories consommées : ${monitoring.caloriesConsumed ?? 0}",
+              style: const TextStyle(fontSize: 17)),
+        ]),
         Padding(
           padding: const EdgeInsets.fromLTRB(30, 10, 30, 5),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text("Glucides : ${monitoring.carbohydrate ?? 0}",
-                  style: const TextStyle(fontSize: 16)),
-              const Spacer(),
-              Text("Lipides : ${monitoring.lipid ?? 0}",
-                  style: const TextStyle(fontSize: 16)),
-              const Spacer(),
-              Text("Protéines : ${monitoring.protein ?? 0}",
-                  style: const TextStyle(fontSize: 16)),
-            ],
-          ),
+          child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+            Text("Glucides : ${monitoring.carbohydrate ?? 0}",
+                style: const TextStyle(fontSize: 16)),
+            const Spacer(),
+            Text("Lipides : ${monitoring.lipid ?? 0}",
+                style: const TextStyle(fontSize: 16)),
+            const Spacer(),
+            Text("Protéines : ${monitoring.protein ?? 0}",
+                style: const TextStyle(fontSize: 16)),
+          ]),
         ),
       ]),
     );
