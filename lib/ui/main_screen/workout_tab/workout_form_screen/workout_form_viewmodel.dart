@@ -16,7 +16,18 @@ class WorkoutFormViewModel extends ChangeNotifier {
   late UserModel user = UserModel();
   late WorkoutModel workout = WorkoutModel();
 
+  int minutes = 0;
+  int seconds = 0;
+
+  getTimeInSeconds() {}
+
+  getSeconds() {}
+
+  getTimeMinutes() {}
+
   handleValidation(BuildContext context) async {
+    workout.timeInSeconds = getTimeInSeconds();
+
     workout.id == null
         ? await _addWorkout(context)
         : await _updateWorkout(context);

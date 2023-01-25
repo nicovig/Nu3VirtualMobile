@@ -23,8 +23,6 @@ class WorkoutFormScreen extends StatefulWidget {
 }
 
 class _WorkoutFormScreenState extends State<WorkoutFormScreen> {
-  DateTime date = DateTime.now();
-
   @override
   Widget build(BuildContext context) {
     final workoutId = ModalRoute.of(context)!.settings.arguments as int;
@@ -49,17 +47,127 @@ class _WorkoutFormScreenState extends State<WorkoutFormScreen> {
                               children: !snapshot.hasData
                                   ? [const LoadingBox()]
                                   : [
+                                      CustomFormField(
+                                          onChanged: (value) {
+                                            if (value != null && value != "") {
+                                              snapshot.data?.name = value;
+                                            }
+                                          },
+                                          initialValue:
+                                              snapshot.data?.name != ''
+                                                  ? snapshot.data?.name
+                                                  : '',
+                                          hintText: 'Nom'),
+                                      CustomFormFieldDate(
+                                          initialValue: snapshot.data?.date,
+                                          firstDate: DateTime(
+                                              DateTime.now().year,
+                                              DateTime.now().month - 1,
+                                              DateTime.now().day),
+                                          label: 'Date de la séance',
+                                          lastDate: DateTime(
+                                              DateTime.now().year,
+                                              DateTime.now().month + 1,
+                                              DateTime.now().day),
+                                          handleOnSaved: (value) {
+                                            if (value != null) {
+                                              snapshot.data?.date = value;
+                                            }
+                                          }),
+                                      Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: const [Text('Durée')]),
+                                      Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Expanded(
+                                                flex: 2,
+                                                child: CustomFormField(
+                                                  hintText: 'Minutes',
+                                                  initialValue: model.minutes
+                                                              .toString() !=
+                                                          '0'
+                                                      ? model.minutes.toString()
+                                                      : '',
+                                                  onChanged: (value) {
+                                                    if (value != null &&
+                                                        value != "") {
+                                                      model.minutes =
+                                                          int.parse(value);
+                                                    }
+                                                  },
+                                                  inputFormatters: [
+                                                    FilteringTextInputFormatter
+                                                        .allow(
+                                                            RegExp(r"[0-9\.-]"))
+                                                  ],
+                                                  keyboardType:
+                                                      TextInputType.number,
+                                                )),
+                                            const Expanded(child: Text('min')),
+                                            Expanded(
+                                              flex: 2,
+                                              child: CustomFormField(
+                                                hintText: 'Secondes',
+                                                initialValue: model.seconds
+                                                            .toString() !=
+                                                        '0'
+                                                    ? model.seconds.toString()
+                                                    : '',
+                                                onChanged: (value) {
+                                                  if (value != null &&
+                                                      value != "") {
+                                                    model.seconds =
+                                                        int.parse(value);
+                                                  }
+                                                },
+                                                inputFormatters: [
+                                                  FilteringTextInputFormatter
+                                                      .allow(
+                                                    RegExp(r"[0-9\.-]"),
+                                                  )
+                                                ],
+                                                keyboardType:
+                                                    TextInputType.number,
+                                              ),
+                                            ),
+                                            const Expanded(child: Text('sec'))
+                                          ]),
+                                      CustomFormField(
+                                        hintText: 'Calories ',
+                                        initialValue: snapshot
+                                                        .data?.caloriesBurned
+                                                        .toString() !=
+                                                    '0' &&
+                                                snapshot.data?.caloriesBurned !=
+                                                    null
+                                            ? snapshot.data?.caloriesBurned
+                                                .toString()
+                                            : '',
+                                        onChanged: (value) {
+                                          if (value != null && value != "") {
+                                            snapshot.data?.caloriesBurned =
+                                                int.parse(value);
+                                          }
+                                        },
+                                        inputFormatters: [
+                                          FilteringTextInputFormatter.allow(
+                                            RegExp(r"[0-9\.-]"),
+                                          )
+                                        ],
+                                        keyboardType: TextInputType.number,
+                                      ),
                                       Container(
                                         padding: const EdgeInsets.fromLTRB(
                                             10, 10, 10, 0),
                                         child: ElevatedButton(
                                             onPressed: () async {
                                               model.workout = WorkoutModel(
-                                                  id: model.workout.id,
+                                                  id: snapshot.data?.id,
                                                   name: snapshot.data?.name,
                                                   date: snapshot.data?.date,
-                                                  timeInSeconds: snapshot
-                                                      .data?.timeInSeconds,
                                                   caloriesBurned: snapshot
                                                       .data?.caloriesBurned,
                                                   userId:

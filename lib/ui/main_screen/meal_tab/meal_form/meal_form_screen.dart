@@ -12,7 +12,7 @@ import 'package:nu3virtual/layouts/forms/custom_form_field_date.dart';
 import 'package:nu3virtual/layouts/forms/custom_form_field_radio_buttons/custom_form_field_meal_type.dart';
 import 'package:nu3virtual/layouts/forms/custom_form_field_time.dart';
 import 'package:nu3virtual/layouts/screen_layouts/loading_box.dart';
-import 'package:nu3virtual/ui/main_screen/meal_tab/meal_creation/meal_form_viewmodel.dart';
+import 'package:nu3virtual/ui/main_screen/meal_tab/meal_form/meal_form_viewmodel.dart';
 
 // ignore: must_be_immutable
 class MealFormScreen extends StatefulWidget {
@@ -224,7 +224,7 @@ class _MealFormScreenState extends State<MealFormScreen> {
                                         child: ElevatedButton(
                                             onPressed: () async {
                                               model.meal = MealModel(
-                                                  id: model.meal.id,
+                                                  id: snapshot.data?.id,
                                                   name: snapshot.data?.name,
                                                   type: snapshot.data?.type,
                                                   isFavorite:

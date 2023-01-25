@@ -56,6 +56,12 @@ class _MainScreenState extends State<MainScreen> {
             }
           });
         }
+        if (ModalRoute.of(context)!.settings.arguments == null) {
+          selectedIndex = 0;
+        } else {
+          selectedIndex = ModalRoute.of(context)!.settings.arguments as int;
+        }
+
         EasyLoading.dismiss(animation: false);
       },
       builder: (context, model, child) => DefaultTabController(

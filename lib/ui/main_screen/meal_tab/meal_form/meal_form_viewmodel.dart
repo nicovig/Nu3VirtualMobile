@@ -17,6 +17,7 @@ class MealFormViewModel extends ChangeNotifier {
   late UserModel user = UserModel();
 
   handleValidation(BuildContext context) async {
+    meal.userId = user.id;
     meal.id == null ? await _addMeal(context) : await _updateMeal(context);
   }
 
@@ -66,6 +67,7 @@ class MealFormViewModel extends ChangeNotifier {
   }
 
   _redirectToMealTab(BuildContext context) {
-    Navigator.of(context).pushNamedAndRemoveUntil(homeRoute, (route) => false);
+    Navigator.of(context)
+        .pushNamedAndRemoveUntil(homeRoute, (route) => false, arguments: 0);
   }
 }
