@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:nu3virtual/core/const/routes.dart';
 
@@ -16,6 +17,9 @@ class MealCreationViewModel extends ChangeNotifier {
   late MealModel meal = MealModel();
   late UserModel user = UserModel();
 
+  DateTime date = DateTime.now();
+  TimeOfDay time = TimeOfDay.now();
+
   handleValidation(BuildContext context) async {
     meal.userId = user.id;
     meal.id == null
@@ -23,25 +27,27 @@ class MealCreationViewModel extends ChangeNotifier {
         : await _updateMeal(meal, context);
   }
 
-  Future loadData(int mealId) async {
-    //Future<MealModel> loadData(int mealId) async { //TODO : créer un Future<MealModel>
+  Future<MealModel> loadData(int mealId) async {
     user = await _userStore.getCurrentUser();
     if (mealId != 0) {
-      meal = await _mealService.getMealById(mealId);
+      return Future<MealModel>.delayed(
+          const Duration(seconds: 1), () => _mealService.getMealById(mealId));
     } else {
-      meal = MealModel(
-          name: '',
-          type: MealTypeEnum.snack,
-          isFavorite: false,
-          date: DateTime.now(),
-          carbohydrate: 0,
-          lipid: 0,
-          protein: 0,
-          calorie: 0,
-          notes: '',
-          userId: user.id);
+      return Future<MealModel>.delayed(
+          const Duration(seconds: 1),
+          () => MealModel(
+              id: 0,
+              name: '',
+              type: MealTypeEnum.snack,
+              isFavorite: false,
+              date: DateTime.now(),
+              carbohydrate: 0,
+              lipid: 0,
+              protein: 0,
+              calorie: 0,
+              notes: '',
+              userId: user.id));
     }
-    notifyListeners();
   }
 
   Future _addMeal(MealModel meal, BuildContext context) async {
