@@ -8,6 +8,7 @@ import 'package:nu3virtual/core/models/workout_model.dart';
 import 'package:nu3virtual/core/services/user/user_service_class.dart';
 import 'package:nu3virtual/core/services/workout/workout_service.dart';
 import 'package:nu3virtual/service_locator.dart';
+import 'package:nu3virtual/ui/main_screen/main_screen.dart';
 
 class WorkoutFormViewModel extends ChangeNotifier {
   final UserStore _userStore = getIt<UserStore>();
@@ -19,16 +20,24 @@ class WorkoutFormViewModel extends ChangeNotifier {
   int minutes = 0;
   int seconds = 0;
 
-  getTimeInSeconds() {}
+  getSeconds(int? timeInSeconds) {
+    if (timeInSeconds != null) {
+      return (timeInSeconds / 60).round().toString();
+    }
+    return 0;
+  }
 
-  getSeconds() {}
-
-  getTimeMinutes() {}
+  getTimeMinutes(int? timeInSeconds) {
+    if (timeInSeconds != null) {
+      return (timeInSeconds % 60).toString();
+    }
+    return 0;
+  }
 
   handleValidation(BuildContext context) async {
-    workout.timeInSeconds = getTimeInSeconds();
+    workout.timeInSeconds = (minutes * 60) + seconds;
 
-    workout.id == null
+    workout.id == 0
         ? await _addWorkout(context)
         : await _updateWorkout(context);
   }
@@ -44,12 +53,8 @@ class WorkoutFormViewModel extends ChangeNotifier {
           () => WorkoutModel(
               id: 0,
               name: '',
-              date: DateTime(
-                  DateTime.now().year,
-                  DateTime.now().month,
-                  DateTime.now().day,
-                  TimeOfDay.now().hour,
-                  TimeOfDay.now().minute),
+              date: DateTime(DateTime.now().year, DateTime.now().month,
+                  DateTime.now().day),
               timeInSeconds: 0,
               caloriesBurned: 0,
               userId: user.id));
@@ -57,7 +62,6 @@ class WorkoutFormViewModel extends ChangeNotifier {
   }
 
   Future _addWorkout(BuildContext context) async {
-    workout.id = 0;
     bool isUpdateOk = await _workoutService.createWorkout(workout);
     if (isUpdateOk) {
       _redirectToWorkoutTab(context);
@@ -74,6 +78,7 @@ class WorkoutFormViewModel extends ChangeNotifier {
   }
 
   _redirectToWorkoutTab(BuildContext context) {
-    Navigator.of(context).pushNamedAndRemoveUntil(homeRoute, (route) => false);
+    Navigator.of(context).pushNamedAndRemoveUntil(homeRoute, (route) => false,
+        arguments: MainScreenTabEnum.workouts.index);
   }
 }

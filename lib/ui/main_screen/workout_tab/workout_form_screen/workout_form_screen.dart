@@ -1,16 +1,12 @@
 // ignore_for_file: library_private_types_in_public_api
 
-import 'package:favorite_button/favorite_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:stacked/stacked.dart';
 
 import 'package:nu3virtual/core/models/workout_model.dart';
 import 'package:nu3virtual/layouts/forms/custom_form_field.dart';
 import 'package:nu3virtual/layouts/forms/custom_form_field_date.dart';
-import 'package:nu3virtual/layouts/forms/custom_form_field_radio_buttons/custom_form_field_meal_type.dart';
-import 'package:nu3virtual/layouts/forms/custom_form_field_time.dart';
 import 'package:nu3virtual/layouts/screen_layouts/loading_box.dart';
 import 'package:nu3virtual/ui/main_screen/workout_tab/workout_form_screen/workout_form_viewmodel.dart';
 
@@ -86,11 +82,9 @@ class _WorkoutFormScreenState extends State<WorkoutFormScreen> {
                                                 flex: 2,
                                                 child: CustomFormField(
                                                   hintText: 'Minutes',
-                                                  initialValue: model.minutes
-                                                              .toString() !=
-                                                          '0'
-                                                      ? model.minutes.toString()
-                                                      : '',
+                                                  initialValue: model
+                                                      .getTimeMinutes(snapshot
+                                                          .data?.timeInSeconds),
                                                   onChanged: (value) {
                                                     if (value != null &&
                                                         value != "") {
@@ -111,11 +105,9 @@ class _WorkoutFormScreenState extends State<WorkoutFormScreen> {
                                               flex: 2,
                                               child: CustomFormField(
                                                 hintText: 'Secondes',
-                                                initialValue: model.seconds
-                                                            .toString() !=
-                                                        '0'
-                                                    ? model.seconds.toString()
-                                                    : '',
+                                                initialValue: model.getSeconds(
+                                                    snapshot
+                                                        .data?.timeInSeconds),
                                                 onChanged: (value) {
                                                   if (value != null &&
                                                       value != "") {

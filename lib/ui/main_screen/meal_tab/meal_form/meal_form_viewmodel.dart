@@ -8,6 +8,7 @@ import 'package:nu3virtual/core/models/user_model.dart';
 import 'package:nu3virtual/core/services/meal/meal_service.dart';
 import 'package:nu3virtual/core/services/user/user_service_class.dart';
 import 'package:nu3virtual/service_locator.dart';
+import 'package:nu3virtual/ui/main_screen/main_screen.dart';
 
 class MealFormViewModel extends ChangeNotifier {
   final MealService _mealService = getIt<MealService>();
@@ -18,7 +19,7 @@ class MealFormViewModel extends ChangeNotifier {
 
   handleValidation(BuildContext context) async {
     meal.userId = user.id;
-    meal.id == null ? await _addMeal(context) : await _updateMeal(context);
+    meal.id == 0 ? await _addMeal(context) : await _updateMeal(context);
   }
 
   Future<MealModel> loadData(int mealId) async {
@@ -50,7 +51,6 @@ class MealFormViewModel extends ChangeNotifier {
   }
 
   Future _addMeal(BuildContext context) async {
-    meal.id = 0;
     bool isUpdateOk = await _mealService.createMeal(meal);
     if (isUpdateOk) {
       _redirectToMealTab(context);
@@ -67,7 +67,7 @@ class MealFormViewModel extends ChangeNotifier {
   }
 
   _redirectToMealTab(BuildContext context) {
-    Navigator.of(context)
-        .pushNamedAndRemoveUntil(homeRoute, (route) => false, arguments: 0);
+    Navigator.of(context).pushNamedAndRemoveUntil(homeRoute, (route) => false,
+        arguments: MainScreenTabEnum.meals.index);
   }
 }

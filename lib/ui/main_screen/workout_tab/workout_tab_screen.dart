@@ -122,25 +122,13 @@ class _WorkoutTabScreenState extends State<WorkoutTabScreen> {
                       motion: const ScrollMotion(),
                       children: [
                         SlidableAction(
-                          onPressed: (BuildContext context) {
-                            showDialog(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return WorkoutDialog(
-                                      workoutToUpdate: workout,
-                                      handleValidation: (workoutUpdated,
-                                          dialogContext) async {
-                                        await model.updateWorkout(
-                                            workoutUpdated, dialogContext);
-                                        await model.loadData(widget.date);
-                                      });
-                                });
-                          },
+                          onPressed: (BuildContext context) =>
+                              model.openWorkoutScreen(context, workout.id ?? 0),
                           backgroundColor: const Color(0xFF7BC043),
                           foregroundColor: Colors.white,
                           icon: Icons.update,
                           label: 'Modifier',
-                        ),
+                        )
                       ],
                     ),
                     child: ListTile(
@@ -152,19 +140,7 @@ class _WorkoutTabScreenState extends State<WorkoutTabScreen> {
               style: ButtonStyle(
                   backgroundColor:
                       MaterialStateProperty.all(Colors.blue.shade100)),
-              onPressed: () {
-                showDialog(
-                  context: context,
-                  builder: (context) => WorkoutDialog(
-                      handleValidation: (workout, dialogContext) async {
-                    workout.userId = model.userId;
-                    await model.addWorkout(workout, dialogContext);
-                    await model.loadData(widget.date);
-
-                    setState(() {});
-                  }),
-                );
-              },
+              onPressed: () => model.openWorkoutScreen(context, 0),
               child: const Text("Ajouter une séance",
                   style: TextStyle(color: Colors.blue))),
         ],

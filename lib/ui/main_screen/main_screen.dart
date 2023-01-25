@@ -133,3 +133,5 @@ class _MainScreenState extends State<MainScreen> {
     });
   }
 }
+
+enum MainScreenTabEnum { meals, workouts, informations }

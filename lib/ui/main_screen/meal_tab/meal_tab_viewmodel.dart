@@ -26,11 +26,11 @@ class MealTabViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  openMealScreen(BuildContext context, int? mealId) {
+  openMealScreen(BuildContext context, int mealId) {
     Navigator.pushNamed(
       context,
       mealRoute,
-      arguments: mealId ?? 0,
+      arguments: mealId,
     );
   }
 

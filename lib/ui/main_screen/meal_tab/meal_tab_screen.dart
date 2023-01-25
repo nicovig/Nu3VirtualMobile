@@ -79,55 +79,52 @@ class _MealTabScreenState extends State<MealTabScreen> {
                     key: Key('meal-index-$index'),
                     // The start action pane is the one at the left or the top side.
                     startActionPane: ActionPane(
-                      // A motion is a widget used to control how the pane animates.
-                      motion: const ScrollMotion(),
-                      children: [
-                        SlidableAction(
-                          onPressed: (BuildContext context) {
-                            showDialog(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return AlertDialog(
-                                    title: const Text("Supprimer"),
-                                    content: Text(
-                                        'Êtes vous sûr de vouloir supprimer le repas "${meal.name}"'),
-                                    actions: <Widget>[
-                                      ElevatedButton(
-                                          onPressed: () async {
-                                            await model.deleteMeal(
-                                                meal.id ?? 0, context);
-                                            await model.loadData(widget.date);
-                                          },
-                                          child: const Text("Oui")),
-                                      ElevatedButton(
-                                        onPressed: () =>
-                                            Navigator.of(context).pop(false),
-                                        child: const Text("Non"),
-                                      ),
-                                    ],
-                                  );
-                                });
-                          },
-                          backgroundColor: const Color(0xFFFE4A49),
-                          foregroundColor: Colors.white,
-                          icon: Icons.delete,
-                          label: 'Supprimer',
-                        )
-                      ],
-                    ),
-                    endActionPane: ActionPane(
-                      motion: const ScrollMotion(),
-                      children: [
-                        SlidableAction(
-                          onPressed: (BuildContext context) =>
-                              model.openMealScreen(context, meal.id),
-                          backgroundColor: const Color(0xFF7BC043),
-                          foregroundColor: Colors.white,
-                          icon: Icons.update,
-                          label: 'Modifier',
-                        ),
-                      ],
-                    ),
+                        // A motion is a widget used to control how the pane animates.
+                        motion: const ScrollMotion(),
+                        children: [
+                          SlidableAction(
+                            onPressed: (BuildContext context) {
+                              showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      title: const Text("Supprimer"),
+                                      content: Text(
+                                          'Êtes vous sûr de vouloir supprimer le repas "${meal.name}"'),
+                                      actions: <Widget>[
+                                        ElevatedButton(
+                                            onPressed: () async {
+                                              await model.deleteMeal(
+                                                  meal.id ?? 0, context);
+                                              await model.loadData(widget.date);
+                                            },
+                                            child: const Text("Oui")),
+                                        ElevatedButton(
+                                          onPressed: () =>
+                                              Navigator.of(context).pop(false),
+                                          child: const Text("Non"),
+                                        ),
+                                      ],
+                                    );
+                                  });
+                            },
+                            backgroundColor: const Color(0xFFFE4A49),
+                            foregroundColor: Colors.white,
+                            icon: Icons.delete,
+                            label: 'Supprimer',
+                          )
+                        ]),
+                    endActionPane:
+                        ActionPane(motion: const ScrollMotion(), children: [
+                      SlidableAction(
+                        onPressed: (BuildContext context) =>
+                            model.openMealScreen(context, meal.id ?? 0),
+                        backgroundColor: const Color(0xFF7BC043),
+                        foregroundColor: Colors.white,
+                        icon: Icons.update,
+                        label: 'Modifier',
+                      )
+                    ]),
                     child: ListTile(
                       title: Text(meal.name ?? ''),
                       subtitle: Text(subtitle),
@@ -137,7 +134,7 @@ class _MealTabScreenState extends State<MealTabScreen> {
               style: ButtonStyle(
                   backgroundColor:
                       MaterialStateProperty.all(Colors.blue.shade100)),
-              onPressed: () => model.openMealScreen(context, null),
+              onPressed: () => model.openMealScreen(context, 0),
               child: const Text("Ajouter un repas",
                   style: TextStyle(color: Colors.blue))),
         ],

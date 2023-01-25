@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 
+import 'package:nu3virtual/core/const/routes.dart';
 import 'package:nu3virtual/core/models/monitoring_model.dart';
 import 'package:nu3virtual/core/models/user_model.dart';
 import 'package:nu3virtual/core/models/workout_model.dart';
@@ -24,10 +25,12 @@ class WorkoutTabViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future addWorkout(WorkoutModel workout, BuildContext dialogContext) async {
-    bool isCreateOk = await _workoutService.createWorkout(workout);
-    Navigator.pop(dialogContext, isCreateOk);
-    notifyListeners();
+  openWorkoutScreen(BuildContext context, int workoutId) {
+    Navigator.pushNamed(
+      context,
+      workoutRoute,
+      arguments: workoutId,
+    );
   }
 
   Future deleteWorkout(int workoutId, BuildContext dialogContext) async {
@@ -39,12 +42,6 @@ class WorkoutTabViewModel extends ChangeNotifier {
   Future loadData(DateTime date) async {
     await _getWorkouts(date);
     await _getMonitoring(date);
-    notifyListeners();
-  }
-
-  Future updateWorkout(WorkoutModel workout, BuildContext dialogContext) async {
-    bool isUpdateOk = await _workoutService.updateWorkout(workout);
-    Navigator.pop(dialogContext, isUpdateOk);
     notifyListeners();
   }
 
