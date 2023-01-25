@@ -7,7 +7,7 @@ import 'package:nu3virtual/core/const/routes.dart';
 import 'package:nu3virtual/service_locator.dart';
 import 'package:nu3virtual/ui/authentication_screen/authentication_screen.dart';
 import 'package:nu3virtual/ui/main_screen/main_screen.dart';
-import 'package:nu3virtual/ui/main_screen/meal_tab/meal_creation/meal_creation_screen.dart';
+import 'package:nu3virtual/ui/main_screen/meal_tab/meal_creation/meal_form_screen.dart';
 
 void main() {
   configEasyLoading();
@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
         home: AuthenticationScreen(title: 'NuVirtual'),
         routes: {
           homeRoute: (context) => MainScreen(),
-          mealRoute: (context) => MealCreationScreen()
+          mealRoute: (context) => MealFormScreen()
         },
         color: Colors.white,
         debugShowCheckedModeBanner: false,

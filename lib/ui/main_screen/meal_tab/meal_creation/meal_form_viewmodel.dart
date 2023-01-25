@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:nu3virtual/core/const/routes.dart';
 
 import 'package:nu3virtual/core/models/meal_model.dart';
@@ -10,7 +9,7 @@ import 'package:nu3virtual/core/services/meal/meal_service.dart';
 import 'package:nu3virtual/core/services/user/user_service_class.dart';
 import 'package:nu3virtual/service_locator.dart';
 
-class MealCreationViewModel extends ChangeNotifier {
+class MealFormViewModel extends ChangeNotifier {
   final MealService _mealService = getIt<MealService>();
   final UserStore _userStore = getIt<UserStore>();
 

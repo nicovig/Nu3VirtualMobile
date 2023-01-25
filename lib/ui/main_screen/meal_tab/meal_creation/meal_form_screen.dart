@@ -12,17 +12,17 @@ import 'package:nu3virtual/layouts/forms/custom_form_field_date.dart';
 import 'package:nu3virtual/layouts/forms/custom_form_field_radio_buttons/custom_form_field_meal_type.dart';
 import 'package:nu3virtual/layouts/forms/custom_form_field_time.dart';
 import 'package:nu3virtual/layouts/screen_layouts/loading_box.dart';
-import 'package:nu3virtual/ui/main_screen/meal_tab/meal_creation/meal_creation_viewmodel.dart';
+import 'package:nu3virtual/ui/main_screen/meal_tab/meal_creation/meal_form_viewmodel.dart';
 
 // ignore: must_be_immutable
-class MealCreationScreen extends StatefulWidget {
-  MealCreationScreen({super.key});
+class MealFormScreen extends StatefulWidget {
+  MealFormScreen({super.key});
 
   @override
-  _MealCreationScreenState createState() => _MealCreationScreenState();
+  _MealFormScreenState createState() => _MealFormScreenState();
 }
 
-class _MealCreationScreenState extends State<MealCreationScreen> {
+class _MealFormScreenState extends State<MealFormScreen> {
   DateTime date = DateTime.now();
   TimeOfDay time = TimeOfDay.now();
 
@@ -32,8 +32,8 @@ class _MealCreationScreenState extends State<MealCreationScreen> {
   Widget build(BuildContext context) {
     final mealId = ModalRoute.of(context)!.settings.arguments as int;
 
-    return ViewModelBuilder<MealCreationViewModel>.reactive(
-      viewModelBuilder: () => MealCreationViewModel(),
+    return ViewModelBuilder<MealFormViewModel>.reactive(
+      viewModelBuilder: () => MealFormViewModel(),
       builder: (context, model, child) => FutureBuilder<MealModel>(
           future: model.loadData(mealId),
           builder: (BuildContext context, AsyncSnapshot<MealModel> snapshot) =>
