@@ -8,7 +8,6 @@ import 'package:stacked/stacked.dart';
 import 'package:nu3virtual/layouts/screen_layouts/change_date_buttons.dart';
 import 'package:nu3virtual/layouts/screen_layouts/monitoring_box.dart';
 import 'package:nu3virtual/ui/main_screen/meal_tab/meal_tab_viewmodel.dart';
-import 'package:nu3virtual/ui/main_screen/meal_tab/meal_dialog/meal_dialog.dart';
 
 // ignore: must_be_immutable
 class MealTabScreen extends StatefulWidget {
