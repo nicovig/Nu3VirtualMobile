@@ -16,14 +16,8 @@ class MealFormViewModel extends ChangeNotifier {
   late MealModel meal = MealModel();
   late UserModel user = UserModel();
 
-  DateTime date = DateTime.now();
-  TimeOfDay time = TimeOfDay.now();
-
   handleValidation(BuildContext context) async {
-    meal.userId = user.id;
-    meal.id == null
-        ? await _addMeal(meal, context)
-        : await _updateMeal(meal, context);
+    meal.id == null ? await _addMeal(context) : await _updateMeal(context);
   }
 
   Future<MealModel> loadData(int mealId) async {
@@ -39,7 +33,12 @@ class MealFormViewModel extends ChangeNotifier {
               name: '',
               type: MealTypeEnum.snack,
               isFavorite: false,
-              date: DateTime.now(),
+              date: DateTime(
+                  DateTime.now().year,
+                  DateTime.now().month,
+                  DateTime.now().day,
+                  TimeOfDay.now().hour,
+                  TimeOfDay.now().minute),
               carbohydrate: 0,
               lipid: 0,
               protein: 0,
@@ -49,7 +48,7 @@ class MealFormViewModel extends ChangeNotifier {
     }
   }
 
-  Future _addMeal(MealModel meal, BuildContext context) async {
+  Future _addMeal(BuildContext context) async {
     meal.id = 0;
     bool isUpdateOk = await _mealService.createMeal(meal);
     if (isUpdateOk) {
@@ -58,7 +57,7 @@ class MealFormViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future _updateMeal(MealModel meal, BuildContext context) async {
+  Future _updateMeal(BuildContext context) async {
     bool isUpdateOk = await _mealService.updateMeal(meal);
     if (isUpdateOk) {
       _redirectToMealTab(context);

@@ -23,11 +23,6 @@ class MealFormScreen extends StatefulWidget {
 }
 
 class _MealFormScreenState extends State<MealFormScreen> {
-  DateTime date = DateTime.now();
-  TimeOfDay time = TimeOfDay.now();
-
-  String timeLabel = 'Heure du repas';
-
   @override
   Widget build(BuildContext context) {
     final mealId = ModalRoute.of(context)!.settings.arguments as int;
@@ -94,7 +89,7 @@ class _MealFormScreenState extends State<MealFormScreen> {
                                               (MealTypeEnum value) =>
                                                   snapshot.data?.type = value),
                                       CustomFormFieldDate(
-                                          initialValue: date,
+                                          initialValue: snapshot.data?.date,
                                           firstDate: DateTime(
                                               DateTime.now().year,
                                               DateTime.now().month - 1,
@@ -105,21 +100,30 @@ class _MealFormScreenState extends State<MealFormScreen> {
                                               DateTime.now().month + 1,
                                               DateTime.now().day),
                                           handleOnSaved: (value) {
-                                            if (value != null && value != "")
-                                              date = value;
+                                            if (value != null) {
+                                              snapshot.data?.date = DateTime(
+                                                  value.year,
+                                                  value.month,
+                                                  value.day,
+                                                  snapshot.data?.date?.hour ??
+                                                      0,
+                                                  snapshot.data?.date?.minute ??
+                                                      0);
+                                            }
                                           }),
                                       CustomFormFieldTime(
-                                          //initialValue: '${time.hour}h ${time.minute}min',
-                                          label: timeLabel,
-                                          labelColor: timeLabel ==
-                                                  '${time.hour}h ${time.minute}min'
-                                              ? Colors.black
-                                              : Colors.grey.shade600,
+                                          initialValue:
+                                              '${snapshot.data?.date?.hour}h ${snapshot.data?.date?.minute}min',
                                           handleOnChanged: (value) async {
-                                            if (value != null && value != "") {
-                                              time = value;
-                                              timeLabel =
-                                                  '${time.hour}h ${time.minute}min';
+                                            if (value != null) {
+                                              snapshot.data?.date = DateTime(
+                                                  snapshot.data?.date?.year ??
+                                                      0,
+                                                  snapshot.data?.date?.month ??
+                                                      0,
+                                                  snapshot.data?.date?.day ?? 0,
+                                                  value.hour,
+                                                  value.minute);
                                               setState(() {});
                                             }
                                           }),
@@ -219,19 +223,13 @@ class _MealFormScreenState extends State<MealFormScreen> {
                                             10, 10, 10, 0),
                                         child: ElevatedButton(
                                             onPressed: () async {
-                                              date = DateTime(
-                                                  date.year,
-                                                  date.month,
-                                                  date.day,
-                                                  time.hour,
-                                                  time.minute);
                                               model.meal = MealModel(
                                                   id: model.meal.id,
                                                   name: snapshot.data?.name,
                                                   type: snapshot.data?.type,
                                                   isFavorite:
                                                       snapshot.data?.isFavorite,
-                                                  date: date,
+                                                  date: snapshot.data?.date,
                                                   carbohydrate: snapshot
                                                       .data?.carbohydrate,
                                                   lipid: snapshot.data?.lipid,

@@ -52,6 +52,21 @@ class WorkoutServiceApi extends WorkoutService {
   }
 
   @override
+  Future<WorkoutModel> getWorkoutById(int workoutId) async {
+    Uri newUrl = Uri.https(
+        hostedDeviceLocalhost + apiUrl, '$controllerName/workout/$workoutId');
+    var response = await http.get(
+      newUrl,
+      headers: headers,
+    );
+
+    final Map<String, dynamic> untypedObject = jsonDecode(response.body);
+    final WorkoutModel workout = WorkoutModel.fromJson(untypedObject);
+
+    return workout;
+  }
+
+  @override
   Future<bool> updateWorkout(WorkoutModel workout) async {
     var response =
         await http.put(url, headers: headers, body: workout.toJson());
