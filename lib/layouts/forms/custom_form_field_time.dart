@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class CustomFormFieldTime extends StatelessWidget {
-  CustomFormFieldTime({
+  const CustomFormFieldTime({
     Key? key,
     required this.initialTime,
     required this.handleOnChanged,

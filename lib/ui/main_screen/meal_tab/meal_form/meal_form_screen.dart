@@ -87,6 +87,8 @@ class _MealFormScreenState extends State<MealFormScreen> {
                                                 }))
                                       ]),
                                       CustomFormFieldMealType(
+                                          mealType: snapshot.data?.type ??
+                                              MealTypeEnum.snack,
                                           handleOnPressedRadioButton:
                                               (MealTypeEnum value) =>
                                                   snapshot.data?.type = value),
@@ -244,7 +246,8 @@ class _MealFormScreenState extends State<MealFormScreen> {
                                                   calorie:
                                                       snapshot.data?.calorie,
                                                   notes: snapshot.data?.notes);
-                                              //await model.handleValidation(context);
+                                              await model
+                                                  .handleValidation(context);
                                             },
                                             child: Text(snapshot.data?.id == 0
                                                 ? "Ajouter"
