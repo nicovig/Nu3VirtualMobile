@@ -36,8 +36,9 @@ class AuthenticationScreen extends StatelessWidget {
                               model.checkEmailOrPseudo(value ?? ''),
                           handleOnSaved: (value) =>
                               model.checkEmailOrPseudo(value ?? ''),
-                          hintText: 'Pseudo ou email'),
+                          label: 'Pseudo ou email'),
                       PasswordFormField(
+                          label: 'Mot de passe',
                           onChanged: (value) =>
                               model.checkPassword(value ?? ''),
                           handleOnSaved: (value) =>

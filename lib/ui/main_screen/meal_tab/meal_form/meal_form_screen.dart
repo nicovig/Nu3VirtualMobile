@@ -27,6 +27,8 @@ class _MealFormScreenState extends State<MealFormScreen> {
   Widget build(BuildContext context) {
     final mealId = ModalRoute.of(context)!.settings.arguments as int;
 
+    String timeValueDisplayed = '';
+
     return ViewModelBuilder<MealFormViewModel>.reactive(
       viewModelBuilder: () => MealFormViewModel(),
       builder: (context, model, child) => FutureBuilder<MealModel>(
@@ -61,7 +63,7 @@ class _MealFormScreenState extends State<MealFormScreen> {
                                                 },
                                                 initialValue:
                                                     snapshot.data?.name,
-                                                hintText: 'Nom')),
+                                                label: 'Nom')),
                                         Padding(
                                             padding: const EdgeInsets.fromLTRB(
                                                 8, 12, 0, 0),
@@ -114,6 +116,11 @@ class _MealFormScreenState extends State<MealFormScreen> {
                                       CustomFormFieldTime(
                                           initialValue:
                                               '${snapshot.data?.date?.hour}h ${snapshot.data?.date?.minute}min',
+                                          hoursDisplayed:
+                                              snapshot.data?.date?.hour ?? 0,
+                                          minutesDisplayed:
+                                              snapshot.data?.date?.minute ?? 0,
+                                          label: 'Heure du repas',
                                           handleOnChanged: (value) async {
                                             if (value != null) {
                                               snapshot.data?.date = DateTime(
@@ -128,7 +135,7 @@ class _MealFormScreenState extends State<MealFormScreen> {
                                             }
                                           }),
                                       CustomFormField(
-                                        hintText: 'Glucides',
+                                        label: 'Glucides',
                                         initialValue: snapshot
                                                     .data?.carbohydrate
                                                     .toString() !=
@@ -150,7 +157,7 @@ class _MealFormScreenState extends State<MealFormScreen> {
                                         keyboardType: TextInputType.number,
                                       ),
                                       CustomFormField(
-                                        hintText: 'Lipides',
+                                        label: 'Lipides',
                                         initialValue: snapshot.data?.lipid
                                                     .toString() !=
                                                 '0'
@@ -170,7 +177,7 @@ class _MealFormScreenState extends State<MealFormScreen> {
                                         keyboardType: TextInputType.number,
                                       ),
                                       CustomFormField(
-                                        hintText: 'Protéines',
+                                        label: 'Protéines',
                                         initialValue: snapshot.data?.protein
                                                     .toString() !=
                                                 '0'
@@ -190,7 +197,7 @@ class _MealFormScreenState extends State<MealFormScreen> {
                                         keyboardType: TextInputType.number,
                                       ),
                                       CustomFormField(
-                                        hintText: 'Calories',
+                                        label: 'Calories',
                                         initialValue: snapshot.data?.calorie
                                                     .toString() !=
                                                 '0'
@@ -217,7 +224,7 @@ class _MealFormScreenState extends State<MealFormScreen> {
                                             }
                                           },
                                           initialValue: snapshot.data?.notes,
-                                          hintText: 'Notes'),
+                                          label: 'Notes'),
                                       Container(
                                         padding: const EdgeInsets.fromLTRB(
                                             10, 10, 10, 0),
@@ -238,8 +245,7 @@ class _MealFormScreenState extends State<MealFormScreen> {
                                                   calorie:
                                                       snapshot.data?.calorie,
                                                   notes: snapshot.data?.notes);
-                                              await model
-                                                  .handleValidation(context);
+                                              //await model.handleValidation(context);
                                             },
                                             child: Text(snapshot.data?.id == 0
                                                 ? "Ajouter"
@@ -248,4 +254,8 @@ class _MealFormScreenState extends State<MealFormScreen> {
                                     ]))))),
     );
   }
+}
+
+getTimeInitialValue(int? snapshotDateHour, int? snapshotDateMinute) {
+  return '${snapshotDateHour}h ${snapshotDateMinute}min';
 }

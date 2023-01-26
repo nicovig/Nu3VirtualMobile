@@ -42,7 +42,7 @@ class UserScreen extends StatelessWidget {
                         onChanged: (value) {
                           if (value != null && value != "") lastname = value;
                         },
-                        hintText: 'Nom',
+                        label: 'Nom',
                         inputFormatters: [
                           FilteringTextInputFormatter.allow(
                             RegExp(r"[a-zA-Z]"),
@@ -59,7 +59,7 @@ class UserScreen extends StatelessWidget {
                         onChanged: (value) {
                           if (value != null && value != "") firstname = value;
                         },
-                        hintText: 'Prénom',
+                        label: 'Prénom',
                         inputFormatters: [
                           FilteringTextInputFormatter.allow(
                             RegExp(r"[a-zA-Z]"),
@@ -76,7 +76,7 @@ class UserScreen extends StatelessWidget {
                         onChanged: (value) {
                           if (value != null && value != "") pseudo = value;
                         },
-                        hintText: 'Pseudo',
+                        label: 'Pseudo',
                         inputFormatters: [
                           FilteringTextInputFormatter.allow(
                             RegExp('[a-zA-Z0-9.]'),
@@ -94,7 +94,7 @@ class UserScreen extends StatelessWidget {
                             height = int.parse(value);
                           }
                         },
-                        hintText: 'Taille (en cm)',
+                        label: 'Taille (en cm)',
                         inputFormatters: [
                           FilteringTextInputFormatter.allow(
                             RegExp(r"[0-9]"),
@@ -113,7 +113,7 @@ class UserScreen extends StatelessWidget {
                             weight = double.parse(value);
                           }
                         },
-                        hintText: 'Poids (en kg)',
+                        label: 'Poids (en kg)',
                         inputFormatters: [
                           FilteringTextInputFormatter.allow(
                             RegExp(r"[0-9\.-]"),
@@ -140,7 +140,7 @@ class UserScreen extends StatelessWidget {
                         onChanged: (value) {
                           if (value != null && value != "") email = value;
                         },
-                        hintText: 'Email',
+                        label: 'Email',
                         keyboardType: TextInputType.emailAddress,
                         validator: (val) {
                           if (val != null && !val.isValidEmail) {
@@ -152,7 +152,7 @@ class UserScreen extends StatelessWidget {
                         onChanged: (value) {
                           if (value != null && value != "") password = value;
                         },
-                        hintText: 'Mot de passe',
+                        label: 'Mot de passe',
                       ),
                       ElevatedButton(
                         onPressed: () {

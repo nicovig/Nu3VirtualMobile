@@ -53,7 +53,7 @@ class _WorkoutFormScreenState extends State<WorkoutFormScreen> {
                                               snapshot.data?.name != ''
                                                   ? snapshot.data?.name
                                                   : '',
-                                          hintText: 'Nom'),
+                                          label: 'Nom'),
                                       CustomFormFieldDate(
                                           initialValue: snapshot.data?.date,
                                           firstDate: DateTime(
@@ -81,7 +81,7 @@ class _WorkoutFormScreenState extends State<WorkoutFormScreen> {
                                             Expanded(
                                                 flex: 2,
                                                 child: CustomFormField(
-                                                  hintText: 'Minutes',
+                                                  label: 'Minutes',
                                                   initialValue: model
                                                       .getTimeMinutes(snapshot
                                                           .data?.timeInSeconds),
@@ -104,7 +104,7 @@ class _WorkoutFormScreenState extends State<WorkoutFormScreen> {
                                             Expanded(
                                               flex: 2,
                                               child: CustomFormField(
-                                                hintText: 'Secondes',
+                                                label: 'Secondes',
                                                 initialValue: model.getSeconds(
                                                     snapshot
                                                         .data?.timeInSeconds),
@@ -128,7 +128,7 @@ class _WorkoutFormScreenState extends State<WorkoutFormScreen> {
                                             const Expanded(child: Text('sec'))
                                           ]),
                                       CustomFormField(
-                                        hintText: 'Calories ',
+                                        label: 'Calories',
                                         initialValue: snapshot
                                                         .data?.caloriesBurned
                                                         .toString() !=

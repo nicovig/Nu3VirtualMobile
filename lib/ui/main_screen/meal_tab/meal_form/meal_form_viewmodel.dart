@@ -29,7 +29,7 @@ class MealFormViewModel extends ChangeNotifier {
           const Duration(seconds: 1), () => _mealService.getMealById(mealId));
     } else {
       return Future<MealModel>.delayed(
-          const Duration(seconds: 1),
+          const Duration(seconds: 0),
           () => MealModel(
               id: 0,
               name: '',

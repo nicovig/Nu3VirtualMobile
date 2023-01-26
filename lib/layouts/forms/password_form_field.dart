@@ -3,13 +3,17 @@ import 'package:flutter/services.dart';
 
 class PasswordFormField extends StatefulWidget {
   PasswordFormField(
-      {super.key, required this.handleOnSaved, required this.onChanged});
+      {super.key,
+      required this.handleOnSaved,
+      required this.label,
+      required this.onChanged});
 
   @override
   _PasswordFormFieldState createState() => _PasswordFormFieldState();
 
   bool isPasswordVisible = false;
   final Function(String?) handleOnSaved;
+  String label;
   final Function(String?) onChanged;
 }
 
@@ -24,7 +28,7 @@ class _PasswordFormFieldState extends State<PasswordFormField> {
           onChanged: widget.onChanged,
           obscureText: !widget.isPasswordVisible,
           decoration: InputDecoration(
-            hintText: 'Mot de passe',
+            labelText: widget.label,
             suffixIcon: IconButton(
               icon: Icon(
                 widget.isPasswordVisible
