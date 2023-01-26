@@ -114,12 +114,12 @@ class _MealFormScreenState extends State<MealFormScreen> {
                                             }
                                           }),
                                       CustomFormFieldTime(
-                                          initialValue:
-                                              '${snapshot.data?.date?.hour}h ${snapshot.data?.date?.minute}min',
-                                          hoursDisplayed:
-                                              snapshot.data?.date?.hour ?? 0,
-                                          minutesDisplayed:
-                                              snapshot.data?.date?.minute ?? 0,
+                                          initialTime: TimeOfDay(
+                                              hour: snapshot.data?.date?.hour ??
+                                                  0,
+                                              minute:
+                                                  snapshot.data?.date?.minute ??
+                                                      0),
                                           label: 'Heure du repas',
                                           handleOnChanged: (value) async {
                                             if (value != null) {
@@ -131,7 +131,6 @@ class _MealFormScreenState extends State<MealFormScreen> {
                                                   snapshot.data?.date?.day ?? 0,
                                                   value.hour,
                                                   value.minute);
-                                              setState(() {});
                                             }
                                           }),
                                       CustomFormField(
