@@ -82,8 +82,8 @@ class _WorkoutFormScreenState extends State<WorkoutFormScreen> {
                                                 flex: 2,
                                                 child: CustomFormField(
                                                   label: 'Minutes',
-                                                  initialValue: model
-                                                      .getTimeMinutes(snapshot
+                                                  initialValue:
+                                                      model.getMinutes(snapshot
                                                           .data?.timeInSeconds),
                                                   onChanged: (value) {
                                                     if (value != null &&
@@ -151,26 +151,36 @@ class _WorkoutFormScreenState extends State<WorkoutFormScreen> {
                                         ],
                                         keyboardType: TextInputType.number,
                                       ),
+                                      CustomFormField(
+                                          maxLines: 2,
+                                          onChanged: (value) {
+                                            if (value != null && value != "") {
+                                              snapshot.data?.notes = value;
+                                            }
+                                          },
+                                          initialValue: snapshot.data?.notes,
+                                          label: 'Notes'),
                                       Container(
-                                        padding: const EdgeInsets.fromLTRB(
-                                            10, 10, 10, 0),
-                                        child: ElevatedButton(
-                                            onPressed: () async {
-                                              model.workout = WorkoutModel(
-                                                  id: snapshot.data?.id,
-                                                  name: snapshot.data?.name,
-                                                  date: snapshot.data?.date,
-                                                  caloriesBurned: snapshot
-                                                      .data?.caloriesBurned,
-                                                  userId:
-                                                      snapshot.data?.userId);
-                                              await model
-                                                  .handleValidation(context);
-                                            },
-                                            child: Text(snapshot.data?.id == 0
-                                                ? "Ajouter"
-                                                : "Modifier")),
-                                      )
+                                          padding: const EdgeInsets.fromLTRB(
+                                              10, 10, 10, 0),
+                                          child: ElevatedButton(
+                                              onPressed: () async {
+                                                model.workout = WorkoutModel(
+                                                    id: snapshot.data?.id,
+                                                    name: snapshot.data?.name,
+                                                    date: snapshot.data?.date,
+                                                    caloriesBurned: snapshot
+                                                        .data?.caloriesBurned,
+                                                    notes: snapshot.data?.notes,
+                                                    userId:
+                                                        snapshot.data?.userId);
+
+                                                await model
+                                                    .handleValidation(context);
+                                              },
+                                              child: Text(snapshot.data?.id == 0
+                                                  ? "Ajouter"
+                                                  : "Modifier")))
                                     ]))))),
     );
   }

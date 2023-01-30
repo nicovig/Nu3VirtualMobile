@@ -78,7 +78,7 @@ class _WorkoutTabScreenState extends State<WorkoutTabScreen> {
                           itemCount: model.workouts.length,
                           itemBuilder: (context, index) {
                             final workout = model.workouts[index];
-                            var subtitle = workout.name ?? '';
+                            var subtitle = workout.notes ?? '';
                             return Slidable(
                                 key: Key('workout-index-$index'),
                                 // The start action pane is the one at the left or the top side.

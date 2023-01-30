@@ -20,23 +20,27 @@ class WorkoutFormViewModel extends ChangeNotifier {
   int minutes = 0;
   int seconds = 0;
 
-  getSeconds(int? timeInSeconds) {
+  getMinutes(int? timeInSeconds) {
     if (timeInSeconds != null) {
-      return (timeInSeconds / 60).round().toString();
+      var result = (timeInSeconds / 60).round();
+      minutes = result;
+      return result.toString();
     }
     return 0;
   }
 
-  getTimeMinutes(int? timeInSeconds) {
+  getSeconds(int? timeInSeconds) {
     if (timeInSeconds != null) {
-      return (timeInSeconds % 60).toString();
+      var result = timeInSeconds % 60;
+      seconds = result;
+      return result.toString();
     }
     return 0;
   }
 
   handleValidation(BuildContext context) async {
     workout.timeInSeconds = (minutes * 60) + seconds;
-
+    workout.userId = user.id;
     workout.id == 0
         ? await _addWorkout(context)
         : await _updateWorkout(context);
@@ -49,7 +53,7 @@ class WorkoutFormViewModel extends ChangeNotifier {
           () => _workoutService.getWorkoutById(workoutId));
     } else {
       return Future<WorkoutModel>.delayed(
-          const Duration(seconds: 1),
+          const Duration(seconds: 0),
           () => WorkoutModel(
               id: 0,
               name: '',

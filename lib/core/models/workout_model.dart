@@ -6,6 +6,7 @@ class WorkoutModel {
   DateTime? date;
   int? timeInSeconds;
   int? caloriesBurned;
+  String? notes;
   int? userId;
 
   WorkoutModel(
@@ -14,6 +15,7 @@ class WorkoutModel {
       this.date,
       this.timeInSeconds,
       this.caloriesBurned,
+      this.notes,
       this.userId});
 
   factory WorkoutModel.fromJson(Map<String, dynamic> parsedJson) {
@@ -25,6 +27,7 @@ class WorkoutModel {
             : null,
         timeInSeconds: parsedJson['timeInSeconds'] ?? "",
         caloriesBurned: parsedJson['caloriesBurned'] ?? "",
+        notes: parsedJson['notes'] ?? "",
         userId: parsedJson['userId'] ?? 0);
   }
 
@@ -35,6 +38,7 @@ class WorkoutModel {
       'date': date?.toIso8601String(),
       'timeInSeconds': timeInSeconds,
       'caloriesBurned': caloriesBurned,
+      'notes': notes,
       'userId': userId
     });
   }
