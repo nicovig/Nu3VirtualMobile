@@ -26,7 +26,7 @@ class _MealTabScreenState extends State<MealTabScreen> {
   Widget build(BuildContext context) {
     return ViewModelBuilder<MealTabViewModel>.reactive(
       viewModelBuilder: () => MealTabViewModel(),
-      onModelReady: (model) {
+      onViewModelReady: (model) {
         EasyLoading.show();
         model.initData(widget.date);
         EasyLoading.dismiss(animation: false);
@@ -67,69 +67,80 @@ class _MealTabScreenState extends State<MealTabScreen> {
               padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
               child: MonitoringBox(
                   date: widget.date, monitoring: model.monitoringDisplayed)),
-          ListView.builder(
-              scrollDirection: Axis.vertical,
-              shrinkWrap: true,
-              itemCount: model.mealsDisplayed.length,
-              itemBuilder: (context, index) {
-                final meal = model.mealsDisplayed[index];
-                var subtitle =
-                    'P: ${meal.protein} G: ${meal.carbohydrate} C: ${meal.calorie}';
-                return Slidable(
-                    key: Key('meal-index-$index'),
-                    // The start action pane is the one at the left or the top side.
-                    startActionPane: ActionPane(
-                        // A motion is a widget used to control how the pane animates.
-                        motion: const ScrollMotion(),
-                        children: [
-                          SlidableAction(
-                            onPressed: (BuildContext context) {
-                              showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return AlertDialog(
-                                      title: const Text("Supprimer"),
-                                      content: Text(
-                                          'Êtes vous sûr de vouloir supprimer le repas "${meal.name}"'),
-                                      actions: <Widget>[
-                                        ElevatedButton(
-                                            onPressed: () async {
-                                              await model.deleteMeal(
-                                                  meal.id ?? 0, context);
-                                              await model.loadData(widget.date);
-                                            },
-                                            child: const Text("Oui")),
-                                        ElevatedButton(
-                                          onPressed: () =>
-                                              Navigator.of(context).pop(false),
-                                          child: const Text("Non"),
-                                        ),
-                                      ],
-                                    );
-                                  });
-                            },
-                            backgroundColor: const Color(0xFFFE4A49),
-                            foregroundColor: Colors.white,
-                            icon: Icons.delete,
-                            label: 'Supprimer',
-                          )
-                        ]),
-                    endActionPane:
-                        ActionPane(motion: const ScrollMotion(), children: [
-                      SlidableAction(
-                        onPressed: (BuildContext context) =>
-                            model.openMealScreen(context, meal.id ?? 0),
-                        backgroundColor: const Color(0xFF7BC043),
-                        foregroundColor: Colors.white,
-                        icon: Icons.update,
-                        label: 'Modifier',
-                      )
-                    ]),
-                    child: ListTile(
-                      title: Text(meal.name ?? ''),
-                      subtitle: Text(subtitle),
-                    ));
-              }),
+          SingleChildScrollView(
+              child: Column(
+            children: [
+              SizedBox(
+                  height: MediaQuery.of(context).size.height - 375,
+                  child: ListView.builder(
+                      scrollDirection: Axis.vertical,
+                      shrinkWrap: true,
+                      itemCount: model.mealsDisplayed.length,
+                      itemBuilder: (context, index) {
+                        final meal = model.mealsDisplayed[index];
+                        var subtitle =
+                            'P: ${meal.protein} G: ${meal.carbohydrate} C: ${meal.calorie}';
+                        return Slidable(
+                            key: Key('meal-index-$index'),
+                            // The start action pane is the one at the left or the top side.
+                            startActionPane: ActionPane(
+                                // A motion is a widget used to control how the pane animates.
+                                motion: const ScrollMotion(),
+                                children: [
+                                  SlidableAction(
+                                    onPressed: (BuildContext context) {
+                                      showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return AlertDialog(
+                                              title: const Text("Supprimer"),
+                                              content: Text(
+                                                  'Êtes vous sûr de vouloir supprimer le repas "${meal.name}"'),
+                                              actions: <Widget>[
+                                                ElevatedButton(
+                                                    onPressed: () async {
+                                                      await model.deleteMeal(
+                                                          meal.id ?? 0,
+                                                          context);
+                                                      await model.loadData(
+                                                          widget.date);
+                                                    },
+                                                    child: const Text("Oui")),
+                                                ElevatedButton(
+                                                  onPressed: () =>
+                                                      Navigator.of(context)
+                                                          .pop(false),
+                                                  child: const Text("Non"),
+                                                ),
+                                              ],
+                                            );
+                                          });
+                                    },
+                                    backgroundColor: const Color(0xFFFE4A49),
+                                    foregroundColor: Colors.white,
+                                    icon: Icons.delete,
+                                    label: 'Supprimer',
+                                  )
+                                ]),
+                            endActionPane: ActionPane(
+                                motion: const ScrollMotion(),
+                                children: [
+                                  SlidableAction(
+                                    onPressed: (BuildContext context) => model
+                                        .openMealScreen(context, meal.id ?? 0),
+                                    backgroundColor: const Color(0xFF7BC043),
+                                    foregroundColor: Colors.white,
+                                    icon: Icons.update,
+                                    label: 'Modifier',
+                                  )
+                                ]),
+                            child: ListTile(
+                              title: Text(meal.name ?? ''),
+                              subtitle: Text(subtitle),
+                            ));
+                      })),
+            ],
+          )),
           ElevatedButton(
               style: ButtonStyle(
                   backgroundColor:
