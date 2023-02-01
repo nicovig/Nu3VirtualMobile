@@ -22,6 +22,28 @@ class MealTabScreen extends StatefulWidget {
 }
 
 class _MealTabScreenState extends State<MealTabScreen> {
+  static const favoritesMealsExpandedContainerHeight = 50;
+  static const standardCuttedListSizePixels = 373;
+  static const withFavoritesMealCuttedListSizePixels =
+      standardCuttedListSizePixels + favoritesMealsExpandedContainerHeight;
+
+  bool isFavoritesMealsContainerExpanded = false;
+  var cuttedListSizePixels = standardCuttedListSizePixels;
+  var favoritesMealsContainerHeight = 0;
+
+  expandFavoritesMealsContainer() {
+    isFavoritesMealsContainerExpanded = !isFavoritesMealsContainerExpanded;
+    if (isFavoritesMealsContainerExpanded) {
+      cuttedListSizePixels = withFavoritesMealCuttedListSizePixels;
+      favoritesMealsContainerHeight = favoritesMealsExpandedContainerHeight;
+    } else {
+      cuttedListSizePixels = standardCuttedListSizePixels;
+      favoritesMealsContainerHeight = 0;
+    }
+
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<MealTabViewModel>.reactive(
@@ -31,7 +53,9 @@ class _MealTabScreenState extends State<MealTabScreen> {
           model.initData(widget.date);
           EasyLoading.dismiss(animation: false);
         },
-        builder: (context, model, child) => Column(children: [
+        builder: (context, model, child) => Container(
+            width: MediaQuery.of(context).size.width,
+            child: Column(children: [
               const Padding(
                 padding: EdgeInsets.fromLTRB(10, 0, 10, 5),
               ),
@@ -69,9 +93,18 @@ class _MealTabScreenState extends State<MealTabScreen> {
                   child: MonitoringBox(
                       date: widget.date,
                       monitoring: model.monitoringDisplayed)),
+              ElevatedButton(
+                  style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.all(Colors.blue.shade100)),
+                  onPressed: () => model.openMealScreen(context, 0),
+                  child: const Text("Ajouter un repas",
+                      style: TextStyle(color: Colors.blue))),
+              const Padding(padding: EdgeInsets.only(bottom: 5)),
               SingleChildScrollView(
                   child: SizedBox(
-                      height: MediaQuery.of(context).size.height - 375,
+                      height: MediaQuery.of(context).size.height -
+                          cuttedListSizePixels,
                       child: ListView.builder(
                           scrollDirection: Axis.vertical,
                           shrinkWrap: true,
@@ -147,13 +180,35 @@ class _MealTabScreenState extends State<MealTabScreen> {
                                     title: Text(meal.name ?? ''),
                                     subtitle: Text(subtitle)));
                           }))),
-              ElevatedButton(
-                  style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all(Colors.blue.shade100)),
-                  onPressed: () => model.openMealScreen(context, 0),
-                  child: const Text("Ajouter un repas",
-                      style: TextStyle(color: Colors.blue)))
-            ]));
+              Container(
+                width: MediaQuery.of(context).size.width,
+                height: 20,
+                child: ElevatedButton(
+                    style: ButtonStyle(
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(0),
+                        )),
+                        backgroundColor:
+                            MaterialStateProperty.all(Colors.green)),
+                    onPressed: () => expandFavoritesMealsContainer(),
+                    child: const Text("Favoris",
+                        style: TextStyle(color: Colors.yellow))),
+              ),
+
+              // AnimatedSize(
+              //   curve: Curves.bounceOut,
+              //   duration: const Duration(seconds: 1),
+              //   child:
+              //       FlutterLogo(size: favoritesMealsContainerHeight.toDouble()),
+              // ),
+              AnimatedContainer(
+                height: favoritesMealsContainerHeight.toDouble(),
+                duration: const Duration(seconds: 1),
+                curve: Curves.fastOutSlowIn,
+                color: Colors.amber,
+              )
+            ])));
   }
 }
