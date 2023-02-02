@@ -32,6 +32,8 @@ class AuthenticationScreenViewModel extends ChangeNotifier {
   }
 
   Future<String> connect(BuildContext context) async {
+    login = 'koalaviril';
+    password = 'nuvirtual01';
     if (login != '' && password != '') {
       AuthenticationResponse response =
           await _authenticationService.login(login, password);

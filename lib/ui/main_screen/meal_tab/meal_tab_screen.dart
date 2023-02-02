@@ -54,6 +54,7 @@ class _MealTabScreenState extends State<MealTabScreen> {
           EasyLoading.dismiss(animation: false);
         },
         builder: (context, model, child) => Container(
+            color: Colors.red,
             width: MediaQuery.of(context).size.width,
             child: Column(children: [
               const Padding(
