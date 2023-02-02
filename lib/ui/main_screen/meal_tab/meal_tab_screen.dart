@@ -22,41 +22,12 @@ class MealTabScreen extends StatefulWidget {
 }
 
 class _MealTabScreenState extends State<MealTabScreen> {
-  static const appBarAndBottomBarHeight = kToolbarHeight + kToolbarHeight;
-  static const double dateMonitoringButtonWidgetsHeight = 216;
-  double listHeight = 0;
-
-  static const favoritesMealsExpandedContainerHeight = 50;
-  static const standardCuttedListSizePixels = 373;
-  static const withFavoritesMealCuttedListSizePixels =
-      standardCuttedListSizePixels + favoritesMealsExpandedContainerHeight;
-
-  bool isFavoritesMealsContainerExpanded = false;
-  var cuttedListSizePixels = standardCuttedListSizePixels;
-  var favoritesMealsContainerHeight = 0;
-
-  expandFavoritesMealsContainer() {
-    isFavoritesMealsContainerExpanded = !isFavoritesMealsContainerExpanded;
-    if (isFavoritesMealsContainerExpanded) {
-      cuttedListSizePixels = withFavoritesMealCuttedListSizePixels;
-      favoritesMealsContainerHeight = favoritesMealsExpandedContainerHeight;
-    } else {
-      cuttedListSizePixels = standardCuttedListSizePixels;
-      favoritesMealsContainerHeight = 0;
-    }
-
-    setState(() {});
-  }
-
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<MealTabViewModel>.reactive(
       viewModelBuilder: () => MealTabViewModel(),
       onViewModelReady: (model) {
         EasyLoading.show();
-        listHeight = MediaQuery.of(context).size.height -
-            appBarAndBottomBarHeight -
-            dateMonitoringButtonWidgetsHeight;
         model.initData(widget.date);
         EasyLoading.dismiss(animation: false);
       },
@@ -101,15 +72,26 @@ class _MealTabScreenState extends State<MealTabScreen> {
             child: MonitoringBox(
                 date: widget.date, monitoring: model.monitoringDisplayed),
           ),
-          ElevatedButton(
-            style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all(Colors.blue.shade100),
-            ),
-            onPressed: () => model.openMealScreen(context, 0),
-            child: const Text(
-              "Ajouter un repas",
-              style: TextStyle(color: Colors.blue),
-            ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              ElevatedButton(
+                style: ButtonStyle(
+                  backgroundColor:
+                      MaterialStateProperty.all(Colors.blue.shade100),
+                ),
+                onPressed: () => model.openMealScreen(context, 0),
+                child: const Icon(Icons.add),
+              ),
+              ElevatedButton(
+                style: ButtonStyle(
+                  backgroundColor:
+                      MaterialStateProperty.all(Colors.blue.shade100),
+                ),
+                onPressed: () => model.openFavoritesMeals(),
+                child: const Icon(Icons.star),
+              ),
+            ],
           ),
           const Padding(
             padding: EdgeInsets.only(bottom: 5),
@@ -182,19 +164,6 @@ class _MealTabScreenState extends State<MealTabScreen> {
           ),
         ],
       ),
-
-      // AnimatedSize(
-      //   curve: Curves.bounceOut,
-      //   duration: const Duration(seconds: 1),
-      //   child:
-      //       FlutterLogo(size: favoritesMealsContainerHeight.toDouble()),
-      // ),
-      // AnimatedContainer(
-      //   height: favoritesMealsContainerHeight.toDouble(),
-      //   duration: const Duration(seconds: 1),
-      //   curve: Curves.fastOutSlowIn,
-      //   color: Colors.amber,
-      // )
     );
   }
 }
