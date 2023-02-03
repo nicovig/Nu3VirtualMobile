@@ -3,6 +3,8 @@ import 'package:get_it/get_it.dart';
 import 'package:nu3virtual/core/services/authentication/authentication_service.dart';
 import 'package:nu3virtual/core/services/authentication/authentication_service_api.dart';
 import 'package:nu3virtual/core/services/authentication/authentication_service_store.dart';
+import 'package:nu3virtual/core/services/favorite_meal/favorite_meal_service.dart';
+import 'package:nu3virtual/core/services/favorite_meal/favorite_meal_service_api.dart';
 import 'package:nu3virtual/core/services/meal/meal_service.dart';
 import 'package:nu3virtual/core/services/meal/meal_service_api.dart';
 import 'package:nu3virtual/core/services/monitoring/monitoring_service.dart';
@@ -26,6 +28,8 @@ setupServiceLocator() {
       () => AuthenticationServiceApi());
   getIt.registerLazySingleton<AuthenticationStore>(
       () => AuthenticationServiceStore());
+  getIt.registerLazySingleton<FavoriteMealService>(
+      () => FavoriteMealServiceApi());
   getIt.registerLazySingleton<MealService>(() => MealServiceApi());
   getIt.registerLazySingleton<MonitoringService>(() => MonitoringServiceApi());
   getIt

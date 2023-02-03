@@ -28,7 +28,7 @@ class _CustomFormFieldMealTypeState extends State<CustomFormFieldMealType> {
           CustomRadioListTile<int>(
               value: MealTypeEnum.breakfast.index,
               groupValue: widget.mealType!.index,
-              leading: 'Petit-déjeuner',
+              leading: getMealTypeEnumText(widget.mealType),
               onChanged: (value) => {
                     enumValue = MealTypeEnum.values.elementAt(value),
                     setState(() => {
@@ -39,7 +39,7 @@ class _CustomFormFieldMealTypeState extends State<CustomFormFieldMealType> {
           CustomRadioListTile<int>(
               value: MealTypeEnum.brunch.index,
               groupValue: widget.mealType!.index,
-              leading: 'Brunch',
+              leading: getMealTypeEnumText(widget.mealType),
               onChanged: (value) => {
                     enumValue = MealTypeEnum.values.elementAt(value),
                     setState(() => {
@@ -50,7 +50,7 @@ class _CustomFormFieldMealTypeState extends State<CustomFormFieldMealType> {
           CustomRadioListTile<int>(
               value: MealTypeEnum.lunch.index,
               groupValue: widget.mealType!.index,
-              leading: 'Déjeuner',
+              leading: getMealTypeEnumText(widget.mealType),
               onChanged: (value) => {
                     enumValue = MealTypeEnum.values.elementAt(value),
                     setState(() => {
@@ -61,7 +61,7 @@ class _CustomFormFieldMealTypeState extends State<CustomFormFieldMealType> {
           CustomRadioListTile<int>(
               value: MealTypeEnum.snack.index,
               groupValue: widget.mealType!.index,
-              leading: 'Collation',
+              leading: getMealTypeEnumText(widget.mealType),
               onChanged: (value) => {
                     enumValue = MealTypeEnum.values.elementAt(value),
                     setState(() => {
@@ -72,7 +72,7 @@ class _CustomFormFieldMealTypeState extends State<CustomFormFieldMealType> {
           CustomRadioListTile<int>(
               value: MealTypeEnum.dinner.index,
               groupValue: widget.mealType!.index,
-              leading: 'Dîner',
+              leading: getMealTypeEnumText(widget.mealType),
               onChanged: (value) => {
                     enumValue = MealTypeEnum.values.elementAt(value),
                     setState(() => {

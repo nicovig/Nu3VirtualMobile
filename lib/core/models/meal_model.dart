@@ -61,3 +61,24 @@ class MealModel {
 }
 
 enum MealTypeEnum { breakfast, brunch, lunch, snack, dinner }
+
+String getMealTypeEnumText(MealTypeEnum mealType) {
+  switch (mealType) {
+    case MealTypeEnum.breakfast:
+      return 'Petit-déjeuner';
+
+    case MealTypeEnum.brunch:
+      return 'Brunch';
+
+    case MealTypeEnum.lunch:
+      return 'Déjeuner';
+
+    case MealTypeEnum.snack:
+      return 'Collation';
+
+    case MealTypeEnum.dinner:
+      return 'Dîner';
+    default:
+      return 'Collation';
+  }
+}

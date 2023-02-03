@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:nu3virtual/ui/main_screen/meal_tab/dialogs/favorites_meals_dialog.dart';
+import 'package:nu3virtual/ui/main_screen/meal_tab/dialogs/favorite_meal_dialog.dart';
 import 'package:stacked/stacked.dart';
 
 import 'package:nu3virtual/layouts/screen_layouts/change_date_buttons.dart';
@@ -92,12 +92,21 @@ class _MealTabScreenState extends State<MealTabScreen> {
                 onPressed: () => showDialog(
                     context: context,
                     builder: (BuildContext context) {
-                      return FavoritesMealsDialog(
-                          userId: model.userId ?? 0,
-                          date: widget.date,
-                          handleValidation: (mealUpdated, dialogContext) async {
-                            await model.updateMeal(mealUpdated, dialogContext);
+                      return FavoriteMealDialog(
+                          favoritesMeals: model.favoritesMeals,
+                          addFavoriteMealToDailyMeals:
+                              (favoriteMealId, dialogContext) async {
+                            EasyLoading.show();
+                            await model.addFavoriteMealToDailyMeals(
+                                favoriteMealId, widget.date, dialogContext);
                             await model.loadData(widget.date);
+                            EasyLoading.dismiss(animation: false);
+                          },
+                          deleteFavoriteMeal: (favoriteMealId) async {
+                            EasyLoading.show();
+                            await model.deleteFavoriteMeal(favoriteMealId);
+                            await model.loadData(widget.date);
+                            EasyLoading.dismiss(animation: false);
                           });
                     }),
                 child: const Icon(Icons.star),
@@ -111,9 +120,9 @@ class _MealTabScreenState extends State<MealTabScreen> {
             scrollDirection: Axis.vertical,
             shrinkWrap: true,
             physics: ScrollPhysics(),
-            itemCount: model.mealsDisplayed.length,
+            itemCount: model.meals.length,
             itemBuilder: (context, index) {
-              final meal = model.mealsDisplayed[index];
+              final meal = model.meals[index];
               var subtitle =
                   'P: ${meal.protein} G: ${meal.carbohydrate} C: ${meal.calorie}';
               return Slidable(
@@ -135,9 +144,11 @@ class _MealTabScreenState extends State<MealTabScreen> {
                                   actions: <Widget>[
                                     ElevatedButton(
                                       onPressed: () async {
+                                        EasyLoading.show();
                                         await model.deleteMeal(
                                             meal.id ?? 0, context);
                                         await model.loadData(widget.date);
+                                        EasyLoading.dismiss(animation: false);
                                       },
                                       child: const Text("Oui"),
                                     ),
