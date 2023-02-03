@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:nu3virtual/ui/main_screen/meal_tab/dialogs/favorites_meals_dialog.dart';
 import 'package:stacked/stacked.dart';
 
 import 'package:nu3virtual/layouts/screen_layouts/change_date_buttons.dart';
@@ -88,7 +89,17 @@ class _MealTabScreenState extends State<MealTabScreen> {
                   backgroundColor:
                       MaterialStateProperty.all(Colors.blue.shade100),
                 ),
-                onPressed: () => model.openFavoritesMeals(context, widget.date),
+                onPressed: () => showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return FavoritesMealsDialog(
+                          userId: model.userId ?? 0,
+                          date: widget.date,
+                          handleValidation: (mealUpdated, dialogContext) async {
+                            await model.updateMeal(mealUpdated, dialogContext);
+                            await model.loadData(widget.date);
+                          });
+                    }),
                 child: const Icon(Icons.star),
               ),
             ],

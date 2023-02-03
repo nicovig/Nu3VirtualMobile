@@ -7,7 +7,7 @@ import 'package:nu3virtual/core/const/routes.dart';
 import 'package:nu3virtual/service_locator.dart';
 import 'package:nu3virtual/ui/authentication_screen/authentication_screen.dart';
 import 'package:nu3virtual/ui/main_screen/main_screen.dart';
-import 'package:nu3virtual/ui/main_screen/meal_tab/favorites_meals/favorites_meals_screen.dart';
+import 'package:nu3virtual/ui/main_screen/meal_tab/dialogs/favorites_meals_dialog.dart';
 import 'package:nu3virtual/ui/main_screen/meal_tab/meal_form/meal_form_screen.dart';
 import 'package:nu3virtual/ui/main_screen/workout_tab/workout_form_screen/workout_form_screen.dart';
 
@@ -30,7 +30,6 @@ class MyApp extends StatelessWidget {
         routes: {
           homeRoute: (context) => MainScreen(),
           mealRoute: (context) => MealFormScreen(),
-          favoritesMeals: (context) => FavoritesMealsScreen(),
           workoutRoute: (context) => WorkoutFormScreen(),
         },
         color: Colors.white,
