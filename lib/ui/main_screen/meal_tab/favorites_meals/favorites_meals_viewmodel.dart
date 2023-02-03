@@ -1,14 +1,12 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:nu3virtual/core/const/routes.dart';
 
 import 'package:nu3virtual/core/models/meal_model.dart';
 import 'package:nu3virtual/core/models/user_model.dart';
 import 'package:nu3virtual/core/services/meal/meal_service.dart';
 import 'package:nu3virtual/core/services/user/user_service_class.dart';
 import 'package:nu3virtual/service_locator.dart';
-import 'package:nu3virtual/ui/main_screen/main_screen.dart';
 
 class FavoritesMealsViewModel extends ChangeNotifier {
   final MealService _mealService = getIt<MealService>();
@@ -17,57 +15,15 @@ class FavoritesMealsViewModel extends ChangeNotifier {
   late MealModel meal = MealModel();
   late UserModel user = UserModel();
 
-  handleValidation(BuildContext context) async {
-    meal.userId = user.id;
-    meal.id == 0 ? await _addMeal(context) : await _updateMeal(context);
+  Future addFavoritesMealsToMeals(BuildContext context) async {
+    notifyListeners();
   }
 
-  Future<MealModel> loadData(int mealId) async {
+  Future deleteFavoriteMeal(BuildContext context) async {
+    notifyListeners();
+  }
+
+  Future loadData() async {
     user = await _userStore.getCurrentUser();
-    if (mealId != 0) {
-      return Future<MealModel>.delayed(
-          const Duration(seconds: 1), () => _mealService.getMealById(mealId));
-    } else {
-      return Future<MealModel>.delayed(
-          const Duration(seconds: 0),
-          () => MealModel(
-              id: 0,
-              name: '',
-              type: MealTypeEnum.snack,
-              isFavorite: false,
-              date: DateTime(
-                  DateTime.now().year,
-                  DateTime.now().month,
-                  DateTime.now().day,
-                  TimeOfDay.now().hour,
-                  TimeOfDay.now().minute),
-              carbohydrate: 0,
-              lipid: 0,
-              protein: 0,
-              calorie: 0,
-              notes: '',
-              userId: user.id));
-    }
-  }
-
-  Future _addMeal(BuildContext context) async {
-    bool isUpdateOk = await _mealService.createMeal(meal);
-    if (isUpdateOk) {
-      _redirectToMealTab(context);
-    }
-    notifyListeners();
-  }
-
-  Future _updateMeal(BuildContext context) async {
-    bool isUpdateOk = await _mealService.updateMeal(meal);
-    if (isUpdateOk) {
-      _redirectToMealTab(context);
-    }
-    notifyListeners();
-  }
-
-  _redirectToMealTab(BuildContext context) {
-    Navigator.of(context).pushNamedAndRemoveUntil(homeRoute, (route) => false,
-        arguments: MainScreenTabEnum.meals.index);
   }
 }

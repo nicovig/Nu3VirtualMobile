@@ -46,7 +46,13 @@ class MealTabViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  openFavoritesMeals() {}
+  openFavoritesMeals(BuildContext context, DateTime date) {
+    Navigator.pushNamed(
+      context,
+      favoritesMeals,
+      arguments: date.millisecondsSinceEpoch,
+    );
+  }
 
   Future updateMeal(MealModel meal, BuildContext dialogContext) async {
     bool isUpdateOk = await _mealService.updateMeal(meal);

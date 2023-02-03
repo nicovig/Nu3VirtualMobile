@@ -88,7 +88,7 @@ class _MealTabScreenState extends State<MealTabScreen> {
                   backgroundColor:
                       MaterialStateProperty.all(Colors.blue.shade100),
                 ),
-                onPressed: () => model.openFavoritesMeals(),
+                onPressed: () => model.openFavoritesMeals(context, widget.date),
                 child: const Icon(Icons.star),
               ),
             ],
