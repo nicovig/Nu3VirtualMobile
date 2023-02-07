@@ -28,7 +28,7 @@ class _CustomFormFieldMealTypeState extends State<CustomFormFieldMealType> {
           CustomRadioListTile<int>(
               value: MealTypeEnum.breakfast.index,
               groupValue: widget.mealType!.index,
-              leading: getMealTypeEnumText(widget.mealType),
+              leading: getMealTypeEnumText(MealTypeEnum.breakfast),
               onChanged: (value) => {
                     enumValue = MealTypeEnum.values.elementAt(value),
                     setState(() => {
@@ -39,7 +39,7 @@ class _CustomFormFieldMealTypeState extends State<CustomFormFieldMealType> {
           CustomRadioListTile<int>(
               value: MealTypeEnum.brunch.index,
               groupValue: widget.mealType!.index,
-              leading: getMealTypeEnumText(widget.mealType),
+              leading: getMealTypeEnumText(MealTypeEnum.brunch),
               onChanged: (value) => {
                     enumValue = MealTypeEnum.values.elementAt(value),
                     setState(() => {
@@ -50,7 +50,7 @@ class _CustomFormFieldMealTypeState extends State<CustomFormFieldMealType> {
           CustomRadioListTile<int>(
               value: MealTypeEnum.lunch.index,
               groupValue: widget.mealType!.index,
-              leading: getMealTypeEnumText(widget.mealType),
+              leading: getMealTypeEnumText(MealTypeEnum.lunch),
               onChanged: (value) => {
                     enumValue = MealTypeEnum.values.elementAt(value),
                     setState(() => {
@@ -61,7 +61,7 @@ class _CustomFormFieldMealTypeState extends State<CustomFormFieldMealType> {
           CustomRadioListTile<int>(
               value: MealTypeEnum.snack.index,
               groupValue: widget.mealType!.index,
-              leading: getMealTypeEnumText(widget.mealType),
+              leading: getMealTypeEnumText(MealTypeEnum.snack),
               onChanged: (value) => {
                     enumValue = MealTypeEnum.values.elementAt(value),
                     setState(() => {
@@ -72,7 +72,7 @@ class _CustomFormFieldMealTypeState extends State<CustomFormFieldMealType> {
           CustomRadioListTile<int>(
               value: MealTypeEnum.dinner.index,
               groupValue: widget.mealType!.index,
-              leading: getMealTypeEnumText(widget.mealType),
+              leading: getMealTypeEnumText(MealTypeEnum.dinner),
               onChanged: (value) => {
                     enumValue = MealTypeEnum.values.elementAt(value),
                     setState(() => {

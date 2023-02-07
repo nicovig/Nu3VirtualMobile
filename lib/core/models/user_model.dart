@@ -67,3 +67,22 @@ class UserModel {
 }
 
 enum GenderEnum { unknown, male, female, other }
+
+String getGenderEnumText(int gender) {
+  if (gender == GenderEnum.unknown.index) {
+    return 'Inconnu';
+  }
+
+  if (gender == GenderEnum.male.index) {
+    return 'Homme';
+  }
+
+  if (gender == GenderEnum.female.index) {
+    return 'Femme';
+  }
+
+  if (gender == GenderEnum.other.index) {
+    return 'Autre';
+  }
+  return 'Inconnu';
+}

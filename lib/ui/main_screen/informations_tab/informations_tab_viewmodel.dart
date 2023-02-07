@@ -13,11 +13,10 @@ class InformationsTabViewModel extends ChangeNotifier {
   final UserStore _userStore = getIt<UserStore>();
 
   List<NutritionGoalModel> informationGoals = [];
-  int? userId = 0;
+  UserModel user = UserModel();
 
   Future initData(DateTime date) async {
-    UserModel user = await _userStore.getCurrentUser();
-    userId = user.id ?? 0;
+    user = await _userStore.getCurrentUser();
     loadData(date);
     notifyListeners();
   }
@@ -29,6 +28,6 @@ class InformationsTabViewModel extends ChangeNotifier {
 
   Future _getNutritionGoals(date) async {
     informationGoals = await _nutritionGoalService
-        .getAllNutritionGoalsByUserIdAndDate(userId, date);
+        .getAllNutritionGoalsByUserIdAndDate(user.id, date);
   }
 }

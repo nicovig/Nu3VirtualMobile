@@ -86,29 +86,38 @@ class _MealTabScreenState extends State<MealTabScreen> {
               ),
               ElevatedButton(
                 style: ButtonStyle(
-                  backgroundColor:
-                      MaterialStateProperty.all(Colors.blue.shade100),
+                  backgroundColor: MaterialStateProperty.all(
+                      model.favoritesMeals.length > 0
+                          ? Colors.blue.shade100
+                          : Colors.grey.shade300),
                 ),
-                onPressed: () => showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return FavoriteMealDialog(
-                          favoritesMeals: model.favoritesMeals,
-                          addFavoriteMealToDailyMeals:
-                              (favoriteMealId, dialogContext) async {
-                            EasyLoading.show();
-                            await model.addFavoriteMealToDailyMeals(
-                                favoriteMealId, widget.date, dialogContext);
-                            await model.loadData(widget.date);
-                            EasyLoading.dismiss(animation: false);
-                          },
-                          deleteFavoriteMeal: (favoriteMealId) async {
-                            EasyLoading.show();
-                            await model.deleteFavoriteMeal(favoriteMealId);
-                            await model.loadData(widget.date);
-                            EasyLoading.dismiss(animation: false);
-                          });
-                    }),
+                onPressed: () {
+                  if (model.favoritesMeals.length > 0) {
+                    showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return FavoriteMealDialog(
+                              favoritesMeals: model.favoritesMeals,
+                              addFavoriteMealToDailyMeals:
+                                  (favoriteMealId, dialogContext) async {
+                                EasyLoading.show();
+                                await model.addFavoriteMealToDailyMeals(
+                                    favoriteMealId, widget.date, dialogContext);
+                                await model.loadData(widget.date);
+                                EasyLoading.dismiss(animation: false);
+                              },
+                              deleteFavoriteMeal: (favoriteMealId) async {
+                                EasyLoading.show();
+                                await model.deleteFavoriteMeal(favoriteMealId);
+                                await model.loadData(widget.date);
+                                setState(() {});
+                                EasyLoading.dismiss(animation: false);
+                              });
+                        });
+                  } else {
+                    EasyLoading.showInfo('Aucun favoris');
+                  }
+                },
                 child: const Icon(Icons.star),
               ),
             ],

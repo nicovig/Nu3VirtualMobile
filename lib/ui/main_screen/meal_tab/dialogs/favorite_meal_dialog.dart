@@ -47,41 +47,58 @@ class _FavoriteMealDialogState extends State<FavoriteMealDialog> {
                     builder: (BuildContext context) => Stack(
                           children: [
                             Positioned(
-                              right: 10,
-                              child: ElevatedButton(
-                                onPressed: (() {
-                                  widget
-                                      .deleteFavoriteMeal(favoriteMeal.id ?? 0);
-                                  setState(() {});
-                                }),
-                                style: ButtonStyle(
-                                    backgroundColor:
-                                        MaterialStateProperty.all(Colors.red)),
-                                child: const Icon(Icons.delete),
+                              child: Container(
+                                width: MediaQuery.of(context).size.width,
+                                margin:
+                                    const EdgeInsets.symmetric(horizontal: 5.0),
+                                decoration: BoxDecoration(
+                                  border: Border(
+                                    left: getBorderDecoration(),
+                                    right: getBorderDecoration(),
+                                  ),
+                                ),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: getCarouselText(favoriteMeal),
+                                ),
                               ),
                             ),
                             Positioned(
-                              child: GestureDetector(
-                                onTap: (() =>
-                                    widget.addFavoriteMealToDailyMeals(
-                                        favoriteMeal.id ?? 0, context)),
-                                child: Container(
-                                  width: MediaQuery.of(context).size.width,
-                                  margin: const EdgeInsets.symmetric(
-                                      horizontal: 5.0),
-                                  decoration: BoxDecoration(
-                                    border: Border(
-                                      left: getBorderDecoration(),
-                                      right: getBorderDecoration(),
-                                      top: getBorderDecoration(),
-                                      bottom: getBorderDecoration(),
+                              child: Row(
+                                children: [
+                                  Spacer(),
+                                  ElevatedButton(
+                                    onPressed: (() {
+                                      widget.addFavoriteMealToDailyMeals(
+                                          favoriteMeal.id ?? 0, context);
+                                      setState(() {});
+                                    }),
+                                    style: ButtonStyle(
+                                      backgroundColor:
+                                          MaterialStateProperty.all(
+                                              Colors.green.shade300),
                                     ),
+                                    child: const Icon(Icons.add),
                                   ),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: getCarouselText(favoriteMeal),
+                                  Spacer(),
+                                  Spacer(),
+                                  Spacer(),
+                                  Spacer(),
+                                  ElevatedButton(
+                                    onPressed: (() {
+                                      widget.deleteFavoriteMeal(
+                                          favoriteMeal.id ?? 0);
+                                      setState(() {});
+                                    }),
+                                    style: ButtonStyle(
+                                      backgroundColor:
+                                          MaterialStateProperty.all(
+                                              Colors.red.shade300),
+                                    ),
+                                    child: const Icon(Icons.delete),
                                   ),
-                                ),
+                                  Spacer(),
+                                ],
                               ),
                             ),
                           ],
@@ -106,7 +123,7 @@ class _FavoriteMealDialogState extends State<FavoriteMealDialog> {
 }
 
 getBorderDecoration() {
-  return BorderSide.lerp(BorderSide(color: Colors.blue.shade300, width: 2),
+  return BorderSide.lerp(BorderSide(color: Colors.blue.shade200, width: 2),
       const BorderSide(style: BorderStyle.none), 0);
 }
 
