@@ -9,7 +9,7 @@ import 'package:nu3virtual/ui/authentication_screen/authentication_screen.dart';
 import 'package:nu3virtual/ui/main_screen/main_screen.dart';
 import 'package:nu3virtual/ui/main_screen/meal_tab/dialogs/favorite_meal_dialog.dart';
 import 'package:nu3virtual/ui/main_screen/meal_tab/meal_form/meal_form_screen.dart';
-import 'package:nu3virtual/ui/main_screen/workout_tab/workout_form_screen/workout_form_screen.dart';
+import 'package:nu3virtual/ui/main_screen/workout_tab/workout_form/workout_form_screen.dart';
 
 void main() {
   configEasyLoading();

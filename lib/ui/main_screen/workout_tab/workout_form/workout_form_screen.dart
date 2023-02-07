@@ -8,7 +8,7 @@ import 'package:nu3virtual/core/models/workout_model.dart';
 import 'package:nu3virtual/layouts/forms/custom_form_field.dart';
 import 'package:nu3virtual/layouts/forms/custom_form_field_date.dart';
 import 'package:nu3virtual/layouts/screen_layouts/loading_box.dart';
-import 'package:nu3virtual/ui/main_screen/workout_tab/workout_form_screen/workout_form_viewmodel.dart';
+import 'package:nu3virtual/ui/main_screen/workout_tab/workout_form/workout_form_viewmodel.dart';
 
 // ignore: must_be_immutable
 class WorkoutFormScreen extends StatefulWidget {

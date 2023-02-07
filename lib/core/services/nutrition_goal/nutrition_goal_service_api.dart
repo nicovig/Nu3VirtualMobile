@@ -24,6 +24,9 @@ class NutritionServiceApi extends NutritionGoalService {
       "date": date.toIso8601String()
     };
 
+    Uri newUrl =
+        Uri.https(hostedDeviceLocalhost + apiUrl, '$controllerName/date');
+
     var response = await http.get(
       url,
       headers: headers,
@@ -37,7 +40,7 @@ class NutritionServiceApi extends NutritionGoalService {
   }
 
   @override
-  Future<bool> updateNutritionGoal(
+  Future<bool> updateNutritionGoals(
       UpdateNutritionGoalRequest updatedNutritionGoal) async {
     var response = await http.put(url,
         headers: headers, body: updatedNutritionGoal.toJson());
