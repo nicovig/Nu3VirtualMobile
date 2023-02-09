@@ -2,13 +2,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:nu3virtual/core/services/nutrition_goal/models/update_nutrition_goals_request.dart';
 import 'package:stacked/stacked.dart';
 
-import 'package:nu3virtual/core/models/workout_model.dart';
+import 'package:nu3virtual/core/models/nutrition_goal_model.dart';
 import 'package:nu3virtual/layouts/forms/custom_form_field.dart';
-import 'package:nu3virtual/layouts/forms/custom_form_field_date.dart';
 import 'package:nu3virtual/layouts/screen_layouts/loading_box.dart';
-import 'package:nu3virtual/ui/main_screen/workout_tab/workout_form/workout_form_viewmodel.dart';
+import 'package:nu3virtual/ui/main_screen/informations_tab/informations_goals_form/informations_goals_form_viewmodel.dart';
 
 // ignore: must_be_immutable
 class InformationsGoalsFormScreen extends StatefulWidget {
@@ -23,167 +23,124 @@ class _InformationsGoalsFormScreenState
     extends State<InformationsGoalsFormScreen> {
   @override
   Widget build(BuildContext context) {
-    final workoutId = ModalRoute.of(context)!.settings.arguments as int;
-
-    return ViewModelBuilder<InformationsGoalsViewModel>.reactive(
-      viewModelBuilder: () => InformationsGoalsViewModel(),
-      builder: (context, model, child) => FutureBuilder<WorkoutModel>(
-          future: model.loadData(workoutId),
-          builder: (BuildContext context,
-                  AsyncSnapshot<WorkoutModel> snapshot) =>
-              Scaffold(
-                  appBar: AppBar(
-                    centerTitle: true,
-                    title: snapshot.hasData
-                        ? Text(
-                            '${model.user.firstName} - ${model.user.weight}kg')
-                        : null,
+    return ViewModelBuilder<InformationsGoalsFormViewModel>.reactive(
+      viewModelBuilder: () => InformationsGoalsFormViewModel(),
+      builder: (context, model, child) =>
+          FutureBuilder<List<NutritionGoalDisplayedModel>>(
+        future: model.loadData(),
+        builder: (BuildContext context,
+                AsyncSnapshot<List<NutritionGoalDisplayedModel>> snapshot) =>
+            Scaffold(
+          appBar: AppBar(
+            centerTitle: true,
+            title: snapshot.hasData
+                ? Text('${model.user.firstName} - ${model.user.weight}kg')
+                : null,
+          ),
+          body: SingleChildScrollView(
+            child: Column(
+              children: [
+                const Padding(
+                  padding: EdgeInsets.only(top: 20),
+                  child: Text(
+                    'Réglage de mes objectifs',
+                    style: TextStyle(fontSize: 20),
                   ),
-                  body: SingleChildScrollView(
-                      child: SafeArea(
-                          child: Column(
-                              children: !snapshot.hasData
-                                  ? [const LoadingBox()]
-                                  : [
-                                      CustomFormField(
-                                          onChanged: (value) {
-                                            if (value != null && value != "") {
-                                              snapshot.data?.name = value;
-                                            }
-                                          },
-                                          initialValue:
-                                              snapshot.data?.name != ''
-                                                  ? snapshot.data?.name
-                                                  : '',
-                                          label: 'Nom'),
-                                      CustomFormFieldDate(
-                                          initialValue: snapshot.data?.date,
-                                          firstDate: DateTime(
-                                              DateTime.now().year,
-                                              DateTime.now().month - 1,
-                                              DateTime.now().day),
-                                          label: 'Date de la séance',
-                                          lastDate: DateTime(
-                                              DateTime.now().year,
-                                              DateTime.now().month + 1,
-                                              DateTime.now().day),
-                                          handleOnSaved: (value) {
-                                            if (value != null) {
-                                              snapshot.data?.date = value;
-                                            }
-                                          }),
-                                      Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: const [Text('Durée')]),
-                                      Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Expanded(
-                                                flex: 2,
-                                                child: CustomFormField(
-                                                  label: 'Minutes',
-                                                  initialValue:
-                                                      model.getMinutes(snapshot
-                                                          .data?.timeInSeconds),
-                                                  onChanged: (value) {
-                                                    if (value != null &&
-                                                        value != "") {
-                                                      model.minutes =
-                                                          int.parse(value);
-                                                    }
-                                                  },
-                                                  inputFormatters: [
-                                                    FilteringTextInputFormatter
-                                                        .allow(
-                                                            RegExp(r"[0-9\.-]"))
-                                                  ],
-                                                  keyboardType:
-                                                      TextInputType.number,
-                                                )),
-                                            const Expanded(child: Text('min')),
-                                            Expanded(
-                                              flex: 2,
-                                              child: CustomFormField(
-                                                label: 'Secondes',
-                                                initialValue: model.getSeconds(
-                                                    snapshot
-                                                        .data?.timeInSeconds),
-                                                onChanged: (value) {
-                                                  if (value != null &&
-                                                      value != "") {
-                                                    model.seconds =
-                                                        int.parse(value);
-                                                  }
-                                                },
-                                                inputFormatters: [
-                                                  FilteringTextInputFormatter
-                                                      .allow(
-                                                    RegExp(r"[0-9\.-]"),
-                                                  )
-                                                ],
-                                                keyboardType:
-                                                    TextInputType.number,
-                                              ),
-                                            ),
-                                            const Expanded(child: Text('sec'))
-                                          ]),
-                                      CustomFormField(
-                                        label: 'Calories',
-                                        initialValue: snapshot
-                                                        .data?.caloriesBurned
-                                                        .toString() !=
-                                                    '0' &&
-                                                snapshot.data?.caloriesBurned !=
-                                                    null
-                                            ? snapshot.data?.caloriesBurned
-                                                .toString()
-                                            : '',
-                                        onChanged: (value) {
-                                          if (value != null && value != "") {
-                                            snapshot.data?.caloriesBurned =
-                                                int.parse(value);
-                                          }
-                                        },
-                                        inputFormatters: [
-                                          FilteringTextInputFormatter.allow(
-                                            RegExp(r"[0-9\.-]"),
-                                          )
-                                        ],
-                                        keyboardType: TextInputType.number,
-                                      ),
-                                      CustomFormField(
-                                          maxLines: 2,
-                                          onChanged: (value) {
-                                            if (value != null && value != "") {
-                                              snapshot.data?.notes = value;
-                                            }
-                                          },
-                                          initialValue: snapshot.data?.notes,
-                                          label: 'Notes'),
-                                      Container(
-                                          padding: const EdgeInsets.fromLTRB(
-                                              10, 10, 10, 0),
-                                          child: ElevatedButton(
-                                              onPressed: () async {
-                                                model.workout = WorkoutModel(
-                                                    id: snapshot.data?.id,
-                                                    name: snapshot.data?.name,
-                                                    date: snapshot.data?.date,
-                                                    caloriesBurned: snapshot
-                                                        .data?.caloriesBurned,
-                                                    notes: snapshot.data?.notes,
-                                                    userId:
-                                                        snapshot.data?.userId);
-
-                                                await model
-                                                    .handleValidation(context);
-                                              },
-                                              child: Text(snapshot.data?.id == 0
-                                                  ? "Ajouter"
-                                                  : "Modifier")))
-                                    ]))))),
+                ),
+                snapshot.hasData
+                    ? getNutritionGoalsGridView(
+                        model, context, snapshot.data ?? [])
+                    : const LoadingBox(),
+                snapshot.hasData
+                    ? ElevatedButton(
+                        onPressed: () async {
+                          await model.updateNutritionGoals(context);
+                        },
+                        child: const Text("Modifier mes objectifs"),
+                      )
+                    : const SizedBox.shrink(),
+              ],
+            ),
+          ),
+        ),
+      ),
     );
   }
+}
+
+Widget getNutritionGoalsGridView(InformationsGoalsFormViewModel model,
+    BuildContext context, List<NutritionGoalDisplayedModel> nutritionGoals) {
+  const double spacingBetweenForms = 8;
+  model.nutritionGoals = nutritionGoals;
+  List<Widget> nutritionGoalsRowsFormFields = [];
+
+  model.nutritionGoals.forEach((nutritionGoal) {
+    nutritionGoalsRowsFormFields.add(
+      Center(
+        child: Text(
+          nutritionGoal.name ?? '',
+          style: TextStyle(fontSize: 18),
+        ),
+      ),
+    );
+    nutritionGoalsRowsFormFields.add(
+      Center(
+        child: SizedBox(
+          width: 75,
+          child: CustomFormField(
+            label: 'Objectif',
+            initialValue: nutritionGoal.totalValue.toString() != '0'
+                ? nutritionGoal.totalValue.toString()
+                : '',
+            onChanged: (value) {
+              if (value != null && value != "") {
+                nutritionGoal.totalValue = int.parse(value);
+              }
+            },
+            inputFormatters: [
+              FilteringTextInputFormatter.allow(
+                RegExp(r"[0-9\.-]"),
+              )
+            ],
+            keyboardType: TextInputType.number,
+          ),
+        ),
+      ),
+    );
+    nutritionGoalsRowsFormFields.add(
+      Center(
+        child: SizedBox(
+          width: 75,
+          child: CustomFormField(
+            label: 'Ordre',
+            initialValue: nutritionGoal.order.toString() != '0'
+                ? nutritionGoal.order.toString()
+                : '',
+            onChanged: (value) {
+              if (value != null && value != "") {
+                nutritionGoal.order = int.parse(value);
+              }
+            },
+            inputFormatters: [
+              FilteringTextInputFormatter.allow(
+                RegExp(r"[0-9\.-]"),
+              )
+            ],
+            keyboardType: TextInputType.number,
+          ),
+        ),
+      ),
+    );
+  });
+
+  return SizedBox(
+    width: MediaQuery.of(context).size.width,
+    height: MediaQuery.of(context).size.height - 275,
+    child: GridView.count(
+      physics: ScrollPhysics(),
+      padding: EdgeInsets.zero,
+      crossAxisCount: 3,
+      children: nutritionGoalsRowsFormFields,
+    ),
+  );
 }

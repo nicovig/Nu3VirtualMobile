@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'package:nu3virtual/core/const/routes.dart';
 
 import 'package:nu3virtual/core/models/nutrition_goal_model.dart';
 import 'package:nu3virtual/core/models/user_model.dart';
@@ -12,7 +13,7 @@ class InformationsTabViewModel extends ChangeNotifier {
 
   final UserStore _userStore = getIt<UserStore>();
 
-  List<NutritionGoalModel> informationGoals = [];
+  List<NutritionGoalDisplayedModel> informationGoals = [];
   UserModel user = UserModel();
 
   Future initData(DateTime date) async {
@@ -24,6 +25,14 @@ class InformationsTabViewModel extends ChangeNotifier {
   Future loadData(DateTime date) async {
     await _getNutritionGoals(date);
     notifyListeners();
+  }
+
+  updateNutritionGoals(BuildContext context) {
+    Navigator.pushNamed(context, nutritionGoalsRoute);
+  }
+
+  updateUserInformations(BuildContext context) {
+    Navigator.pushNamed(context, modifyUserRoute, arguments: false);
   }
 
   Future _getNutritionGoals(date) async {

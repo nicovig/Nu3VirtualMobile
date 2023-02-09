@@ -128,7 +128,7 @@ class _MealTabScreenState extends State<MealTabScreen> {
           ListView.builder(
             scrollDirection: Axis.vertical,
             shrinkWrap: true,
-            physics: ScrollPhysics(),
+            physics: const ScrollPhysics(),
             itemCount: model.meals.length,
             itemBuilder: (context, index) {
               final meal = model.meals[index];

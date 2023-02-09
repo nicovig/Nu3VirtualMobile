@@ -1,7 +1,5 @@
 import 'dart:convert';
 
-import 'package:nu3virtual/core/helpers/helpers.dart';
-
 class UserModel {
   int? id;
   String? pseudo;
@@ -85,4 +83,23 @@ String getGenderEnumText(int gender) {
     return 'Autre';
   }
   return 'Inconnu';
+}
+
+String getGenderEnumTextFromEnum(GenderEnum gender) {
+  switch (gender) {
+    case GenderEnum.unknown:
+      return 'Inconnu';
+
+    case GenderEnum.male:
+      return 'Homme';
+
+    case GenderEnum.female:
+      return 'Femme';
+
+    case GenderEnum.other:
+      return 'Autre';
+
+    default:
+      return 'Inconnu';
+  }
 }

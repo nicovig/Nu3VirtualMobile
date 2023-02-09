@@ -85,7 +85,9 @@ class _InformationsTabScreenState extends State<InformationsTabScreen> {
                   ),
                 ),
                 ElevatedButton(
-                  onPressed: (() {}),
+                  onPressed: (() {
+                    model.updateNutritionGoals(context);
+                  }),
                   style: ButtonStyle(
                       backgroundColor:
                           MaterialStateProperty.all(Colors.blue.shade200)),
@@ -232,7 +234,9 @@ class _InformationsTabScreenState extends State<InformationsTabScreen> {
                         padding: EdgeInsets.only(top: 20),
                       ),
                       ElevatedButton(
-                        onPressed: (() {}),
+                        onPressed: (() {
+                          model.updateUserInformations(context);
+                        }),
                         style: ButtonStyle(
                             backgroundColor: MaterialStateProperty.all(
                                 Colors.blue.shade200)),

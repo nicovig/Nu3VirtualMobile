@@ -1,88 +1,54 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:nu3virtual/core/const/routes.dart';
 
+import 'package:nu3virtual/core/const/routes.dart';
+import 'package:nu3virtual/core/models/nutrition_goal_model.dart';
 import 'package:nu3virtual/core/models/user_model.dart';
-import 'package:nu3virtual/core/models/workout_model.dart';
+import 'package:nu3virtual/core/services/nutrition_goal/models/update_nutrition_goals_request.dart';
+import 'package:nu3virtual/core/services/nutrition_goal/nutrition_goal_service.dart';
 import 'package:nu3virtual/core/services/user/user_service_class.dart';
-import 'package:nu3virtual/core/services/workout/workout_service.dart';
 import 'package:nu3virtual/service_locator.dart';
 import 'package:nu3virtual/ui/main_screen/main_screen.dart';
 
-class WorkoutFormViewModel extends ChangeNotifier {
+class InformationsGoalsFormViewModel extends ChangeNotifier {
+  final NutritionGoalService _nutritionGoalService =
+      getIt<NutritionGoalService>();
   final UserStore _userStore = getIt<UserStore>();
-  final WorkoutService _workoutService = getIt<WorkoutService>();
 
   late UserModel user = UserModel();
-  late WorkoutModel workout = WorkoutModel();
+  List<NutritionGoalDisplayedModel> nutritionGoals = [];
 
-  int minutes = 0;
-  int seconds = 0;
-
-  getMinutes(int? timeInSeconds) {
-    if (timeInSeconds != null) {
-      var result = (timeInSeconds / 60).round();
-      minutes = result;
-      return result.toString();
-    }
-    return 0;
-  }
-
-  getSeconds(int? timeInSeconds) {
-    if (timeInSeconds != null) {
-      var result = timeInSeconds % 60;
-      seconds = result;
-      return result.toString();
-    }
-    return 0;
-  }
-
-  handleValidation(BuildContext context) async {
-    workout.timeInSeconds = (minutes * 60) + seconds;
-    workout.userId = user.id;
-    workout.id == 0
-        ? await _addWorkout(context)
-        : await _updateWorkout(context);
-  }
-
-  Future<WorkoutModel> loadData(int workoutId) async {
+  Future<List<NutritionGoalDisplayedModel>> loadData() async {
     user = await _userStore.getCurrentUser();
-    if (workoutId != 0) {
-      return Future<WorkoutModel>.delayed(const Duration(seconds: 1),
-          () => _workoutService.getWorkoutById(workoutId));
-    } else {
-      return Future<WorkoutModel>.delayed(
-          const Duration(seconds: 0),
-          () => WorkoutModel(
-              id: 0,
-              name: '',
-              date: DateTime(DateTime.now().year, DateTime.now().month,
-                  DateTime.now().day),
-              timeInSeconds: 0,
-              caloriesBurned: 0,
-              userId: user.id));
-    }
+    return Future<List<NutritionGoalDisplayedModel>>.delayed(
+        const Duration(seconds: 1),
+        () => _nutritionGoalService.getAllNutritionGoalsByUserId(user.id));
   }
 
-  Future _addWorkout(BuildContext context) async {
-    bool isUpdateOk = await _workoutService.createWorkout(workout);
+  Future updateNutritionGoals(BuildContext context) async {
+    List<UpdateNutritionGoalRequest> updatedNutritionGoals = [];
+
+    nutritionGoals.forEach((nutritionGoal) {
+      updatedNutritionGoals.add(UpdateNutritionGoalRequest(
+          id: nutritionGoal.id ?? 0,
+          order: nutritionGoal.order ?? 0,
+          totalValue: nutritionGoal.totalValue ?? 0));
+    });
+
+    UpdateNutritionGoalsRequest allUpdatedNutritionGoals =
+        UpdateNutritionGoalsRequest(nutritionGoals: updatedNutritionGoals);
+
+    bool isUpdateOk = await _nutritionGoalService
+        .updateNutritionGoals(allUpdatedNutritionGoals);
     if (isUpdateOk) {
-      _redirectToWorkoutTab(context);
+      _redirectToInformationsTab(context);
     }
     notifyListeners();
   }
 
-  Future _updateWorkout(BuildContext context) async {
-    bool isUpdateOk = await _workoutService.updateWorkout(workout);
-    if (isUpdateOk) {
-      _redirectToWorkoutTab(context);
-    }
-    notifyListeners();
-  }
-
-  _redirectToWorkoutTab(BuildContext context) {
+  _redirectToInformationsTab(BuildContext context) {
     Navigator.of(context).pushNamedAndRemoveUntil(homeRoute, (route) => false,
-        arguments: MainScreenTabEnum.workouts.index);
+        arguments: MainScreenTabEnum.informations.index);
   }
 }

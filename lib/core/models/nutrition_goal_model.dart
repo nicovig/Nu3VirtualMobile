@@ -1,6 +1,36 @@
 import 'dart:convert';
 
-class NutritionGoalModel {
+class NutritionGoalFormModel {
+  int? id;
+  String? name;
+  int? type;
+  int? order;
+  int? totalValue;
+
+  NutritionGoalFormModel(
+      {this.id, this.name, this.type, this.order, this.totalValue});
+
+  factory NutritionGoalFormModel.fromJson(Map<String, dynamic> parsedJson) {
+    return NutritionGoalFormModel(
+        id: parsedJson['id'] ?? 0,
+        name: parsedJson['name'] ?? '',
+        type: parsedJson['type'] ?? 0,
+        order: parsedJson['order'] ?? 0,
+        totalValue: parsedJson['totalValue'] ?? 0);
+  }
+
+  String toJson() {
+    return jsonEncode({
+      'id': id,
+      'name': name,
+      'type': type,
+      'order': order,
+      'totalValue': totalValue
+    });
+  }
+}
+
+class NutritionGoalDisplayedModel {
   int? id;
   int? order;
   String? name;
@@ -10,7 +40,7 @@ class NutritionGoalModel {
   num? achievedRatio;
   int? totalValue;
 
-  NutritionGoalModel(
+  NutritionGoalDisplayedModel(
       {this.id,
       this.order,
       this.name,
@@ -20,8 +50,9 @@ class NutritionGoalModel {
       this.totalValue,
       this.achievedRatio});
 
-  factory NutritionGoalModel.fromJson(Map<String, dynamic> parsedJson) {
-    return NutritionGoalModel(
+  factory NutritionGoalDisplayedModel.fromJson(
+      Map<String, dynamic> parsedJson) {
+    return NutritionGoalDisplayedModel(
         id: parsedJson['id'] ?? 0,
         order: parsedJson['order'] ?? 0,
         name: parsedJson['name'] ?? "",
@@ -45,26 +76,6 @@ class NutritionGoalModel {
       'totalValue': totalValue,
       'achievedRatio': achievedRatio
     });
-  }
-}
-
-class UpdateNutritionGoalRequest {
-  int id;
-  int order;
-  int totalValue;
-
-  UpdateNutritionGoalRequest(
-      {required this.id, required this.order, required this.totalValue});
-
-  factory UpdateNutritionGoalRequest.fromJson(Map<String, dynamic> parsedJson) {
-    return UpdateNutritionGoalRequest(
-        id: parsedJson['id'] ?? 0,
-        order: parsedJson['order'] ?? 0,
-        totalValue: parsedJson['totalValue'] ?? 0);
-  }
-
-  String toJson() {
-    return jsonEncode({'id': id, 'order': order, 'totalValue': totalValue});
   }
 }
 

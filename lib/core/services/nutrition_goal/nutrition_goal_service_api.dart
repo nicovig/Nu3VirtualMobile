@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 import 'package:nu3virtual/core/models/nutrition_goal_model.dart';
+import 'package:nu3virtual/core/services/nutrition_goal/models/update_nutrition_goals_request.dart';
 import 'package:nu3virtual/core/services/nutrition_goal/nutrition_goal_service.dart';
 
 class NutritionServiceApi extends NutritionGoalService {
@@ -16,7 +17,28 @@ class NutritionServiceApi extends NutritionGoalService {
   static Uri url = Uri.https(hostedDeviceLocalhost + apiUrl, controllerName);
 
   @override
-  Future<List<NutritionGoalModel>> getAllNutritionGoalsByUserIdAndDate(
+  Future<List<NutritionGoalDisplayedModel>> getAllNutritionGoalsByUserId(
+      int? userId) async {
+    Map<String, String> headers = {
+      "Content-Type": "application/json",
+      "userId": userId.toString()
+    };
+
+    var response = await http.get(
+      url,
+      headers: headers,
+    );
+
+    final List untypedObjects = jsonDecode(response.body);
+    final List<NutritionGoalDisplayedModel> nutritionGoalList = untypedObjects
+        .map((e) => NutritionGoalDisplayedModel.fromJson(e))
+        .toList();
+
+    return nutritionGoalList;
+  }
+
+  @override
+  Future<List<NutritionGoalDisplayedModel>> getAllNutritionGoalsByUserIdAndDate(
       int? userId, DateTime date) async {
     Map<String, String> headers = {
       "Content-Type": "application/json",
@@ -25,25 +47,26 @@ class NutritionServiceApi extends NutritionGoalService {
     };
 
     Uri newUrl =
-        Uri.https(hostedDeviceLocalhost + apiUrl, '$controllerName/date');
+        Uri.https(hostedDeviceLocalhost + apiUrl, '$controllerName/withDate');
 
     var response = await http.get(
-      url,
+      newUrl,
       headers: headers,
     );
 
     final List untypedObjects = jsonDecode(response.body);
-    final List<NutritionGoalModel> nutritionGoalList =
-        untypedObjects.map((e) => NutritionGoalModel.fromJson(e)).toList();
+    final List<NutritionGoalDisplayedModel> nutritionGoalList = untypedObjects
+        .map((e) => NutritionGoalDisplayedModel.fromJson(e))
+        .toList();
 
     return nutritionGoalList;
   }
 
   @override
   Future<bool> updateNutritionGoals(
-      UpdateNutritionGoalRequest updatedNutritionGoal) async {
+      UpdateNutritionGoalsRequest updatedNutritionGoals) async {
     var response = await http.put(url,
-        headers: headers, body: updatedNutritionGoal.toJson());
+        headers: headers, body: updatedNutritionGoals.toJson());
     return response.statusCode == 200 || response.statusCode == 204;
   }
 }

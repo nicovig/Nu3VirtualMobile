@@ -26,8 +26,7 @@ class AuthenticationScreenViewModel extends ChangeNotifier {
   }
 
   void createAccount(BuildContext context) {
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => UserScreen()));
+    Navigator.pushNamed(context, modifyUserRoute, arguments: true);
     notifyListeners();
   }
 
