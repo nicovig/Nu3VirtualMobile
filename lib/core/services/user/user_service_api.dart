@@ -22,6 +22,22 @@ class UserServiceApi extends UserService {
   static Uri url = Uri.https(hostedDeviceLocalhost + apiUrl, controllerName);
 
   @override
+  Future<bool> changePassword(
+      int userId, String oldPassword, String newPassword) async {
+    Map<String, String> headers = {
+      "Content-Type": "application/json",
+      "userId": userId.toString(),
+      "oldPassword": oldPassword,
+      "newPassword": newPassword,
+    };
+
+    Uri customUrl =
+        Uri.https(hostedDeviceLocalhost + apiUrl, '$controllerName/password');
+    var response = await http.patch(customUrl, headers: headers);
+    return response.statusCode == 200 || response.statusCode == 204;
+  }
+
+  @override
   Future<bool> create(UserModel userToCreate, String password) async {
     Map<String, String> headers = {
       "Content-Type": "application/json",

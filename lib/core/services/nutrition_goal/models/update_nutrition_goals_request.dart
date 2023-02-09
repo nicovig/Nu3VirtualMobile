@@ -9,8 +9,7 @@ class UpdateNutritionGoalsRequest {
     var returnValue = jsonEncode({'nutritionGoals': nutritionGoals});
     returnValue = returnValue.replaceAll('\\', '');
     returnValue = returnValue.replaceAll('"{', '{');
-    returnValue = returnValue.replaceAll('}"', '}');
-    return returnValue;
+    return returnValue.replaceAll('}"', '}');
   }
 }
 

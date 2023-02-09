@@ -7,6 +7,8 @@ abstract class UserStore {
 }
 
 abstract class UserService {
+  Future<bool> changePassword(
+      int userId, String oldPassword, String newPassword);
   Future<bool> create(UserModel userToCreate, String password);
   Future<bool> update(UserModel userToUpdate);
 }

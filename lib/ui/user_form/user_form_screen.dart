@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:nu3virtual/layouts/forms/custom_form_field_radio_buttons/custom_form_field_gender.dart';
-import 'package:nu3virtual/layouts/screen_layouts/loading_box.dart';
+
 import 'package:stacked/stacked.dart';
 
 import 'package:nu3virtual/core/helpers/ext-classes.dart';
 import 'package:nu3virtual/core/models/user_model.dart';
 import 'package:nu3virtual/layouts/forms/custom_form_field.dart';
 import 'package:nu3virtual/layouts/forms/custom_form_field_date.dart';
+import 'package:nu3virtual/layouts/forms/custom_form_field_radio_buttons/custom_form_field_gender.dart';
 import 'package:nu3virtual/layouts/screen_layouts/custom_title.dart';
-import 'package:nu3virtual/ui/user_screen/user_screen_viewmodel.dart';
+import 'package:nu3virtual/layouts/screen_layouts/loading_box.dart';
+import 'package:nu3virtual/ui/user_form/dialogs/change_password_dialog/change_password_dialog_screen.dart';
+import 'package:nu3virtual/ui/user_form/user_form_screen_viewmodel.dart';
 
 class UserScreen extends StatelessWidget {
   @override
@@ -19,11 +21,10 @@ class UserScreen extends StatelessWidget {
     return ViewModelBuilder<UserScreenViewModel>.reactive(
       viewModelBuilder: () => UserScreenViewModel(),
       builder: (context, model, child) => FutureBuilder<UserModel>(
-        future: model.loadData(),
+        future: model.loadData(isFromLogin),
         builder: (BuildContext context, AsyncSnapshot<UserModel> snapshot) =>
             Scaffold(
-          appBar: AppBar(
-              title: const Text("NuVirtual"), automaticallyImplyLeading: false),
+          appBar: AppBar(title: const Text("NuVirtual")),
           body: SingleChildScrollView(
             child: SafeArea(
               child: snapshot.hasData
@@ -43,6 +44,8 @@ Widget getUserForm(UserScreenViewModel model, BuildContext context,
   UserModel user = userFromSnapshot;
 
   GenderEnum userGender = GenderEnum.male;
+  String firstPassword = '';
+  String secondPassword = '';
 
   if (user.gender == GenderEnum.male.index) {
     userGender = GenderEnum.male;
@@ -59,7 +62,8 @@ Widget getUserForm(UserScreenViewModel model, BuildContext context,
     key: formKey,
     child: Column(
       children: [
-        const CustomTitle(title: "Créer un compte"),
+        CustomTitle(
+            title: isFromLogin ? "Créer un compte" : "Modifier mon compte"),
         CustomFormField(
           initialValue: user.lastName,
           onChanged: (value) {
@@ -166,6 +170,7 @@ Widget getUserForm(UserScreenViewModel model, BuildContext context,
             handleOnPressedRadioButton: (GenderEnum value) =>
                 user.gender = value.index),
         CustomFormField(
+          initialValue: user.email,
           onChanged: (value) {
             if (value != null && value != "") user.email = value;
           },
@@ -177,22 +182,70 @@ Widget getUserForm(UserScreenViewModel model, BuildContext context,
             }
           },
         ),
-        CustomFormField(
-          onChanged: (value) {
-            if (value != null && value != "") user.password = value;
-          },
-          label: 'Mot de passe',
-        ),
+        Row(children: [
+          SizedBox(
+            width: MediaQuery.of(context).size.width - (isFromLogin ? 0 : 70),
+            child: CustomFormField(
+              onChanged: (value) {
+                if (value != null && value != "") firstPassword = value;
+              },
+              label: isFromLogin ? 'Mot de passe' : 'Mot de passe en cours',
+            ),
+          ),
+          isFromLogin
+              ? const SizedBox.shrink()
+              : Padding(
+                  padding: const EdgeInsets.fromLTRB(0, 12, 0, 0),
+                  child: ElevatedButton(
+                    onPressed: () => {
+                      showDialog(
+                        context: context,
+                        builder: (context) => ChangePasswordDialogScreen(),
+                      ),
+                    },
+                    child: const Icon(Icons.settings),
+                  ),
+                )
+        ]),
+        isFromLogin
+            ? CustomFormField(
+                onChanged: (value) {
+                  if (value != null && value != "") secondPassword = value;
+                },
+                label: 'Répétez le mot de passe',
+              )
+            : const SizedBox.shrink(),
         ElevatedButton(
-          onPressed: () {
+          onPressed: () async {
             if (formKey.currentState!.validate()) {
-              model.createUser(context, user, isFromLogin);
+              if (!isFromLogin && firstPassword == '') {
+                EasyLoading.showError(
+                    'Le mot de passe est obligatoire pour modifier votre compte');
+              } else if (isFromLogin &&
+                  (firstPassword == '' || secondPassword == '')) {
+                EasyLoading.showError(
+                    'Le mot de passe est obligatoire pour créer votre compte');
+              } else if (isFromLogin && firstPassword != secondPassword) {
+                EasyLoading.showError(
+                    'Les deux mots de passe doivent être identiques');
+              } else {
+                var isValidateOk =
+                    await model.validate(context, user, isFromLogin);
+
+                if (!isValidateOk) {
+                  EasyLoading.showError(
+                      'Erreur lors de la ${isFromLogin ? 'création' : 'mise à jour'} du compte');
+                  if (isFromLogin) {
+                    EasyLoading.showError('Le mot de passe est-il correct ?');
+                  }
+                }
+              }
             } else {
               EasyLoading.showError(
                   'Erreur avec les données rentrées dans le formulaire');
             }
           },
-          child: const Text('Créer un compte'),
+          child: Text(isFromLogin ? 'Créer un compte' : 'Modifier le compte'),
         )
       ],
     ),

@@ -2,11 +2,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
 import 'package:stacked/stacked.dart';
 
 import 'package:nu3virtual/core/models/workout_model.dart';
 import 'package:nu3virtual/layouts/forms/custom_form_field.dart';
 import 'package:nu3virtual/layouts/forms/custom_form_field_date.dart';
+import 'package:nu3virtual/layouts/screen_layouts/custom_title.dart';
 import 'package:nu3virtual/layouts/screen_layouts/loading_box.dart';
 import 'package:nu3virtual/ui/main_screen/workout_tab/workout_form/workout_form_viewmodel.dart';
 
@@ -43,6 +45,8 @@ class _WorkoutFormScreenState extends State<WorkoutFormScreen> {
                               children: !snapshot.hasData
                                   ? [const LoadingBox()]
                                   : [
+                                      const CustomTitle(
+                                          title: "Création d'une séance"),
                                       CustomFormField(
                                           onChanged: (value) {
                                             if (value != null && value != "") {

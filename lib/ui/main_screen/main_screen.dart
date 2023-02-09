@@ -76,10 +76,12 @@ class _MainScreenState extends State<MainScreen> {
                     child: GestureDetector(
                       onTap: () {
                         showDialog(
-                            context: context,
-                            builder: (context) => DisconnectionDialog(
-                                handleOnPressedDisconnectButton: () =>
-                                    {model.disconnect(context)}));
+                          context: context,
+                          builder: (context) => DisconnectionDialog(
+                            handleOnPressedDisconnectButton: () =>
+                                {model.disconnect(context)},
+                          ),
+                        );
                       },
                       child: const Icon(
                         Icons.exit_to_app_sharp,

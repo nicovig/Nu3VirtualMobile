@@ -11,6 +11,7 @@ import 'package:nu3virtual/layouts/forms/custom_form_field.dart';
 import 'package:nu3virtual/layouts/forms/custom_form_field_date.dart';
 import 'package:nu3virtual/layouts/forms/custom_form_field_radio_buttons/custom_form_field_meal_type.dart';
 import 'package:nu3virtual/layouts/forms/custom_form_field_time.dart';
+import 'package:nu3virtual/layouts/screen_layouts/custom_title.dart';
 import 'package:nu3virtual/layouts/screen_layouts/loading_box.dart';
 import 'package:nu3virtual/ui/main_screen/meal_tab/meal_form/meal_form_viewmodel.dart';
 
@@ -47,33 +48,37 @@ class _MealFormScreenState extends State<MealFormScreen> {
                 children: !snapshot.hasData
                     ? [const LoadingBox()]
                     : [
-                        Row(children: [
-                          SizedBox(
-                              width: MediaQuery.of(context).size.width - 50,
-                              child: CustomFormField(
-                                  onChanged: (value) {
-                                    if (value != null && value != "") {
-                                      snapshot.data?.name = value;
-                                    }
-                                  },
-                                  initialValue: snapshot.data?.name,
-                                  label: 'Nom')),
-                          Padding(
+                        const CustomTitle(title: "Création d'un repas"),
+                        Row(
+                          children: [
+                            SizedBox(
+                                width: MediaQuery.of(context).size.width - 50,
+                                child: CustomFormField(
+                                    onChanged: (value) {
+                                      if (value != null && value != "") {
+                                        snapshot.data?.name = value;
+                                      }
+                                    },
+                                    initialValue: snapshot.data?.name,
+                                    label: 'Nom')),
+                            Padding(
                               padding: const EdgeInsets.fromLTRB(8, 12, 0, 0),
                               child: StarButton(
-                                  isStarred: snapshot.data?.isFavorite,
-                                  iconSize: 40,
-                                  valueChanged: (isStarred) {
-                                    snapshot.data?.isFavorite =
-                                        isStarred as bool;
-                                    if (snapshot.data != null &&
-                                        snapshot.data?.isFavorite != null &&
-                                        snapshot.data?.isFavorite == true) {
-                                      EasyLoading.showSuccess(
-                                          'Le plat sera ajouté aux favoris');
-                                    }
-                                  }))
-                        ]),
+                                isStarred: snapshot.data?.isFavorite,
+                                iconSize: 40,
+                                valueChanged: (isStarred) {
+                                  snapshot.data?.isFavorite = isStarred as bool;
+                                  if (snapshot.data != null &&
+                                      snapshot.data?.isFavorite != null &&
+                                      snapshot.data?.isFavorite == true) {
+                                    EasyLoading.showSuccess(
+                                        'Le plat sera ajouté aux favoris');
+                                  }
+                                },
+                              ),
+                            )
+                          ],
+                        ),
                         CustomFormFieldMealType(
                             mealType: snapshot.data?.type ?? MealTypeEnum.snack,
                             handleOnPressedRadioButton: (MealTypeEnum value) =>

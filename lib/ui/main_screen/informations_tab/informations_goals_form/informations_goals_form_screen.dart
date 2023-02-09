@@ -2,11 +2,12 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:nu3virtual/core/services/nutrition_goal/models/update_nutrition_goals_request.dart';
 import 'package:stacked/stacked.dart';
 
 import 'package:nu3virtual/core/models/nutrition_goal_model.dart';
+import 'package:nu3virtual/core/services/nutrition_goal/models/update_nutrition_goals_request.dart';
 import 'package:nu3virtual/layouts/forms/custom_form_field.dart';
+import 'package:nu3virtual/layouts/screen_layouts/custom_title.dart';
 import 'package:nu3virtual/layouts/screen_layouts/loading_box.dart';
 import 'package:nu3virtual/ui/main_screen/informations_tab/informations_goals_form/informations_goals_form_viewmodel.dart';
 
@@ -40,13 +41,7 @@ class _InformationsGoalsFormScreenState
           body: SingleChildScrollView(
             child: Column(
               children: [
-                const Padding(
-                  padding: EdgeInsets.only(top: 20),
-                  child: Text(
-                    'Réglage de mes objectifs',
-                    style: TextStyle(fontSize: 20),
-                  ),
-                ),
+                const CustomTitle(title: "Réglage de mes objectifs"),
                 snapshot.hasData
                     ? getNutritionGoalsGridView(
                         model, context, snapshot.data ?? [])

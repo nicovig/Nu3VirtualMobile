@@ -6,7 +6,7 @@ import 'package:nu3virtual/core/const/routes.dart';
 import 'package:nu3virtual/core/services/authentication/authentication_service.dart';
 import 'package:nu3virtual/core/services/authentication/models/authentication_response_models.dart';
 import 'package:nu3virtual/service_locator.dart';
-import 'package:nu3virtual/ui/user_screen/user_screen.dart';
+import 'package:nu3virtual/ui/user_form/user_form_screen.dart';
 
 class AuthenticationScreenViewModel extends ChangeNotifier {
   final AuthenticationService _authenticationService =
