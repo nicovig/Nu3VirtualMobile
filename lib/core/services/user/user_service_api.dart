@@ -45,16 +45,31 @@ class UserServiceApi extends UserService {
     };
     var response =
         await http.post(url, headers: headers, body: userToCreate.toJson());
-    _saveCreateResponse(response.body);
+    if (response.statusCode == 200 || response.statusCode == 204) {
+      _saveCreateResponse(response.body);
+    }
     return response.statusCode == 200 || response.statusCode == 204;
   }
 
   @override
-  Future<bool> update(UserModel userToUpdate) async {
+  Future<String> update(UserModel userToUpdate, String password) async {
+    Map<String, String> headers = {
+      "Content-Type": "application/json",
+      "password": password
+    };
     var response =
         await http.put(url, headers: headers, body: userToUpdate.toJson());
-    _saveCreateResponse(response.body);
-    return response.statusCode == 200 || response.statusCode == 204;
+    if (response.statusCode == 200 || response.statusCode == 204) {
+      _saveCreateResponse(response.body);
+      return "";
+    } else {
+      if (response.body.contains(
+          "Le mot de passe renseigné n'est pas celui qui a servi à la création du compte")) {
+        return "Erreur lors de la modification de l'utilisateur, le mot de passe est différent de celui enregistré";
+      } else {
+        return "Erreur lors de la mise à jour du compte";
+      }
+    }
   }
 
   _saveCreateResponse(String tokenModelString) {

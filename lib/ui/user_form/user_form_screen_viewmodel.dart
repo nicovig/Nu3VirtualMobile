@@ -43,24 +43,24 @@ class UserScreenViewModel extends ChangeNotifier {
     }
   }
 
-  Future<bool> validate(
-      BuildContext context, UserModel user, bool isFromLogin) async {
+  Future<String> validate(BuildContext context, UserModel user, String password,
+      bool isCreatingUser) async {
     bool isOk = false;
-
-    if (isFromLogin) {
-      var passwordSended = user.password ?? '';
-      user.password = '';
-      isOk = await _userService.create(user, passwordSended);
+    var message;
+    if (isCreatingUser) {
+      isOk = await _userService.create(user, password);
     } else {
-      isOk = await _userService.update(user);
+      message = await _userService.update(user, password);
+      isOk = message == "" ? true : false;
     }
 
     if (isOk) {
       Navigator.of(context).pushNamedAndRemoveUntil(homeRoute, (route) => false,
-          arguments: isFromLogin ? null : MainScreenTabEnum.informations.index);
-      return true;
+          arguments:
+              isCreatingUser ? null : MainScreenTabEnum.informations.index);
+      return message;
     } else {
-      return false;
+      return message;
     }
   }
 }

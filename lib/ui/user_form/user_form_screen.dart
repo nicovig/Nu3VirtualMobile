@@ -57,9 +57,7 @@ Widget getUserForm(UserScreenViewModel model, BuildContext context,
     userGender = GenderEnum.other;
   }
 
-  final formKey = GlobalKey<FormState>();
   return Form(
-    key: formKey,
     child: Column(
       children: [
         CustomTitle(
@@ -217,32 +215,26 @@ Widget getUserForm(UserScreenViewModel model, BuildContext context,
             : const SizedBox.shrink(),
         ElevatedButton(
           onPressed: () async {
-            if (formKey.currentState!.validate()) {
-              if (!isFromLogin && firstPassword == '') {
-                EasyLoading.showError(
-                    'Le mot de passe est obligatoire pour modifier votre compte');
-              } else if (isFromLogin &&
-                  (firstPassword == '' || secondPassword == '')) {
-                EasyLoading.showError(
-                    'Le mot de passe est obligatoire pour créer votre compte');
-              } else if (isFromLogin && firstPassword != secondPassword) {
-                EasyLoading.showError(
-                    'Les deux mots de passe doivent être identiques');
-              } else {
-                var isValidateOk =
-                    await model.validate(context, user, isFromLogin);
-
-                if (!isValidateOk) {
-                  EasyLoading.showError(
-                      'Erreur lors de la ${isFromLogin ? 'création' : 'mise à jour'} du compte');
-                  if (isFromLogin) {
-                    EasyLoading.showError('Le mot de passe est-il correct ?');
-                  }
-                }
-              }
-            } else {
+            if (!isFromLogin && firstPassword == '') {
               EasyLoading.showError(
-                  'Erreur avec les données rentrées dans le formulaire');
+                  'Le mot de passe est obligatoire pour modifier votre compte');
+            } else if (isFromLogin &&
+                (firstPassword == '' || secondPassword == '')) {
+              EasyLoading.showError(
+                  'Le mot de passe est obligatoire pour créer votre compte');
+            } else if (isFromLogin && firstPassword != secondPassword) {
+              EasyLoading.showError(
+                  'Les deux mots de passe doivent être identiques');
+            } else {
+              String message = await model.validate(
+                  context, user, firstPassword, isFromLogin);
+
+              if (message != "") {
+                EasyLoading.showError(message);
+              } else {
+                EasyLoading.showSuccess(
+                    '${isFromLogin ? 'Création' : 'Mise à jour'} du compte effectuée avec succès');
+              }
             }
           },
           child: Text(isFromLogin ? 'Créer un compte' : 'Modifier le compte'),
