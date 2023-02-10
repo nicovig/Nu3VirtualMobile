@@ -1,25 +1,22 @@
 // ignore_for_file: library_private_types_in_public_api
 
+import 'package:event/event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:nu3virtual/ui/main_screen/meal_tab/dialogs/favorite_meal_dialog.dart';
 import 'package:stacked/stacked.dart';
 
-import 'package:nu3virtual/layouts/screen_layouts/change_date_buttons.dart';
-import 'package:nu3virtual/layouts/screen_layouts/monitoring_box.dart';
+import 'package:nu3virtual/ui/main_screen/meal_tab/dialogs/favorite_meal_dialog.dart';
 import 'package:nu3virtual/ui/main_screen/meal_tab/meal_tab_viewmodel.dart';
 
 // ignore: must_be_immutable
 class MealTabScreen extends StatefulWidget {
-  MealTabScreen(
-      {super.key, required this.date, required this.handleOnPressedDateButton});
+  MealTabScreen({super.key, required this.dateChangeEvent});
 
   @override
   _MealTabScreenState createState() => _MealTabScreenState();
 
-  DateTime date;
-  final Function(ChangeDateButtonTypeEnum type) handleOnPressedDateButton;
+  Event<EventArgs> dateChangeEvent;
 }
 
 class _MealTabScreenState extends State<MealTabScreen> {
@@ -29,50 +26,11 @@ class _MealTabScreenState extends State<MealTabScreen> {
       viewModelBuilder: () => MealTabViewModel(),
       onViewModelReady: (model) {
         EasyLoading.show();
-        model.initData(widget.date);
+        model.initData(widget.dateChangeEvent);
         EasyLoading.dismiss(animation: false);
       },
       builder: (context, model, child) => Column(
         children: [
-          const Padding(
-            padding: EdgeInsets.fromLTRB(10, 0, 10, 5),
-          ),
-          ChangeDateButtons(
-            handleOnPressedLeftButton: (() async {
-              EasyLoading.show();
-              setState(() {
-                widget.date = DateTime(
-                    widget.date.year, widget.date.month, widget.date.day - 1);
-              });
-              await model.loadData(widget.date);
-              widget.handleOnPressedDateButton(ChangeDateButtonTypeEnum.left);
-              EasyLoading.dismiss(animation: false);
-            }),
-            handleOnPressedMiddleButton: (() async {
-              EasyLoading.show();
-              setState(() {
-                widget.date = DateTime.now();
-              });
-              await model.loadData(widget.date);
-              widget.handleOnPressedDateButton(ChangeDateButtonTypeEnum.middle);
-              EasyLoading.dismiss(animation: false);
-            }),
-            handleOnPressedRightButton: (() async {
-              EasyLoading.show();
-              setState(() {
-                widget.date = DateTime(
-                    widget.date.year, widget.date.month, widget.date.day + 1);
-              });
-              await model.loadData(widget.date);
-              widget.handleOnPressedDateButton(ChangeDateButtonTypeEnum.right);
-              EasyLoading.dismiss(animation: false);
-            }),
-          ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
-            child: MonitoringBox(
-                date: widget.date, monitoring: model.monitoringDisplayed),
-          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
@@ -101,15 +59,14 @@ class _MealTabScreenState extends State<MealTabScreen> {
                               addFavoriteMealToDailyMeals:
                                   (favoriteMealId, dialogContext) async {
                                 EasyLoading.show();
-                                await model.addFavoriteMealToDailyMeals(
-                                    favoriteMealId, widget.date, dialogContext);
-                                await model.loadData(widget.date);
+                                //await model.addFavoriteMealToDailyMeals(favoriteMealId, widget.date, dialogContext);
+                                //await model.loadData(widget.date);
                                 EasyLoading.dismiss(animation: false);
                               },
                               deleteFavoriteMeal: (favoriteMealId) async {
                                 EasyLoading.show();
                                 await model.deleteFavoriteMeal(favoriteMealId);
-                                await model.loadData(widget.date);
+                                //await model.loadData(widget.date);
                                 setState(() {});
                                 EasyLoading.dismiss(animation: false);
                               });
@@ -156,7 +113,7 @@ class _MealTabScreenState extends State<MealTabScreen> {
                                         EasyLoading.show();
                                         await model.deleteMeal(
                                             meal.id ?? 0, context);
-                                        await model.loadData(widget.date);
+                                        //await model.loadData(widget.date);
                                         EasyLoading.dismiss(animation: false);
                                       },
                                       child: const Text("Oui"),

@@ -1,3 +1,4 @@
+import 'package:event/event.dart';
 import 'package:flutter/widgets.dart';
 
 import 'package:nu3virtual/core/const/routes.dart';

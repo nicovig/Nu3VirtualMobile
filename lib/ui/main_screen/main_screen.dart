@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:nu3virtual/layouts/screen_layouts/monitoring_box.dart';
 import 'package:stacked/stacked.dart';
 
 import 'package:nu3virtual/layouts/screen_layouts/change_date_buttons.dart';
@@ -22,32 +23,13 @@ class _MainScreenState extends State<MainScreen> {
   int userId = 0;
   int selectedIndex = 0;
 
-  DateTime date = DateTime.now();
-
   @override
   Widget build(BuildContext context) {
-    final List<Widget> pages = <Widget>[
-      MealTabScreen(
-        date: date,
-        handleOnPressedDateButton: ((ChangeDateButtonTypeEnum type) async =>
-            handleDateChange(type)),
-      ),
-      WorkoutTabScreen(
-        date: date,
-        handleOnPressedDateButton: ((ChangeDateButtonTypeEnum type) async =>
-            handleDateChange(type)),
-      ),
-      InformationsTabScreen(
-        date: date,
-        handleOnPressedDateButton: ((ChangeDateButtonTypeEnum type) async =>
-            handleDateChange(type)),
-      )
-    ];
-
     return ViewModelBuilder<MainScreenViewModel>.reactive(
       viewModelBuilder: () => MainScreenViewModel(),
-      onModelReady: (model) {
+      onViewModelReady: (model) {
         EasyLoading.show();
+        model = model;
         model.loadData();
         if (model.user.id != null) {
           setState(() {
@@ -91,8 +73,39 @@ class _MainScreenState extends State<MainScreen> {
               ]),
           body: Column(
             children: [
+              const Padding(
+                padding: EdgeInsets.fromLTRB(10, 0, 10, 5),
+              ),
+              ChangeDateButtons(
+                handleOnPressedLeftButton: (() async {
+                  EasyLoading.show();
+                  setState(() {
+                    model.updateDate(ChangeDateButtonTypeEnum.left);
+                  });
+                  EasyLoading.dismiss(animation: false);
+                }),
+                handleOnPressedMiddleButton: (() async {
+                  EasyLoading.show();
+                  setState(() {
+                    model.updateDate(ChangeDateButtonTypeEnum.middle);
+                  });
+                  EasyLoading.dismiss(animation: false);
+                }),
+                handleOnPressedRightButton: (() async {
+                  EasyLoading.show();
+                  setState(() {
+                    model.updateDate(ChangeDateButtonTypeEnum.right);
+                  });
+                  EasyLoading.dismiss(animation: false);
+                }),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
+                child: MonitoringBox(
+                    date: model.date, monitoring: model.monitoringDisplayed),
+              ),
               SingleChildScrollView(
-                child: pages.elementAt(selectedIndex),
+                child: getTabDisplayed(model, selectedIndex),
               ),
             ],
           ),
@@ -122,22 +135,24 @@ class _MainScreenState extends State<MainScreen> {
       ),
     );
   }
+}
 
-  void handleDateChange(ChangeDateButtonTypeEnum type) {
-    setState(() {
-      switch (type) {
-        case ChangeDateButtonTypeEnum.left:
-          date = DateTime(date.year, date.month, date.day - 1);
-          break;
-        case ChangeDateButtonTypeEnum.middle:
-          date = DateTime.now();
-          break;
-        case ChangeDateButtonTypeEnum.right:
-          date = DateTime(date.year, date.month, date.day + 1);
-          break;
-      }
-    });
-  }
+Widget getTabDisplayed(MainScreenViewModel model, int selectedIndex) {
+  final List<Widget> pages = <Widget>[
+    MealTabScreen(dateChangeEvent: model.dateChangeEvent),
+    // WorkoutTabScreen(
+    //   date: date,
+    //   handleOnPressedDateButton: ((ChangeDateButtonTypeEnum type) async =>
+    //       handleDateChange(type)),
+    // ),
+    // InformationsTabScreen(
+    //   date: date,
+    //   handleOnPressedDateButton: ((ChangeDateButtonTypeEnum type) async =>
+    //       handleDateChange(type)),
+    // )
+  ];
+
+  return pages.elementAt(selectedIndex);
 }
 
 enum MainScreenTabEnum { meals, workouts, informations }

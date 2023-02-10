@@ -26,48 +26,13 @@ class _WorkoutTabScreenState extends State<WorkoutTabScreen> {
   Widget build(BuildContext context) {
     return ViewModelBuilder<WorkoutTabViewModel>.reactive(
       viewModelBuilder: () => WorkoutTabViewModel(),
-      onModelReady: (model) {
+      onViewModelReady: (model) {
         EasyLoading.show();
         model.initData(widget.date);
         EasyLoading.dismiss(animation: false);
       },
       builder: (context, model, child) => Column(
         children: [
-          const Padding(
-            padding: EdgeInsets.fromLTRB(10, 0, 10, 5),
-          ),
-          ChangeDateButtons(handleOnPressedLeftButton: (() async {
-            EasyLoading.show();
-            setState(() {
-              widget.date = DateTime(
-                  widget.date.year, widget.date.month, widget.date.day - 1);
-            });
-            await model.loadData(widget.date);
-            widget.handleOnPressedDateButton(ChangeDateButtonTypeEnum.left);
-            EasyLoading.dismiss(animation: false);
-          }), handleOnPressedMiddleButton: (() async {
-            EasyLoading.show();
-            setState(() {
-              widget.date = DateTime.now();
-            });
-            await model.loadData(widget.date);
-            widget.handleOnPressedDateButton(ChangeDateButtonTypeEnum.middle);
-            EasyLoading.dismiss(animation: false);
-          }), handleOnPressedRightButton: (() async {
-            EasyLoading.show();
-            setState(() {
-              widget.date = DateTime(
-                  widget.date.year, widget.date.month, widget.date.day + 1);
-            });
-            await model.loadData(widget.date);
-            widget.handleOnPressedDateButton(ChangeDateButtonTypeEnum.right);
-            EasyLoading.dismiss(animation: false);
-          })),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
-            child: MonitoringBox(
-                date: widget.date, monitoring: model.monitoringDisplayed),
-          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [

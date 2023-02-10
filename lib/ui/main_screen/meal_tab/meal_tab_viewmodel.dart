@@ -1,11 +1,12 @@
+import 'package:event/event.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+
 import 'package:nu3virtual/core/const/routes.dart';
 import 'package:nu3virtual/core/models/favorite_meal_model.dart';
-
 import 'package:nu3virtual/core/models/meal_model.dart';
 import 'package:nu3virtual/core/models/monitoring_model.dart';
 import 'package:nu3virtual/core/models/user_model.dart';
+import 'package:nu3virtual/core/services/date/date_service_class.dart';
 import 'package:nu3virtual/core/services/favorite_meal/favorite_meal_service.dart';
 import 'package:nu3virtual/core/services/meal/meal_service.dart';
 import 'package:nu3virtual/core/services/monitoring/monitoring_service.dart';
@@ -13,6 +14,7 @@ import 'package:nu3virtual/core/services/user/user_service_class.dart';
 import 'package:nu3virtual/service_locator.dart';
 
 class MealTabViewModel extends ChangeNotifier {
+  final DateStore _dateStore = getIt<DateStore>();
   final FavoriteMealService _favoriteMealService = getIt<FavoriteMealService>();
   final MealService _mealService = getIt<MealService>();
   final MonitoringService _monitoringService = getIt<MonitoringService>();
@@ -44,10 +46,12 @@ class MealTabViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future initData(DateTime date) async {
+  Future initData(Event<EventArgs> dateChangeEvent) async {
+    _dateChangeSubscribe(dateChangeEvent);
+    DateTime currentDate = await _dateStore.getDate();
     UserModel user = await _userStore.getCurrentUser();
     userId = user.id ?? 0;
-    await loadData(date);
+    await loadData(currentDate);
     notifyListeners();
   }
 
@@ -70,6 +74,13 @@ class MealTabViewModel extends ChangeNotifier {
     bool isUpdateOk = await _mealService.updateMeal(meal);
     Navigator.pop(dialogContext, isUpdateOk);
     notifyListeners();
+  }
+
+  void _dateChangeSubscribe(Event<EventArgs> dateChangeEvent) {
+    dateChangeEvent.subscribe((args) async {
+      DateTime currentDate = await _dateStore.getDate();
+      await loadData(currentDate);
+    });
   }
 
   Future _getFavoritesMeals(DateTime date) async {
