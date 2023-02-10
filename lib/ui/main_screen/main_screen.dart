@@ -20,7 +20,6 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  int userId = 0;
   int selectedIndex = 0;
 
   @override
@@ -29,15 +28,7 @@ class _MainScreenState extends State<MainScreen> {
       viewModelBuilder: () => MainScreenViewModel(),
       onViewModelReady: (model) {
         EasyLoading.show();
-        model = model;
         model.loadData();
-        if (model.user.id != null) {
-          setState(() {
-            if (model.user.id != null) {
-              userId = model.user.id!;
-            }
-          });
-        }
         if (ModalRoute.of(context)!.settings.arguments == null) {
           selectedIndex = 0;
         } else {

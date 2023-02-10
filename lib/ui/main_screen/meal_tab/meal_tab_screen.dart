@@ -59,14 +59,15 @@ class _MealTabScreenState extends State<MealTabScreen> {
                               addFavoriteMealToDailyMeals:
                                   (favoriteMealId, dialogContext) async {
                                 EasyLoading.show();
-                                //await model.addFavoriteMealToDailyMeals(favoriteMealId, widget.date, dialogContext);
-                                //await model.loadData(widget.date);
+                                await model.addFavoriteMealToDailyMeals(
+                                    dialogContext, favoriteMealId);
+                                await model.loadData();
                                 EasyLoading.dismiss(animation: false);
                               },
                               deleteFavoriteMeal: (favoriteMealId) async {
                                 EasyLoading.show();
                                 await model.deleteFavoriteMeal(favoriteMealId);
-                                //await model.loadData(widget.date);
+                                await model.loadData();
                                 setState(() {});
                                 EasyLoading.dismiss(animation: false);
                               });
