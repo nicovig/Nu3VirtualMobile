@@ -101,7 +101,9 @@ class _FavoriteMealDialogState extends State<FavoriteMealDialog> {
                       FavoriteMealModel favoritesMeal =
                           widget.favoritesMeals[currentFavoriteMeal];
                       widget.deleteFavoriteMeal(favoritesMeal.id ?? 0);
-                      setState(() {});
+                      setState(() {
+                        widget.favoritesMeals.removeAt(currentFavoriteMeal);
+                      });
                     }),
                     style: ButtonStyle(
                       backgroundColor:

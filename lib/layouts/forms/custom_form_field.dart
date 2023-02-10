@@ -12,6 +12,7 @@ class CustomFormField extends StatelessWidget {
     this.keyboardType,
     required this.label,
     this.maxLines,
+    this.maxLength,
     this.onChanged,
     this.validator,
   }) : super(key: key);
@@ -23,6 +24,7 @@ class CustomFormField extends StatelessWidget {
   final TextInputType? keyboardType;
   final String label;
   final int? maxLines;
+  final int? maxLength;
   final Function(String?)? onChanged;
   final String? Function(String?)? validator;
 
@@ -33,6 +35,8 @@ class CustomFormField extends StatelessWidget {
       child: TextFormField(
         initialValue: initialValue,
         maxLines: maxLines,
+        maxLength: maxLength,
+        maxLengthEnforcement: MaxLengthEnforcement.enforced,
         onSaved: handleOnSaved,
         inputFormatters: inputFormatters,
         keyboardType: keyboardType,
