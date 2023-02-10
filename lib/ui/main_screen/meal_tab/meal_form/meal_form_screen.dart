@@ -198,6 +198,10 @@ class _MealFormScreenState extends State<MealFormScreen> {
                         Container(
                           padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
                           child: ElevatedButton(
+                            style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all(
+                                  Colors.blue.shade300),
+                            ),
                             onPressed: () async {
                               model.meal = MealModel(
                                   id: snapshot.data?.id,

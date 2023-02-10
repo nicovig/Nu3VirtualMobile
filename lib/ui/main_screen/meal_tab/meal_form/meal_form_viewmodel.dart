@@ -1,16 +1,18 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:nu3virtual/core/const/routes.dart';
 
+import 'package:nu3virtual/core/const/routes.dart';
 import 'package:nu3virtual/core/models/meal_model.dart';
 import 'package:nu3virtual/core/models/user_model.dart';
+import 'package:nu3virtual/core/services/date/date_service_class.dart';
 import 'package:nu3virtual/core/services/meal/meal_service.dart';
 import 'package:nu3virtual/core/services/user/user_service_class.dart';
 import 'package:nu3virtual/service_locator.dart';
 import 'package:nu3virtual/ui/main_screen/main_screen.dart';
 
 class MealFormViewModel extends ChangeNotifier {
+  final DateStore _dateStore = getIt<DateStore>();
   final MealService _mealService = getIt<MealService>();
   final UserStore _userStore = getIt<UserStore>();
 
@@ -28,6 +30,7 @@ class MealFormViewModel extends ChangeNotifier {
       return Future<MealModel>.delayed(
           const Duration(seconds: 1), () => _mealService.getMealById(mealId));
     } else {
+      DateTime currentDate = await _dateStore.getDate();
       return Future<MealModel>.delayed(
           const Duration(seconds: 0),
           () => MealModel(
@@ -36,9 +39,9 @@ class MealFormViewModel extends ChangeNotifier {
               type: MealTypeEnum.snack,
               isFavorite: false,
               date: DateTime(
-                  DateTime.now().year,
-                  DateTime.now().month,
-                  DateTime.now().day,
+                  currentDate.year,
+                  currentDate.month,
+                  currentDate.day,
                   TimeOfDay.now().hour,
                   TimeOfDay.now().minute),
               carbohydrate: 0,

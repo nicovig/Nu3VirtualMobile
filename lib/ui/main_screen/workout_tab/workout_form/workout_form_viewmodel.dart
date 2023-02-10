@@ -1,16 +1,18 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:nu3virtual/core/const/routes.dart';
 
+import 'package:nu3virtual/core/const/routes.dart';
 import 'package:nu3virtual/core/models/user_model.dart';
 import 'package:nu3virtual/core/models/workout_model.dart';
+import 'package:nu3virtual/core/services/date/date_service_class.dart';
 import 'package:nu3virtual/core/services/user/user_service_class.dart';
 import 'package:nu3virtual/core/services/workout/workout_service.dart';
 import 'package:nu3virtual/service_locator.dart';
 import 'package:nu3virtual/ui/main_screen/main_screen.dart';
 
 class WorkoutFormViewModel extends ChangeNotifier {
+  final DateStore _dateStore = getIt<DateStore>();
   final UserStore _userStore = getIt<UserStore>();
   final WorkoutService _workoutService = getIt<WorkoutService>();
 
@@ -52,15 +54,17 @@ class WorkoutFormViewModel extends ChangeNotifier {
       return Future<WorkoutModel>.delayed(const Duration(seconds: 1),
           () => _workoutService.getWorkoutById(workoutId));
     } else {
+      DateTime currentDate = await _dateStore.getDate();
       return Future<WorkoutModel>.delayed(
           const Duration(seconds: 0),
           () => WorkoutModel(
               id: 0,
               name: '',
-              date: DateTime(DateTime.now().year, DateTime.now().month,
-                  DateTime.now().day),
+              date: DateTime(
+                  currentDate.year, currentDate.month, currentDate.day),
               timeInSeconds: 0,
               caloriesBurned: 0,
+              notes: '',
               userId: user.id));
     }
   }

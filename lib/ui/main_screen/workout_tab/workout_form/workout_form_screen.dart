@@ -3,7 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-
 import 'package:stacked/stacked.dart';
 
 import 'package:nu3virtual/core/models/workout_model.dart';
@@ -152,6 +151,10 @@ class _WorkoutFormScreenState extends State<WorkoutFormScreen> {
                         Container(
                           padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
                           child: ElevatedButton(
+                            style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all(
+                                  Colors.blue.shade300),
+                            ),
                             onPressed: () async {
                               model.workout = WorkoutModel(
                                   id: snapshot.data?.id,
@@ -164,7 +167,6 @@ class _WorkoutFormScreenState extends State<WorkoutFormScreen> {
                               if (controlForms(model.workout)) {
                                 await model.handleValidation(context);
                               }
-                              await model.handleValidation(context);
                             },
                             child: Text(snapshot.data?.id == 0
                                 ? "Ajouter"
