@@ -19,6 +19,11 @@ class AuthenticationScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return ViewModelBuilder<AuthenticationScreenViewModel>.reactive(
         viewModelBuilder: () => AuthenticationScreenViewModel(),
+        onViewModelReady: (model) {
+          EasyLoading.show();
+          model.setData();
+          EasyLoading.dismiss(animation: false);
+        },
         builder: (context, model, child) => Scaffold(
             appBar: AppBar(
               centerTitle: true,
@@ -32,17 +37,12 @@ class AuthenticationScreen extends StatelessWidget {
                     children: [
                       const CustomTitle(title: "Se connecter"),
                       CustomFormField(
-                          onChanged: (value) =>
-                              model.checkEmailOrPseudo(value ?? ''),
-                          handleOnSaved: (value) =>
-                              model.checkEmailOrPseudo(value ?? ''),
+                          onChanged: (value) => model.login = value!,
                           label: 'Pseudo ou email'),
                       PasswordFormField(
-                          label: 'Mot de passe',
-                          onChanged: (value) =>
-                              model.checkPassword(value ?? ''),
-                          handleOnSaved: (value) =>
-                              model.checkPassword(value ?? '')),
+                        label: 'Mot de passe',
+                        onChanged: (value) => model.password = value!,
+                      ),
                       SizedBox(
                         width: MediaQuery.of(context).size.width * 0.9,
                         child: ElevatedButton(

@@ -10,6 +10,11 @@ class UserScreenViewModel extends ChangeNotifier {
   final UserService _userService = getIt<UserService>();
   final UserStore _userStore = getIt<UserStore>();
 
+  Future<bool> checkEmailOrPseudo(String login) async {
+    //vérifier si pseudo pas déjà pris
+    return true;
+  }
+
   Future<UserModel> loadData(bool isFromLogin) async {
     if (isFromLogin) {
       return Future<UserModel>.delayed(

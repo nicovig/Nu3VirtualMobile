@@ -89,8 +89,12 @@ class _MainScreenState extends State<MainScreen> {
                       ),
                     ))
               ]),
-          body: SingleChildScrollView(
-            child: pages.elementAt(selectedIndex),
+          body: Column(
+            children: [
+              SingleChildScrollView(
+                child: pages.elementAt(selectedIndex),
+              ),
+            ],
           ),
           bottomNavigationBar: BottomNavigationBar(
             onTap: (value) => {
