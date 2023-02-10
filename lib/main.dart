@@ -25,8 +25,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
         title: 'NuVirtual',
-        theme:
-            ThemeData(appBarTheme: const AppBarTheme(color: Colors.lightBlue)),
+        theme: ThemeData(appBarTheme: AppBarTheme(color: Colors.blue.shade300)),
         home: AuthenticationScreen(title: 'NuVirtual'),
         routes: {
           homeRoute: (context) => MainScreen(),
@@ -58,7 +57,7 @@ void configEasyLoading() {
     ..boxShadow = <BoxShadow>[] // removes black background
     ..loadingStyle = EasyLoadingStyle.light
     ..textColor = Colors.black
-    ..indicatorColor = Colors.blue // color of animated loader
+    ..indicatorColor = Colors.blue.shade200 // color of animated loader
     ..lineWidth = 20
     ..backgroundColor = Colors.transparent;
 }

@@ -43,7 +43,7 @@ class _MealTabScreenState extends State<MealTabScreen> {
               ElevatedButton(
                 style: ButtonStyle(
                   backgroundColor:
-                      MaterialStateProperty.all(Colors.blue.shade100),
+                      MaterialStateProperty.all(Colors.blue.shade200),
                 ),
                 onPressed: () => model.openMealScreen(context, 0),
                 child: const Icon(Icons.add),
@@ -52,7 +52,7 @@ class _MealTabScreenState extends State<MealTabScreen> {
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all(
                       model.favoritesMeals.length > 0
-                          ? Colors.blue.shade100
+                          ? Colors.blue.shade200
                           : Colors.grey.shade300),
                 ),
                 onPressed: () {
@@ -120,7 +120,7 @@ class _MealTabScreenState extends State<MealTabScreen> {
                                         EasyLoading.show();
                                         await model.deleteMeal(
                                             meal.id ?? 0, context);
-                                        //await model.loadData(widget.date);
+                                        await model.loadData();
                                         EasyLoading.dismiss(animation: false);
                                       },
                                       child: const Text("Oui"),

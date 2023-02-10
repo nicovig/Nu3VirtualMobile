@@ -21,7 +21,7 @@ class FavoriteMealServiceApi extends FavoriteMealService {
       int favoriteMealId, DateTime date, int userId) async {
     Map<String, String> headers = {
       "Content-Type": "application/json",
-      "userId": favoriteMealId.toString()
+      "userId": userId.toString()
     };
 
     var response = await http.post(url,

@@ -52,6 +52,19 @@ class UserServiceApi extends UserService {
   }
 
   @override
+  Future<bool> isEmailUsable(String email) async {
+    Map<String, String> headers = {
+      "Content-Type": "application/json",
+      "email": email
+    };
+
+    Uri customUrl =
+        Uri.https(hostedDeviceLocalhost + apiUrl, '$controllerName/email');
+    var response = await http.patch(customUrl, headers: headers);
+    return response.statusCode == 200 || response.statusCode == 204;
+  }
+
+  @override
   Future<String> update(UserModel userToUpdate, String password) async {
     Map<String, String> headers = {
       "Content-Type": "application/json",

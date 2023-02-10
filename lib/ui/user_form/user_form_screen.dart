@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-
 import 'package:stacked/stacked.dart';
 
 import 'package:nu3virtual/core/helpers/ext-classes.dart';
@@ -9,6 +8,7 @@ import 'package:nu3virtual/core/models/user_model.dart';
 import 'package:nu3virtual/layouts/forms/custom_form_field.dart';
 import 'package:nu3virtual/layouts/forms/custom_form_field_date.dart';
 import 'package:nu3virtual/layouts/forms/custom_form_field_radio_buttons/custom_form_field_gender.dart';
+import 'package:nu3virtual/layouts/forms/password_form_field.dart';
 import 'package:nu3virtual/layouts/screen_layouts/custom_title.dart';
 import 'package:nu3virtual/layouts/screen_layouts/loading_box.dart';
 import 'package:nu3virtual/ui/user_form/dialogs/change_password_dialog/change_password_dialog_screen.dart';
@@ -183,11 +183,9 @@ Widget getUserForm(UserScreenViewModel model, BuildContext context,
         Row(children: [
           SizedBox(
             width: MediaQuery.of(context).size.width - (isFromLogin ? 0 : 70),
-            child: CustomFormField(
-              onChanged: (value) {
-                if (value != null && value != "") firstPassword = value;
-              },
+            child: PasswordFormField(
               label: isFromLogin ? 'Mot de passe' : 'Mot de passe en cours',
+              onChanged: (value) => firstPassword = value!,
             ),
           ),
           isFromLogin

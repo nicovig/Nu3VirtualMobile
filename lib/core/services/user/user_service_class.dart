@@ -10,5 +10,6 @@ abstract class UserService {
   Future<bool> changePassword(
       int userId, String oldPassword, String newPassword);
   Future<bool> create(UserModel userToCreate, String password);
+  Future<bool> isEmailUsable(String email);
   Future<String> update(UserModel userToUpdate, String password);
 }

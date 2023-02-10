@@ -210,7 +210,9 @@ class _MealFormScreenState extends State<MealFormScreen> {
                                   protein: snapshot.data?.protein,
                                   calorie: snapshot.data?.calorie,
                                   notes: snapshot.data?.notes);
-                              await model.handleValidation(context);
+                              if (controlForms(model.meal)) {
+                                await model.handleValidation(context);
+                              }
                             },
                             child: Text(snapshot.data?.id == 0
                                 ? "Ajouter"
@@ -225,6 +227,14 @@ class _MealFormScreenState extends State<MealFormScreen> {
       ),
     );
   }
+}
+
+bool controlForms(MealModel mealModel) {
+  if (mealModel.name == null || mealModel.name == '') {
+    EasyLoading.showError("Le nom est requis");
+    return false;
+  }
+  return true;
 }
 
 getTimeInitialValue(int? snapshotDateHour, int? snapshotDateMinute) {

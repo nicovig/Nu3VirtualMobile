@@ -10,6 +10,7 @@ class UserScreenViewModel extends ChangeNotifier {
   final UserService _userService = getIt<UserService>();
   final UserStore _userStore = getIt<UserStore>();
 
+  String initialEmail = '';
   Future<bool> checkEmailOrPseudo(String login) async {
     //vérifier si pseudo pas déjà pris
     return true;
@@ -32,6 +33,7 @@ class UserScreenViewModel extends ChangeNotifier {
               password: ''));
     } else {
       UserModel user = await _userStore.getCurrentUser();
+      initialEmail = user.email ?? '';
       return Future<UserModel>.delayed(
           const Duration(seconds: 0),
           () => UserModel(
@@ -50,13 +52,23 @@ class UserScreenViewModel extends ChangeNotifier {
 
   Future<String> validate(BuildContext context, UserModel user, String password,
       bool isCreatingUser) async {
+    String message = '';
+    bool isEmailUsable = true;
     bool isOk = false;
-    var message;
-    if (isCreatingUser) {
-      isOk = await _userService.create(user, password);
+
+    if (isCreatingUser || initialEmail != user.email) {
+      isEmailUsable = await _userService.isEmailUsable(user.email ?? '');
+    }
+
+    if (isEmailUsable) {
+      if (isCreatingUser) {
+        isOk = await _userService.create(user, password);
+      } else {
+        message = await _userService.update(user, password);
+        isOk = message == "" ? true : false;
+      }
     } else {
-      message = await _userService.update(user, password);
-      isOk = message == "" ? true : false;
+      message = "L'email renseigné est déjà pris par un compte";
     }
 
     if (isOk) {

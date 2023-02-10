@@ -12,8 +12,8 @@ class CustomTitle extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.only(top: 18),
       child: Text(title,
-          style: const TextStyle(
-            color: Colors.blue,
+          style: TextStyle(
+            color: Colors.blue.shade300,
             fontSize: 26,
           )),
     );
