@@ -1,7 +1,8 @@
 // ignore_for_file: library_private_types_in_public_api
+import 'package:event/event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:intl/intl.dart';
+import 'package:intl/src/intl/date_format.dart';
 import 'package:stacked/stacked.dart';
 
 import 'package:nu3virtual/core/models/user_model.dart';
@@ -10,17 +11,21 @@ import 'package:nu3virtual/ui/main_screen/informations_tab/informations_tab_view
 
 // ignore: must_be_immutable
 class InformationsTabScreen extends StatefulWidget {
-  InformationsTabScreen(
-      {super.key, required this.date, required this.handleOnPressedDateButton});
+  InformationsTabScreen({super.key, required this.dateChangeEvent});
 
   @override
   _InformationsTabScreenState createState() => _InformationsTabScreenState();
 
-  DateTime date;
-  final Function(ChangeDateButtonTypeEnum type) handleOnPressedDateButton;
+  Event<EventArgs> dateChangeEvent;
 }
 
 class _InformationsTabScreenState extends State<InformationsTabScreen> {
+  @override
+  void deactivate() {
+    widget.dateChangeEvent.unsubscribeAll();
+    super.deactivate();
+  }
+
   static const double spaceBetweenLinesPersonnalInformations = 6;
 
   @override
@@ -29,54 +34,20 @@ class _InformationsTabScreenState extends State<InformationsTabScreen> {
       viewModelBuilder: () => InformationsTabViewModel(),
       onViewModelReady: (model) {
         EasyLoading.show();
-        model.initData(widget.date);
+        model.initData(widget.dateChangeEvent);
       },
       builder: (context, model, child) => Column(
         children: [
-          const Padding(
-            padding: EdgeInsets.fromLTRB(10, 0, 10, 5),
-          ),
-          ChangeDateButtons(
-            handleOnPressedLeftButton: (() async {
-              EasyLoading.show();
-              setState(() {
-                widget.date = DateTime(
-                    widget.date.year, widget.date.month, widget.date.day - 1);
-              });
-              await model.loadData(widget.date);
-              widget.handleOnPressedDateButton(ChangeDateButtonTypeEnum.left);
-              EasyLoading.dismiss(animation: false);
-            }),
-            handleOnPressedMiddleButton: (() async {
-              EasyLoading.show();
-              setState(() {
-                widget.date = DateTime.now();
-              });
-              await model.loadData(widget.date);
-              widget.handleOnPressedDateButton(ChangeDateButtonTypeEnum.middle);
-              EasyLoading.dismiss(animation: false);
-            }),
-            handleOnPressedRightButton: (() async {
-              EasyLoading.show();
-              setState(() {
-                widget.date = DateTime(
-                    widget.date.year, widget.date.month, widget.date.day + 1);
-              });
-              await model.loadData(widget.date);
-              widget.handleOnPressedDateButton(ChangeDateButtonTypeEnum.right);
-              EasyLoading.dismiss(animation: false);
-            }),
-          ),
           Padding(
-            padding: const EdgeInsets.only(top: 20),
+            padding: const EdgeInsets.only(top: 10),
             child: Column(
               children: [
                 Text(
                     style: const TextStyle(fontSize: 20),
                     DateFormat('EEEE d MMMM yyyy')
-                        .format(widget.date)
+                        .format(model.currentDate)
                         .toString()),
-                const Divider(),
+                const Divider(thickness: 0.8),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 20),
                   child: Row(
@@ -93,157 +64,151 @@ class _InformationsTabScreenState extends State<InformationsTabScreen> {
                           MaterialStateProperty.all(Colors.blue.shade200)),
                   child: const Text('Modifier mes objetctifs'),
                 ),
-                const Divider(height: 30),
-                const Padding(
-                  padding: EdgeInsets.only(top: 10),
-                ),
-                Container(
-                  child: Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: const [
-                          Text(
-                            'Mes informations',
-                            style: TextStyle(fontSize: 20),
-                          )
-                        ],
-                      ),
-                      const Padding(
-                        padding: EdgeInsets.only(top: 20),
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Spacer(),
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: const [
-                              Padding(
-                                padding: EdgeInsets.only(
-                                    bottom:
-                                        spaceBetweenLinesPersonnalInformations),
-                                child: Text('Pseudo :'),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.only(
-                                    bottom:
-                                        spaceBetweenLinesPersonnalInformations),
-                                child: Text('Prénom :'),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.only(
-                                    bottom:
-                                        spaceBetweenLinesPersonnalInformations),
-                                child: Text('Nom :'),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.only(
-                                    bottom:
-                                        spaceBetweenLinesPersonnalInformations),
-                                child: Text('Genre :'),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.only(
-                                    bottom:
-                                        spaceBetweenLinesPersonnalInformations),
-                                child: Text('Date de naissance :'),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.only(
-                                    bottom:
-                                        spaceBetweenLinesPersonnalInformations),
-                                child: Text('Taille :'),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.only(
-                                    bottom:
-                                        spaceBetweenLinesPersonnalInformations),
-                                child: Text('Poids :'),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.only(
-                                    bottom:
-                                        spaceBetweenLinesPersonnalInformations),
-                                child: Text('Taille :'),
-                              ),
-                            ],
-                          ),
-                          const Spacer(),
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                    bottom:
-                                        spaceBetweenLinesPersonnalInformations),
-                                child: Text(model.user.pseudo ?? ''),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                    bottom:
-                                        spaceBetweenLinesPersonnalInformations),
-                                child: Text(model.user.firstName ?? ''),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                    bottom:
-                                        spaceBetweenLinesPersonnalInformations),
-                                child: Text(model.user.lastName ?? ''),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                    bottom:
-                                        spaceBetweenLinesPersonnalInformations),
-                                child: Text(
-                                    getGenderEnumText(model.user.gender ?? 0)),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                    bottom:
-                                        spaceBetweenLinesPersonnalInformations),
-                                child:
-                                    Text(getUserBirthday(model.user.birthday)),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                    bottom:
-                                        spaceBetweenLinesPersonnalInformations),
-                                child:
-                                    Text(getUserHeight(model.user.height ?? 0)),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                    bottom:
-                                        spaceBetweenLinesPersonnalInformations),
-                                child:
-                                    Text(getUserWeight(model.user.weight ?? 0)),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(bottom: 3),
-                                child: Text(model.user.email ?? ''),
-                              ),
-                            ],
-                          ),
-                          const Spacer(),
-                        ],
-                      ),
-                      const Padding(
-                        padding: EdgeInsets.only(top: 20),
-                      ),
-                      ElevatedButton(
-                        onPressed: (() {
-                          model.updateUserInformations(context);
-                        }),
-                        style: ButtonStyle(
-                            backgroundColor: MaterialStateProperty.all(
-                                Colors.blue.shade200)),
-                        child: const Text('Modifier mes informations'),
-                      ),
-                    ],
-                  ),
+                const Divider(height: 20, thickness: 0.8),
+                Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        Text(
+                          'Mes informations',
+                          style: TextStyle(fontSize: 20),
+                        )
+                      ],
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.only(top: 20),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Spacer(),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: const [
+                            Padding(
+                              padding: EdgeInsets.only(
+                                  bottom:
+                                      spaceBetweenLinesPersonnalInformations),
+                              child: Text('Pseudo :'),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(
+                                  bottom:
+                                      spaceBetweenLinesPersonnalInformations),
+                              child: Text('Prénom :'),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(
+                                  bottom:
+                                      spaceBetweenLinesPersonnalInformations),
+                              child: Text('Nom :'),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(
+                                  bottom:
+                                      spaceBetweenLinesPersonnalInformations),
+                              child: Text('Genre :'),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(
+                                  bottom:
+                                      spaceBetweenLinesPersonnalInformations),
+                              child: Text('Date de naissance :'),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(
+                                  bottom:
+                                      spaceBetweenLinesPersonnalInformations),
+                              child: Text('Taille :'),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(
+                                  bottom:
+                                      spaceBetweenLinesPersonnalInformations),
+                              child: Text('Poids :'),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(
+                                  bottom:
+                                      spaceBetweenLinesPersonnalInformations),
+                              child: Text('Taille :'),
+                            ),
+                          ],
+                        ),
+                        const Spacer(),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  bottom:
+                                      spaceBetweenLinesPersonnalInformations),
+                              child: Text(model.user.pseudo ?? ''),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  bottom:
+                                      spaceBetweenLinesPersonnalInformations),
+                              child: Text(model.user.firstName ?? ''),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  bottom:
+                                      spaceBetweenLinesPersonnalInformations),
+                              child: Text(model.user.lastName ?? ''),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  bottom:
+                                      spaceBetweenLinesPersonnalInformations),
+                              child: Text(
+                                  getGenderEnumText(model.user.gender ?? 0)),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  bottom:
+                                      spaceBetweenLinesPersonnalInformations),
+                              child: Text(getUserBirthday(model.user.birthday)),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  bottom:
+                                      spaceBetweenLinesPersonnalInformations),
+                              child:
+                                  Text(getUserHeight(model.user.height ?? 0)),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  bottom:
+                                      spaceBetweenLinesPersonnalInformations),
+                              child:
+                                  Text(getUserWeight(model.user.weight ?? 0)),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 3),
+                              child: Text(model.user.email ?? ''),
+                            ),
+                          ],
+                        ),
+                        const Spacer(),
+                      ],
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.only(top: 20),
+                    ),
+                    ElevatedButton(
+                      onPressed: (() {
+                        model.updateUserInformations(context);
+                      }),
+                      style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.all(Colors.blue.shade200)),
+                      child: const Text('Modifier mes informations'),
+                    ),
+                  ],
                 ),
               ],
             ),
@@ -263,7 +228,15 @@ List<Widget> getDataGoalsWidgetList(InformationsTabViewModel model) {
       Column(
         children: [
           Text(informationGoal.name ?? ''),
-          const SizedBox(height: 20),
+          Padding(
+            padding: EdgeInsets.fromLTRB(0, 8, 0, 10),
+            child: Text(
+                style: TextStyle(
+                    fontSize: 22,
+                    color: getMacronutrimentGoalPercentageColor(
+                        informationGoal.achievedRatio)),
+                getMacronutrimentGoalPercentage(informationGoal.achievedRatio)),
+          ),
           CircularProgressIndicator(
             strokeWidth: 6,
             value: double.parse(
@@ -281,6 +254,32 @@ List<Widget> getDataGoalsWidgetList(InformationsTabViewModel model) {
   }
   EasyLoading.dismiss(animation: false);
   return list;
+}
+
+String getMacronutrimentGoalPercentage(num? achievedRatio) {
+  if (achievedRatio != null) {
+    var percentage = achievedRatio * 100;
+    return '${percentage.toStringAsFixed(2)}%';
+  }
+  return '';
+}
+
+Color getMacronutrimentGoalPercentageColor(num? achievedRatio) {
+  if (achievedRatio != null) {
+    if (achievedRatio < 0.33) {
+      return Colors.red.shade300;
+    }
+    if (achievedRatio >= 0.33 && achievedRatio < 0.66) {
+      return Colors.orange.shade200;
+    }
+    if (achievedRatio >= 0.66 && achievedRatio < 1) {
+      return Colors.green.shade300;
+    }
+    if (achievedRatio > 1) {
+      return const Color.fromRGBO(31, 138, 112, 1);
+    }
+  }
+  return Colors.black;
 }
 
 String getUserBirthday(DateTime? birthday) {

@@ -1,34 +1,37 @@
 // ignore_for_file: library_private_types_in_public_api
 
+import 'package:event/event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:stacked/stacked.dart';
 
-import 'package:nu3virtual/layouts/screen_layouts/change_date_buttons.dart';
-import 'package:nu3virtual/layouts/screen_layouts/monitoring_box.dart';
 import 'package:nu3virtual/ui/main_screen/workout_tab/workout_tab_viewmodel.dart';
 
 // ignore: must_be_immutable
 class WorkoutTabScreen extends StatefulWidget {
-  WorkoutTabScreen(
-      {super.key, required this.date, required this.handleOnPressedDateButton});
+  WorkoutTabScreen({super.key, required this.dateChangeEvent});
 
   @override
   _WorkoutTabScreenState createState() => _WorkoutTabScreenState();
 
-  DateTime date;
-  final Function(ChangeDateButtonTypeEnum type) handleOnPressedDateButton;
+  Event<EventArgs> dateChangeEvent;
 }
 
 class _WorkoutTabScreenState extends State<WorkoutTabScreen> {
+  @override
+  void deactivate() {
+    widget.dateChangeEvent.unsubscribeAll();
+    super.deactivate();
+  }
+
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<WorkoutTabViewModel>.reactive(
       viewModelBuilder: () => WorkoutTabViewModel(),
       onViewModelReady: (model) {
         EasyLoading.show();
-        model.initData(widget.date);
+        model.initData(widget.dateChangeEvent);
         EasyLoading.dismiss(animation: false);
       },
       builder: (context, model, child) => Column(
@@ -79,7 +82,7 @@ class _WorkoutTabScreenState extends State<WorkoutTabScreen> {
                                         EasyLoading.show();
                                         await model.deleteWorkout(
                                             workout.id ?? 0, context);
-                                        await model.loadData(widget.date);
+                                        await model.loadData();
                                         EasyLoading.dismiss(animation: false);
                                       },
                                       child: const Text("Oui"),

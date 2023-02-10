@@ -74,7 +74,9 @@ class MealTabViewModel extends ChangeNotifier {
   }
 
   void _dateChangeSubscribe(Event<EventArgs> dateChangeEvent) {
-    dateChangeEvent.subscribe((args) async => await loadData());
+    dateChangeEvent.subscribe((args) async {
+      await loadData();
+    });
   }
 
   Future _getFavoritesMeals(DateTime date) async {

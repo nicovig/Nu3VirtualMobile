@@ -21,6 +21,12 @@ class MealTabScreen extends StatefulWidget {
 
 class _MealTabScreenState extends State<MealTabScreen> {
   @override
+  void deactivate() {
+    widget.dateChangeEvent.unsubscribeAll();
+    super.deactivate();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<MealTabViewModel>.reactive(
       viewModelBuilder: () => MealTabViewModel(),

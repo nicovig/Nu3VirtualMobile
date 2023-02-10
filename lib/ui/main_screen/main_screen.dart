@@ -90,11 +90,14 @@ class _MainScreenState extends State<MainScreen> {
                   EasyLoading.dismiss(animation: false);
                 }),
               ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
-                child: MonitoringBox(
-                    date: model.date, monitoring: model.monitoringDisplayed),
-              ),
+              isMonitoringDisplayed(selectedIndex)
+                  ? Padding(
+                      padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
+                      child: MonitoringBox(
+                          date: model.date,
+                          monitoring: model.monitoringDisplayed),
+                    )
+                  : const SizedBox.shrink(),
               SingleChildScrollView(
                 child: getTabDisplayed(model, selectedIndex),
               ),
@@ -131,19 +134,15 @@ class _MainScreenState extends State<MainScreen> {
 Widget getTabDisplayed(MainScreenViewModel model, int selectedIndex) {
   final List<Widget> pages = <Widget>[
     MealTabScreen(dateChangeEvent: model.dateChangeEvent),
-    // WorkoutTabScreen(
-    //   date: date,
-    //   handleOnPressedDateButton: ((ChangeDateButtonTypeEnum type) async =>
-    //       handleDateChange(type)),
-    // ),
-    // InformationsTabScreen(
-    //   date: date,
-    //   handleOnPressedDateButton: ((ChangeDateButtonTypeEnum type) async =>
-    //       handleDateChange(type)),
-    // )
+    WorkoutTabScreen(dateChangeEvent: model.dateChangeEvent),
+    InformationsTabScreen(dateChangeEvent: model.dateChangeEvent)
   ];
 
   return pages.elementAt(selectedIndex);
+}
+
+bool isMonitoringDisplayed(int selectedIndex) {
+  return selectedIndex < 2;
 }
 
 enum MainScreenTabEnum { meals, workouts, informations }
