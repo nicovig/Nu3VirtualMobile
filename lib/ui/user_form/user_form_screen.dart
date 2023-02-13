@@ -44,8 +44,6 @@ Widget getUserForm(UserScreenViewModel model, BuildContext context,
   UserModel user = userFromSnapshot;
 
   GenderEnum userGender = GenderEnum.male;
-  String firstPassword = '';
-  String secondPassword = '';
 
   if (user.gender == GenderEnum.male.index) {
     userGender = GenderEnum.male;
@@ -185,7 +183,7 @@ Widget getUserForm(UserScreenViewModel model, BuildContext context,
             width: MediaQuery.of(context).size.width - (isFromLogin ? 0 : 70),
             child: PasswordFormField(
               label: isFromLogin ? 'Mot de passe' : 'Mot de passe en cours',
-              onChanged: (value) => firstPassword = value!,
+              onChanged: (value) => model.firstPassword = value!,
             ),
           ),
           isFromLogin
@@ -206,26 +204,28 @@ Widget getUserForm(UserScreenViewModel model, BuildContext context,
         isFromLogin
             ? CustomFormField(
                 onChanged: (value) {
-                  if (value != null && value != "") secondPassword = value;
+                  if (value != null && value != "")
+                    model.secondPassword = value;
                 },
                 label: 'Répétez le mot de passe',
               )
             : const SizedBox.shrink(),
         ElevatedButton(
           onPressed: () async {
-            if (!isFromLogin && firstPassword == '') {
+            if (!isFromLogin && model.firstPassword == '') {
               EasyLoading.showError(
                   'Le mot de passe est obligatoire pour modifier votre compte');
             } else if (isFromLogin &&
-                (firstPassword == '' || secondPassword == '')) {
+                (model.firstPassword == '' || model.secondPassword == '')) {
               EasyLoading.showError(
                   'Le mot de passe est obligatoire pour créer votre compte');
-            } else if (isFromLogin && firstPassword != secondPassword) {
+            } else if (isFromLogin &&
+                model.firstPassword != model.secondPassword) {
               EasyLoading.showError(
                   'Les deux mots de passe doivent être identiques');
             } else {
               String message = await model.validate(
-                  context, user, firstPassword, isFromLogin);
+                  context, user, model.firstPassword, isFromLogin);
 
               if (message != "") {
                 EasyLoading.showError(message);

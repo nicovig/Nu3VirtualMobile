@@ -11,10 +11,8 @@ class UserScreenViewModel extends ChangeNotifier {
   final UserStore _userStore = getIt<UserStore>();
 
   String initialEmail = '';
-  Future<bool> checkEmailOrPseudo(String login) async {
-    //vérifier si pseudo pas déjà pris
-    return true;
-  }
+  String firstPassword = '';
+  String secondPassword = '';
 
   Future<UserModel> loadData(bool isFromLogin) async {
     if (isFromLogin) {

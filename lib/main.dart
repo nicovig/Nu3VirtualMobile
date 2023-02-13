@@ -52,6 +52,8 @@ class MyHttpOverrides extends HttpOverrides {
 
 void configEasyLoading() {
   EasyLoading.instance
+    ..displayDuration = const Duration(milliseconds: 3000)
+    ..dismissOnTap = false
     ..indicatorType = EasyLoadingIndicatorType.doubleBounce
     ..progressColor = Colors.white
     ..boxShadow = <BoxShadow>[] // removes black background

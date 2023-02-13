@@ -41,17 +41,21 @@ class _InformationsGoalsFormScreenState
           body: SingleChildScrollView(
             child: Column(
               children: [
-                const CustomTitle(title: "Réglage de mes objectifs"),
+                const CustomTitle(title: "Réglages de mes objectifs"),
                 snapshot.hasData
                     ? getNutritionGoalsGridView(
                         model, context, snapshot.data ?? [])
                     : const LoadingBox(),
                 snapshot.hasData
                     ? ElevatedButton(
+                        style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.all(Colors.blue.shade300),
+                        ),
                         onPressed: () async {
                           await model.updateNutritionGoals(context);
                         },
-                        child: const Text("Modifier mes objectifs"),
+                        child: const Text("Modifier"),
                       )
                     : const SizedBox.shrink(),
               ],
