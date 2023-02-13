@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:stacked/stacked.dart';
 
 import 'package:nu3virtual/core/helpers/helpers.dart';
 import 'package:nu3virtual/core/models/favorite_meal_model.dart';
@@ -8,7 +9,6 @@ import 'package:nu3virtual/layouts/forms/custom_form_field_radio_buttons/custom_
 import 'package:nu3virtual/layouts/screen_layouts/custom_title.dart';
 import 'package:nu3virtual/layouts/screen_layouts/loading_box.dart';
 import 'package:nu3virtual/ui/main_screen/meal_tab/favorite_meal/favorite_meal_viewmodel.dart';
-import 'package:stacked/stacked.dart';
 
 class FavoriteMealScreen extends StatefulWidget {
   FavoriteMealScreen({Key? key}) : super(key: key);
@@ -21,15 +21,18 @@ class _FavoriteMealScreenState extends State<FavoriteMealScreen> {
   int currentFavoriteMeal = 0;
   bool areSlidesDisplayed = false;
   MealTypeEnum mealType = getDefaultMealType();
+  List<Widget> slides = [];
 
   @override
   Widget build(BuildContext context) {
     List<Widget> getCarouselSlides(FavoriteMealViewModel model,
         List<FavoriteMealModel>? favoriteMeals, MealTypeEnum currentMealType) {
-      List<Widget> slides = [];
+      model.favoritesMealsDisplayed = [];
+      slides = [];
       if (favoriteMeals != null) {
-        favoriteMeals.forEach((favoriteMeal) {
+        for (var favoriteMeal in favoriteMeals) {
           if (favoriteMeal.type == currentMealType) {
+            model.favoritesMealsDisplayed.add(favoriteMeal);
             slides.add(
               Builder(
                 builder: (BuildContext context) => Container(
@@ -51,7 +54,7 @@ class _FavoriteMealScreenState extends State<FavoriteMealScreen> {
               ),
             );
           }
-        });
+        }
       }
 
       if (slides.isNotEmpty) {
@@ -125,7 +128,7 @@ class _FavoriteMealScreenState extends State<FavoriteMealScreen> {
                                       ElevatedButton(
                                         onPressed: (() {
                                           FavoriteMealModel favoritesMeal =
-                                              model.favoritesMeals[
+                                              model.favoritesMealsDisplayed[
                                                   currentFavoriteMeal];
                                           model.addFavoriteMealToDailyMeals(
                                               context, favoritesMeal.id ?? 0);
@@ -143,10 +146,10 @@ class _FavoriteMealScreenState extends State<FavoriteMealScreen> {
                                       ElevatedButton(
                                         onPressed: (() {
                                           FavoriteMealModel favoritesMeal =
-                                              model.favoritesMeals[
+                                              model.favoritesMealsDisplayed[
                                                   currentFavoriteMeal];
                                           model.deleteFavoriteMeal(
-                                              favoritesMeal.id ?? 0);
+                                              context, favoritesMeal.id ?? 0);
                                           setState(() {
                                             snapshot.data
                                                 ?.removeAt(currentFavoriteMeal);

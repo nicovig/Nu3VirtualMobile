@@ -55,7 +55,7 @@ class _MealTabScreenState extends State<MealTabScreen> {
                           : Colors.grey.shade300),
                 ),
                 onPressed: () {
-                  if (model.favoritesMeals.length > 0) {
+                  if (model.favoritesMeals.isNotEmpty) {
                     model.openFavoriteMealScreen(context);
                   } else {
                     EasyLoading.showInfo('Aucun favoris');

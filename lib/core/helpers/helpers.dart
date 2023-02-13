@@ -6,10 +6,11 @@ import 'package:intl/intl.dart';
 import 'package:nu3virtual/core/models/meal_model.dart';
 
 MealTypeEnum getDefaultMealType() {
+  var test = TimeOfDay.now().hour;
   if (TimeOfDay.now().hour <= 10) {
     return MealTypeEnum.breakfast;
   }
-  if (TimeOfDay.now().hour <= 12) {
+  if (TimeOfDay.now().hour < 12) {
     return MealTypeEnum.brunch;
   }
   if (TimeOfDay.now().hour <= 14) {
