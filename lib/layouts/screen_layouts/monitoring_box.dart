@@ -37,13 +37,13 @@ class MonitoringBox extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.fromLTRB(30, 10, 30, 5),
           child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-            Text("Glucides : ${monitoring.carbohydrate ?? 0}",
+            Text("Glucides : ${monitoring.carbohydrate ?? 0}g",
                 style: TextStyle(fontSize: 16, color: Colors.blue.shade300)),
             const Spacer(),
-            Text("Lipides : ${monitoring.lipid ?? 0}",
+            Text("Lipides : ${monitoring.lipid ?? 0}g",
                 style: TextStyle(fontSize: 16, color: Colors.blue.shade300)),
             const Spacer(),
-            Text("Protéines : ${monitoring.protein ?? 0}",
+            Text("Protéines : ${monitoring.protein ?? 0}g",
                 style: TextStyle(fontSize: 16, color: Colors.blue.shade300)),
           ]),
         ),

@@ -6,7 +6,6 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:stacked/stacked.dart';
 
-import 'package:nu3virtual/ui/main_screen/meal_tab/dialogs/favorite_meal_dialog.dart';
 import 'package:nu3virtual/ui/main_screen/meal_tab/meal_tab_viewmodel.dart';
 
 // ignore: must_be_immutable
@@ -57,27 +56,7 @@ class _MealTabScreenState extends State<MealTabScreen> {
                 ),
                 onPressed: () {
                   if (model.favoritesMeals.length > 0) {
-                    showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return FavoriteMealDialog(
-                              favoritesMeals: model.favoritesMeals,
-                              addFavoriteMealToDailyMeals:
-                                  (favoriteMealId, dialogContext) async {
-                                EasyLoading.show();
-                                await model.addFavoriteMealToDailyMeals(
-                                    dialogContext, favoriteMealId);
-                                await model.loadData();
-                                EasyLoading.dismiss(animation: false);
-                              },
-                              deleteFavoriteMeal: (favoriteMealId) async {
-                                EasyLoading.show();
-                                await model.deleteFavoriteMeal(favoriteMealId);
-                                await model.loadData();
-                                setState(() {});
-                                EasyLoading.dismiss(animation: false);
-                              });
-                        });
+                    model.openFavoriteMealScreen(context);
                   } else {
                     EasyLoading.showInfo('Aucun favoris');
                   }
@@ -97,7 +76,7 @@ class _MealTabScreenState extends State<MealTabScreen> {
             itemBuilder: (context, index) {
               final meal = model.meals[index];
               var subtitle =
-                  'P: ${meal.protein} G: ${meal.carbohydrate} C: ${meal.calorie}';
+                  'P: ${meal.protein}g G: ${meal.carbohydrate}g C: ${meal.calorie}g';
               return Slidable(
                 key: Key('meal-index-$index'),
                 // The start action pane is the one at the left or the top side.

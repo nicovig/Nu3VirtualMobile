@@ -12,6 +12,8 @@ import 'package:nu3virtual/ui/main_screen/meal_tab/meal_form/meal_form_screen.da
 import 'package:nu3virtual/ui/main_screen/workout_tab/workout_form/workout_form_screen.dart';
 import 'package:nu3virtual/ui/user_form/user_form_screen.dart';
 
+import 'ui/main_screen/meal_tab/favorite_meal/favorite_meal_screen.dart';
+
 void main() {
   configEasyLoading();
   setupServiceLocator();
@@ -28,6 +30,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(appBarTheme: AppBarTheme(color: Colors.blue.shade300)),
         home: AuthenticationScreen(title: 'NuVirtual'),
         routes: {
+          favoriteMealsRoute: (context) => FavoriteMealScreen(),
           homeRoute: (context) => MainScreen(),
           mealRoute: (context) => MealFormScreen(),
           modifyUserRoute: (context) => UserScreen(),

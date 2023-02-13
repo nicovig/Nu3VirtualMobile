@@ -28,8 +28,6 @@ class _MealFormScreenState extends State<MealFormScreen> {
   Widget build(BuildContext context) {
     final mealId = ModalRoute.of(context)!.settings.arguments as int;
 
-    String timeValueDisplayed = '';
-
     return ViewModelBuilder<MealFormViewModel>.reactive(
       viewModelBuilder: () => MealFormViewModel(),
       builder: (context, model, child) => FutureBuilder<MealModel>(
@@ -73,6 +71,12 @@ class _MealFormScreenState extends State<MealFormScreen> {
                                       snapshot.data?.isFavorite == true) {
                                     EasyLoading.showSuccess(
                                         'Le plat sera ajouté aux favoris');
+                                  }
+                                  if (snapshot.data != null &&
+                                      snapshot.data?.isFavorite != null &&
+                                      snapshot.data?.isFavorite == false) {
+                                    EasyLoading.showSuccess(
+                                        'Le plat sera enlevé des favoris');
                                   }
                                 },
                               ),
@@ -118,7 +122,7 @@ class _MealFormScreenState extends State<MealFormScreen> {
                           },
                         ),
                         CustomFormField(
-                          label: 'Glucides',
+                          label: 'Glucides (grammes)',
                           initialValue:
                               snapshot.data?.carbohydrate.toString() != '0'
                                   ? snapshot.data?.carbohydrate.toString()
@@ -136,7 +140,7 @@ class _MealFormScreenState extends State<MealFormScreen> {
                           keyboardType: TextInputType.number,
                         ),
                         CustomFormField(
-                          label: 'Lipides',
+                          label: 'Lipides (grammes)',
                           initialValue: snapshot.data?.lipid.toString() != '0'
                               ? snapshot.data?.lipid.toString()
                               : '',
@@ -153,7 +157,7 @@ class _MealFormScreenState extends State<MealFormScreen> {
                           keyboardType: TextInputType.number,
                         ),
                         CustomFormField(
-                          label: 'Protéines',
+                          label: 'Protéines (grammes)',
                           initialValue: snapshot.data?.protein.toString() != '0'
                               ? snapshot.data?.protein.toString()
                               : '',

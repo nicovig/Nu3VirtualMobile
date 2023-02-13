@@ -1,3 +1,4 @@
+const String favoriteMealsRoute = '/favorite';
 const String homeRoute = '/home';
 const String loginRoute = '/';
 const String mealRoute = '/meal';

@@ -11,7 +11,7 @@ import 'package:nu3virtual/core/services/meal/meal_service.dart';
 import 'package:nu3virtual/core/services/user/user_service_class.dart';
 import 'package:nu3virtual/service_locator.dart';
 
-class MealTabViewModel extends ChangeNotifier {
+class FavoriteMealViewModel extends ChangeNotifier {
   final DateStore _dateStore = getIt<DateStore>();
   final FavoriteMealService _favoriteMealService = getIt<FavoriteMealService>();
   final MealService _mealService = getIt<MealService>();
@@ -19,7 +19,7 @@ class MealTabViewModel extends ChangeNotifier {
 
   List<FavoriteMealModel> favoritesMeals = [];
   List<MealModel> meals = [];
-  int? userId = 0;
+  late UserModel user = UserModel();
 
   Future addFavoriteMealToDailyMeals(
       BuildContext dialogContext, int favoriteMealId) async {
@@ -28,7 +28,7 @@ class MealTabViewModel extends ChangeNotifier {
         currentDate.day, TimeOfDay.now().hour, TimeOfDay.now().minute);
 
     bool isAddOk = await _favoriteMealService.addFavoriteMealToDailyMeals(
-        favoriteMealId, favoriteMealDate, userId ?? 0);
+        favoriteMealId, favoriteMealDate, user.id ?? 0);
     Navigator.of(dialogContext).pop(isAddOk);
     notifyListeners();
   }
@@ -44,23 +44,10 @@ class MealTabViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future initData(Event<EventArgs> dateChangeEvent) async {
-    _dateChangeSubscribe(dateChangeEvent);
-    UserModel user = await _userStore.getCurrentUser();
-    userId = user.id ?? 0;
-    await loadData();
-    notifyListeners();
-  }
-
-  Future loadData() async {
+  Future<List<FavoriteMealModel>> loadData() async {
+    user = await _userStore.getCurrentUser();
     DateTime currentDate = await _dateStore.getDate();
-    await _getFavoritesMeals();
-    await _getMeals(currentDate);
-    notifyListeners();
-  }
-
-  openFavoriteMealScreen(BuildContext context) {
-    Navigator.pushNamed(context, favoriteMealsRoute);
+    return _getFavoritesMeals(currentDate);
   }
 
   openMealScreen(BuildContext context, int mealId) {
@@ -77,20 +64,8 @@ class MealTabViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void _dateChangeSubscribe(Event<EventArgs> dateChangeEvent) {
-    dateChangeEvent.subscribe((args) async {
-      await loadData();
-    });
-  }
-
-  Future _getFavoritesMeals() async {
-    favoritesMeals =
-        await _favoriteMealService.getAllFavoriteMealsByUserId(userId ?? 0);
-    notifyListeners();
-  }
-
-  Future _getMeals(DateTime date) async {
-    meals = await _mealService.getAllMealsByUserIdAndDate(userId, date);
-    notifyListeners();
+  Future<List<FavoriteMealModel>> _getFavoritesMeals(DateTime date) async {
+    return Future<List<FavoriteMealModel>>.delayed(const Duration(seconds: 1),
+        () => _favoriteMealService.getAllFavoriteMealsByUserId(user.id ?? 0));
   }
 }
