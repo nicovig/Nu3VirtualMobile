@@ -23,7 +23,7 @@ MealTypeEnum getDefaultMealType() {
 }
 
 String getMonitoringDate(DateTime date, context) {
-  return 'Semaine ${_getWeekNumber(date)} - ${DateFormat('EEEE d MMMM yyyy').format(date)}'; //mecredi 30 novembre 2022
+  return DateFormat('EEEE d MMMM yyyy').format(date); //mecredi 30 novembre 2022
 }
 
 num _getWeekNumber(DateTime date) {

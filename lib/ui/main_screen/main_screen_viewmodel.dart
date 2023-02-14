@@ -23,7 +23,7 @@ class MainScreenViewModel extends ChangeNotifier {
   Future loadData() async {
     user = await _userStore.getCurrentUser();
     date = await _dateStore.getDate();
-    _getMonitoring();
+    await _getMonitoring();
     notifyListeners();
   }
 
@@ -32,7 +32,7 @@ class MainScreenViewModel extends ChangeNotifier {
     Navigator.of(context).pushNamedAndRemoveUntil(loginRoute, (route) => false);
   }
 
-  void updateDate(ChangeDateButtonTypeEnum dateChangeType) {
+  void updateDate(ChangeDateButtonTypeEnum dateChangeType) async {
     switch (dateChangeType) {
       case ChangeDateButtonTypeEnum.left:
         date = DateTime(date.year, date.month, date.day - 1);
@@ -45,6 +45,7 @@ class MainScreenViewModel extends ChangeNotifier {
         break;
     }
     _dateStore.setDate(date);
+    await _getMonitoring();
     dateChangeEvent.broadcast();
   }
 
