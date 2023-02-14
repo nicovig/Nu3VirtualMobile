@@ -62,46 +62,46 @@ class _MainScreenState extends State<MainScreen> {
                       ),
                     ))
               ]),
-          body: Column(
-            children: [
-              const Padding(
-                padding: EdgeInsets.fromLTRB(10, 0, 10, 5),
-              ),
-              ChangeDateButtons(
-                handleOnPressedLeftButton: (() async {
-                  EasyLoading.show();
-                  setState(() {
-                    model.updateDate(ChangeDateButtonTypeEnum.left);
-                  });
-                  EasyLoading.dismiss(animation: false);
-                }),
-                handleOnPressedMiddleButton: (() async {
-                  EasyLoading.show();
-                  setState(() {
-                    model.updateDate(ChangeDateButtonTypeEnum.middle);
-                  });
-                  EasyLoading.dismiss(animation: false);
-                }),
-                handleOnPressedRightButton: (() async {
-                  EasyLoading.show();
-                  setState(() {
-                    model.updateDate(ChangeDateButtonTypeEnum.right);
-                  });
-                  EasyLoading.dismiss(animation: false);
-                }),
-              ),
-              isMonitoringDisplayed(selectedIndex)
-                  ? Padding(
-                      padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
-                      child: MonitoringBox(
-                          date: model.date,
-                          monitoring: model.monitoringDisplayed),
-                    )
-                  : const SizedBox.shrink(),
-              SingleChildScrollView(
-                child: getTabDisplayed(model, selectedIndex),
-              ),
-            ],
+          body: SingleChildScrollView(
+            child: Column(
+              children: [
+                const Padding(
+                  padding: EdgeInsets.fromLTRB(10, 0, 10, 5),
+                ),
+                ChangeDateButtons(
+                  handleOnPressedLeftButton: (() async {
+                    EasyLoading.show();
+                    setState(() {
+                      model.updateDate(ChangeDateButtonTypeEnum.left);
+                    });
+                    EasyLoading.dismiss(animation: false);
+                  }),
+                  handleOnPressedMiddleButton: (() async {
+                    EasyLoading.show();
+                    setState(() {
+                      model.updateDate(ChangeDateButtonTypeEnum.middle);
+                    });
+                    EasyLoading.dismiss(animation: false);
+                  }),
+                  handleOnPressedRightButton: (() async {
+                    EasyLoading.show();
+                    setState(() {
+                      model.updateDate(ChangeDateButtonTypeEnum.right);
+                    });
+                    EasyLoading.dismiss(animation: false);
+                  }),
+                ),
+                isMonitoringDisplayed(selectedIndex)
+                    ? Padding(
+                        padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
+                        child: MonitoringBox(
+                            date: model.date,
+                            monitoring: model.monitoringDisplayed),
+                      )
+                    : const SizedBox.shrink(),
+                getTabDisplayed(model, selectedIndex)
+              ],
+            ),
           ),
           bottomNavigationBar: BottomNavigationBar(
             onTap: (value) => {
