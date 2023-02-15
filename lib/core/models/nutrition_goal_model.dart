@@ -80,3 +80,22 @@ class NutritionGoalDisplayedModel {
 }
 
 enum MacronutrientTypeEnum { carbohydrate, lipid, protein, calorie }
+
+String getMacronutrientTypeEnumText(MacronutrientTypeEnum macronutrientType) {
+  switch (macronutrientType) {
+    case MacronutrientTypeEnum.carbohydrate:
+      return 'Glucides';
+
+    case MacronutrientTypeEnum.lipid:
+      return 'Lipides';
+
+    case MacronutrientTypeEnum.protein:
+      return 'Protéines';
+
+    case MacronutrientTypeEnum.calorie:
+      return 'Calories';
+
+    default:
+      return 'Calories';
+  }
+}

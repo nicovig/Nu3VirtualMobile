@@ -2,13 +2,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:nu3virtual/core/models/user_model.dart';
 import 'package:stacked/stacked.dart';
 
 import 'package:nu3virtual/core/models/nutrition_goal_model.dart';
-import 'package:nu3virtual/core/services/nutrition_goal/models/update_nutrition_goals_request.dart';
-import 'package:nu3virtual/layouts/forms/custom_form_field.dart';
 import 'package:nu3virtual/layouts/screen_layouts/custom_title.dart';
 import 'package:nu3virtual/layouts/screen_layouts/loading_box.dart';
+import 'package:nu3virtual/ui/main_screen/informations_tab/informations_goals_form/dialogs/informations_goals_dialog/informations_goals_dialog.dart';
 import 'package:nu3virtual/ui/main_screen/informations_tab/informations_goals_form/informations_goals_form_viewmodel.dart';
 
 // ignore: must_be_immutable
@@ -44,7 +44,7 @@ class _InformationsGoalsFormScreenState
                     children: [
                       const CustomTitle(title: "Réglages de mes objectifs"),
                       SizedBox(
-                        height: MediaQuery.of(context).size.height - 400,
+                        height: MediaQuery.of(context).size.height - 470,
                         child: ReorderableListView(
                           padding: const EdgeInsets.symmetric(horizontal: 40),
                           children: getNutritionGoalsTiles(
@@ -118,33 +118,57 @@ List<Widget> getNutritionGoalsTiles(InformationsGoalsFormViewModel model,
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(10, 0, 20, 0),
-                child: SizedBox(
-                  width: 85,
-                  child: Text(
-                    nutritionGoal.name ?? '',
-                    style: const TextStyle(fontSize: 18),
-                  ),
-                ),
-              ),
-              const SizedBox(
-                width: 75,
-                child: Text(
-                  'Objectif : ',
-                  style: TextStyle(fontSize: 16),
-                ),
-              ),
-              SizedBox(
-                width: 30,
-                child: TextFormField(
-                  initialValue: nutritionGoal.totalValue.toString() != '0'
-                      ? nutritionGoal.totalValue.toString()
-                      : '',
-                  decoration: const InputDecoration(border: InputBorder.none),
-                  keyboardType: TextInputType.number,
-                  inputFormatters: <TextInputFormatter>[
-                    FilteringTextInputFormatter.digitsOnly
-                  ], // Only numbers can be entered
+                padding: const EdgeInsets.only(left: 10),
+                child: Row(
+                  children: [
+                    SizedBox(
+                      width: 100,
+                      child: Text(
+                        nutritionGoal.name ?? '',
+                        style: const TextStyle(fontSize: 18),
+                      ),
+                    ),
+                    Row(
+                      children: [
+                        const SizedBox(
+                          width: 75,
+                          child: Text(
+                            'Objectif : ',
+                            style: TextStyle(fontSize: 16),
+                          ),
+                        ),
+                        SizedBox(
+                          width: 30,
+                          child: TextFormField(
+                            initialValue:
+                                nutritionGoal.totalValue.toString() != '0'
+                                    ? nutritionGoal.totalValue.toString()
+                                    : '',
+                            decoration:
+                                const InputDecoration(border: InputBorder.none),
+                            keyboardType: TextInputType.number,
+                            inputFormatters: <TextInputFormatter>[
+                              FilteringTextInputFormatter.digitsOnly
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 20),
+                      child: SizedBox(
+                        width: 40,
+                        child: IconButton(
+                          icon: Icon(
+                            Icons.info,
+                            color: Colors.blue.shade300,
+                          ),
+                          onPressed: () => openInformationDialog(
+                              context, model, nutritionGoal.type),
+                        ),
+                      ),
+                    )
+                  ],
                 ),
               ),
             ],
@@ -153,6 +177,17 @@ List<Widget> getNutritionGoalsTiles(InformationsGoalsFormViewModel model,
       ),
     );
   }
-
   return nutritionGoalsListTile;
+}
+
+openInformationDialog(BuildContext context,
+    InformationsGoalsFormViewModel model, int? macronutrientType) {
+  if (macronutrientType != null) {
+    showDialog(
+      context: context,
+      builder: (context) => InformationsGoalsDialog(
+          genderType: GenderEnum.values[model.user.gender ?? 0],
+          macronutrientType: MacronutrientTypeEnum.values[macronutrientType]),
+    );
+  }
 }
