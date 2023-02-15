@@ -127,30 +127,24 @@ List<Widget> getNutritionGoalsTiles(InformationsGoalsFormViewModel model,
                   ),
                 ),
               ),
-              const Padding(
-                padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
-                child: SizedBox(
-                  width: 75,
-                  child: Text(
-                    'Objectif : ',
-                    style: TextStyle(fontSize: 16),
-                  ),
+              const SizedBox(
+                width: 75,
+                child: Text(
+                  'Objectif : ',
+                  style: TextStyle(fontSize: 16),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                child: SizedBox(
-                  width: 30,
-                  child: TextFormField(
-                    initialValue: nutritionGoal.totalValue.toString() != '0'
-                        ? nutritionGoal.totalValue.toString()
-                        : '',
-                    decoration: const InputDecoration(border: InputBorder.none),
-                    keyboardType: TextInputType.number,
-                    inputFormatters: <TextInputFormatter>[
-                      FilteringTextInputFormatter.digitsOnly
-                    ], // Only numbers can be entered
-                  ),
+              SizedBox(
+                width: 30,
+                child: TextFormField(
+                  initialValue: nutritionGoal.totalValue.toString() != '0'
+                      ? nutritionGoal.totalValue.toString()
+                      : '',
+                  decoration: const InputDecoration(border: InputBorder.none),
+                  keyboardType: TextInputType.number,
+                  inputFormatters: <TextInputFormatter>[
+                    FilteringTextInputFormatter.digitsOnly
+                  ], // Only numbers can be entered
                 ),
               ),
             ],
