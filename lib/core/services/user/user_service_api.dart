@@ -60,7 +60,7 @@ class UserServiceApi extends UserService {
 
     Uri customUrl =
         Uri.https(hostedDeviceLocalhost + apiUrl, '$controllerName/email');
-    var response = await http.patch(customUrl, headers: headers);
+    var response = await http.get(customUrl, headers: headers);
     return response.statusCode == 200 || response.statusCode == 204;
   }
 

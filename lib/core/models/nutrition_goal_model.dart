@@ -1,35 +1,5 @@
 import 'dart:convert';
 
-class NutritionGoalFormModel {
-  int? id;
-  String? name;
-  int? type;
-  int? order;
-  int? totalValue;
-
-  NutritionGoalFormModel(
-      {this.id, this.name, this.type, this.order, this.totalValue});
-
-  factory NutritionGoalFormModel.fromJson(Map<String, dynamic> parsedJson) {
-    return NutritionGoalFormModel(
-        id: parsedJson['id'] ?? 0,
-        name: parsedJson['name'] ?? '',
-        type: parsedJson['type'] ?? 0,
-        order: parsedJson['order'] ?? 0,
-        totalValue: parsedJson['totalValue'] ?? 0);
-  }
-
-  String toJson() {
-    return jsonEncode({
-      'id': id,
-      'name': name,
-      'type': type,
-      'order': order,
-      'totalValue': totalValue
-    });
-  }
-}
-
 class NutritionGoalDisplayedModel {
   int? id;
   int? order;
@@ -39,6 +9,7 @@ class NutritionGoalDisplayedModel {
   int? achievedValue;
   num? achievedRatio;
   int? totalValue;
+  bool isActive;
 
   NutritionGoalDisplayedModel(
       {this.id,
@@ -48,7 +19,8 @@ class NutritionGoalDisplayedModel {
       this.date,
       this.achievedValue,
       this.totalValue,
-      this.achievedRatio});
+      this.achievedRatio,
+      required this.isActive});
 
   factory NutritionGoalDisplayedModel.fromJson(
       Map<String, dynamic> parsedJson) {
@@ -62,7 +34,8 @@ class NutritionGoalDisplayedModel {
             : null,
         achievedValue: parsedJson['achievedValue'] ?? 0,
         totalValue: parsedJson['totalValue'] ?? 0,
-        achievedRatio: parsedJson['achievedRatio'] ?? 0);
+        achievedRatio: parsedJson['achievedRatio'] ?? 0,
+        isActive: parsedJson['isActive'] ?? true);
   }
 
   String toJson() {
@@ -74,7 +47,8 @@ class NutritionGoalDisplayedModel {
       'date': date?.toIso8601String(),
       'achievedValue': achievedValue,
       'totalValue': totalValue,
-      'achievedRatio': achievedRatio
+      'achievedRatio': achievedRatio,
+      'isActive': isActive
     });
   }
 }

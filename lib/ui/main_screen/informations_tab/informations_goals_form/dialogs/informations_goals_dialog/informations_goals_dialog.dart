@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
+import 'package:nu3virtual/core/const/macronutrients_text.dart';
 import 'package:nu3virtual/core/models/nutrition_goal_model.dart';
 import 'package:nu3virtual/core/models/user_model.dart';
+import 'package:url_launcher/link.dart';
 
 class InformationsGoalsDialog extends StatelessWidget {
   InformationsGoalsDialog({
@@ -21,91 +23,93 @@ class InformationsGoalsDialog extends StatelessWidget {
       case MacronutrientTypeEnum.carbohydrate:
         switch (genderType) {
           case GenderEnum.unknown:
-            return 'Glucides inconnu';
+            source = carbohydrate_unknown_source;
+            return carbohydrate_unknown_text;
 
           case GenderEnum.male:
-            return 'Glucides homme';
+            source = carbohydrate_male_source;
+            return carbohydrate_male_text;
 
           case GenderEnum.female:
-            return 'Glucides femme';
+            source = carbohydrate_female_source;
+            return carbohydrate_female_text;
 
           case GenderEnum.other:
-            return 'Glucides autre';
+            source = carbohydrate_other_source;
+            return carbohydrate_other_text;
 
           default:
-            return 'Glucides inconnu';
+            source = carbohydrate_unknown_source;
+            return carbohydrate_unknown_text;
         }
 
       case MacronutrientTypeEnum.lipid:
         switch (genderType) {
           case GenderEnum.unknown:
-            return 'Lipides inconnu';
+            source = lipid_unknown_source;
+            return lipid_unknown_text;
 
           case GenderEnum.male:
-            return 'Lipides homme';
+            source = lipid_male_source;
+            return lipid_male_text;
 
           case GenderEnum.female:
-            return 'Lipides femme';
+            source = lipid_female_source;
+            return lipid_female_text;
 
           case GenderEnum.other:
-            return 'Lipides autre';
+            source = lipid_other_source;
+            return lipid_other_text;
 
           default:
-            return 'Lipides inconnu';
+            source = lipid_unknown_source;
+            return lipid_unknown_text;
         }
 
       case MacronutrientTypeEnum.protein:
         switch (genderType) {
           case GenderEnum.unknown:
-            return 'Lipides inconnu';
+            source = protein_unknown_source;
+            return protein_unknown_text;
 
           case GenderEnum.male:
-            return 'Lipides homme';
+            source = protein_male_source;
+            return protein_male_text;
 
           case GenderEnum.female:
-            return 'Lipides femme';
+            source = protein_female_source;
+            return protein_female_text;
 
           case GenderEnum.other:
-            return 'Lipides autre';
+            source = protein_other_source;
+            return protein_other_text;
 
           default:
-            return 'Lipides inconnu';
+            source = protein_unknown_source;
+            return protein_unknown_text;
         }
 
       case MacronutrientTypeEnum.calorie:
         switch (genderType) {
           case GenderEnum.unknown:
-            return 'Lipides inconnu';
+            source = calorie_unknown_source;
+            return calorie_unknown_text;
 
           case GenderEnum.male:
-            return 'Lipides homme';
+            source = calorie_male_source;
+            return calorie_male_text;
 
           case GenderEnum.female:
-            return 'Lipides femme';
+            source = calorie_female_source;
+            return calorie_female_text;
 
           case GenderEnum.other:
-            return 'Lipides autre';
+            source = calorie_other_source;
+            return calorie_other_text;
 
           default:
-            return 'Lipides inconnu';
-        }
-
-      default:
-        switch (genderType) {
-          case GenderEnum.unknown:
-            return 'Lipides inconnu';
-
-          case GenderEnum.male:
-            return 'Lipides homme';
-
-          case GenderEnum.female:
-            return 'Lipides femme';
-
-          case GenderEnum.other:
-            return 'Lipides autre';
-
-          default:
-            return 'Lipides inconnu';
+            source = calorie_unknown_source;
+            return calorie_unknown_text;
         }
     }
   }
@@ -121,13 +125,14 @@ class InformationsGoalsDialog extends StatelessWidget {
         Text(getMacronutrientTypeText(genderType, macronutrientType)),
         Padding(
           padding: const EdgeInsets.only(top: 10),
-          child: Text('Source: $source'),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(top: 10),
-          child: ElevatedButton(
-            onPressed: (() => Navigator.pop(context, true)),
-            child: const Text('Fermer'),
+          child: Link(
+            uri: Uri.parse(source),
+            builder: (_, followLink) {
+              return ElevatedButton(
+                onPressed: followLink,
+                child: const Text('Source'),
+              );
+            },
           ),
         ),
       ],

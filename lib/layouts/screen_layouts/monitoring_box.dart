@@ -18,36 +18,112 @@ class MonitoringBox extends StatelessWidget {
       width: MediaQuery.of(context).size.width,
       height: 100.0,
       decoration: BoxDecoration(
-          border: Border.all(
-            color: Colors.blue,
-            width: 1,
-          ),
-          borderRadius: BorderRadius.circular(10.0)),
-      child: Column(children: [
-        Padding(
+        border: Border.all(
+          color: Colors.blue,
+          width: 1,
+        ),
+        borderRadius: BorderRadius.circular(10.0),
+      ),
+      child: Column(
+        children: [
+          Padding(
             padding: const EdgeInsets.symmetric(vertical: 10),
             child: Text(
               getMonitoringDate(date, context),
-              style: TextStyle(fontSize: 18, color: Colors.blue.shade300),
-            )),
-        Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-          Text("Calories consommées : ${monitoring.caloriesConsumed ?? 0}",
-              style: TextStyle(fontSize: 17, color: Colors.blue.shade300)),
-        ]),
-        Padding(
-          padding: const EdgeInsets.fromLTRB(30, 10, 30, 5),
-          child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-            Text("Glucides : ${monitoring.carbohydrate ?? 0}g",
-                style: TextStyle(fontSize: 16, color: Colors.blue.shade300)),
-            const Spacer(),
-            Text("Lipides : ${monitoring.lipid ?? 0}g",
-                style: TextStyle(fontSize: 16, color: Colors.blue.shade300)),
-            const Spacer(),
-            Text("Protéines : ${monitoring.protein ?? 0}g",
-                style: TextStyle(fontSize: 16, color: Colors.blue.shade300)),
-          ]),
-        ),
-      ]),
+              style: TextStyle(fontSize: 20, color: Colors.blue.shade300),
+            ),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children:
+                getMonitoringBoxFirstLine(monitoring.nutritionGoalsMonitoring),
+          ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(0, 10, 0, 5),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: getMonitoringBoxSecondLine(
+                  monitoring.nutritionGoalsMonitoring),
+            ),
+          ),
+        ],
+      ),
     );
+  }
+}
+
+List<Widget> getMonitoringBoxFirstLine(
+    List<NutritionGoalMonitoringModel> nutritionGoalMonitoring) {
+  List<Widget> lineText = [];
+
+  int monitoringTextOnLine = nutritionGoalMonitoring.length > 3 ? 2 : 1;
+
+  if (nutritionGoalMonitoring.isNotEmpty) {
+    for (var i = 0; i < monitoringTextOnLine; i++) {
+      if (nutritionGoalMonitoring.length > 3 && i != 1) {
+        lineText.add(const Spacer());
+      }
+      lineText.add(Text(
+        getMonitoringBoxText(nutritionGoalMonitoring[i]),
+        style: TextStyle(fontSize: 18, color: Colors.blue.shade300),
+      ));
+      if (nutritionGoalMonitoring.length > 3) {
+        lineText.add(const Spacer());
+      }
+    }
+  }
+  return lineText;
+}
+
+List<Widget> getMonitoringBoxSecondLine(
+    List<NutritionGoalMonitoringModel> nutritionGoalMonitoring) {
+  List<Widget> lineText = [];
+
+  int startTo = nutritionGoalMonitoring.length > 3 ? 2 : 1; //zero based
+  int monitoringTextOnLine = 3;
+
+  if (nutritionGoalMonitoring.length == 2) {
+    monitoringTextOnLine = 1;
+  } else if (nutritionGoalMonitoring.length == 3 ||
+      nutritionGoalMonitoring.length == 4) {
+    monitoringTextOnLine = 2;
+  }
+
+  if (nutritionGoalMonitoring.length > 1) {
+    for (var i = startTo; i < nutritionGoalMonitoring.length; i++) {
+      if (monitoringTextOnLine != 1 && i == startTo) {
+        lineText.add(const Spacer());
+      }
+
+      lineText.add(Text(
+        getMonitoringBoxText(nutritionGoalMonitoring[i]),
+        style: TextStyle(fontSize: 16, color: Colors.blue.shade300),
+      ));
+
+      if (monitoringTextOnLine != 1) {
+        lineText.add(const Spacer());
+      }
+    }
+  }
+  return lineText;
+}
+
+String getMonitoringBoxText(
+    NutritionGoalMonitoringModel nutritionGoalMonitoring) {
+  switch (nutritionGoalMonitoring.type) {
+    case MonitoringInformationTypeEnum.caloriesBurned:
+      return "Cal. brûlées : ${nutritionGoalMonitoring.value}";
+
+    case MonitoringInformationTypeEnum.caloriesConsumed:
+      return "Cal. consommées : ${nutritionGoalMonitoring.value}";
+
+    case MonitoringInformationTypeEnum.carbohydrate:
+      return "Glucides : ${nutritionGoalMonitoring.value}";
+
+    case MonitoringInformationTypeEnum.lipid:
+      return "Lipides : ${nutritionGoalMonitoring.value}";
+
+    case MonitoringInformationTypeEnum.protein:
+      return "Protéines : ${nutritionGoalMonitoring.value}";
   }
 }

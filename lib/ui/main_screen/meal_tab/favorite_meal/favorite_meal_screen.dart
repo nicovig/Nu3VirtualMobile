@@ -6,6 +6,7 @@ import 'package:nu3virtual/core/helpers/helpers.dart';
 import 'package:nu3virtual/core/models/favorite_meal_model.dart';
 import 'package:nu3virtual/core/models/meal_model.dart';
 import 'package:nu3virtual/layouts/forms/custom_form_field_radio_buttons/custom_form_field_meal_type.dart';
+import 'package:nu3virtual/layouts/screen_layouts/custom_appbar.dart';
 import 'package:nu3virtual/layouts/screen_layouts/custom_title.dart';
 import 'package:nu3virtual/layouts/screen_layouts/loading_box.dart';
 import 'package:nu3virtual/ui/main_screen/meal_tab/favorite_meal/favorite_meal_viewmodel.dart';
@@ -90,12 +91,11 @@ class _FavoriteMealScreenState extends State<FavoriteMealScreen> {
         builder: (BuildContext context,
                 AsyncSnapshot<List<FavoriteMealModel>> snapshot) =>
             Scaffold(
-          appBar: AppBar(
-            centerTitle: true,
-            title: snapshot.hasData
-                ? Text('${model.user.firstName} - ${model.user.weight}kg')
-                : null,
-          ),
+          appBar: CustomAppBar(
+              title: snapshot.hasData
+                  ? '${model.user.firstName} - ${model.user.weight}kg'
+                  : '',
+              displayDisconnectionButton: false),
           body: SingleChildScrollView(
             child: Column(
               children: [

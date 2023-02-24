@@ -29,9 +29,7 @@ class MonitoringServiceApi extends MonitoringService {
       headers: headers,
     );
 
-    final Map<String, dynamic> untypedObject = jsonDecode(response.body);
-    final MonitoringModel monitoring = MonitoringModel.fromJson(untypedObject);
-
+    var monitoring = MonitoringModel.fromJson(response.body);
     return monitoring;
   }
 }

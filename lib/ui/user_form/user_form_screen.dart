@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:nu3virtual/layouts/screen_layouts/custom_appbar.dart';
 import 'package:stacked/stacked.dart';
 
 import 'package:nu3virtual/core/helpers/ext-classes.dart';
@@ -24,7 +25,8 @@ class UserScreen extends StatelessWidget {
         future: model.loadData(isFromLogin),
         builder: (BuildContext context, AsyncSnapshot<UserModel> snapshot) =>
             Scaffold(
-          appBar: AppBar(title: const Text("NuVirtual")),
+          appBar: CustomAppBar(
+              title: 'NuVirtual', displayDisconnectionButton: false),
           body: SingleChildScrollView(
             child: SafeArea(
               child: snapshot.hasData

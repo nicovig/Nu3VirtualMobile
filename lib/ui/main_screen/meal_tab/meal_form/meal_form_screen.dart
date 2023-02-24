@@ -4,6 +4,7 @@ import 'package:favorite_button/favorite_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+
 import 'package:stacked/stacked.dart';
 
 import 'package:nu3virtual/core/models/meal_model.dart';
@@ -11,6 +12,7 @@ import 'package:nu3virtual/layouts/forms/custom_form_field.dart';
 import 'package:nu3virtual/layouts/forms/custom_form_field_date.dart';
 import 'package:nu3virtual/layouts/forms/custom_form_field_radio_buttons/custom_form_field_meal_type.dart';
 import 'package:nu3virtual/layouts/forms/custom_form_field_time.dart';
+import 'package:nu3virtual/layouts/screen_layouts/custom_appbar.dart';
 import 'package:nu3virtual/layouts/screen_layouts/custom_title.dart';
 import 'package:nu3virtual/layouts/screen_layouts/loading_box.dart';
 import 'package:nu3virtual/ui/main_screen/meal_tab/meal_form/meal_form_viewmodel.dart';
@@ -34,12 +36,11 @@ class _MealFormScreenState extends State<MealFormScreen> {
         future: model.loadData(mealId),
         builder: (BuildContext context, AsyncSnapshot<MealModel> snapshot) =>
             Scaffold(
-          appBar: AppBar(
-            centerTitle: true,
-            title: snapshot.hasData
-                ? Text('${model.user.firstName} - ${model.user.weight}kg')
-                : null,
-          ),
+          appBar: CustomAppBar(
+              title: snapshot.hasData
+                  ? '${model.user.firstName} - ${model.user.weight}kg'
+                  : '',
+              displayDisconnectionButton: false),
           body: SingleChildScrollView(
             child: SafeArea(
               child: Column(

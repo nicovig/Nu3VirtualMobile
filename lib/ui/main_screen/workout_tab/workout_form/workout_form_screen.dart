@@ -8,6 +8,7 @@ import 'package:stacked/stacked.dart';
 import 'package:nu3virtual/core/models/workout_model.dart';
 import 'package:nu3virtual/layouts/forms/custom_form_field.dart';
 import 'package:nu3virtual/layouts/forms/custom_form_field_date.dart';
+import 'package:nu3virtual/layouts/screen_layouts/custom_appbar.dart';
 import 'package:nu3virtual/layouts/screen_layouts/custom_title.dart';
 import 'package:nu3virtual/layouts/screen_layouts/loading_box.dart';
 import 'package:nu3virtual/ui/main_screen/workout_tab/workout_form/workout_form_viewmodel.dart';
@@ -31,12 +32,11 @@ class _WorkoutFormScreenState extends State<WorkoutFormScreen> {
         future: model.loadData(workoutId),
         builder: (BuildContext context, AsyncSnapshot<WorkoutModel> snapshot) =>
             Scaffold(
-          appBar: AppBar(
-            centerTitle: true,
-            title: snapshot.hasData
-                ? Text('${model.user.firstName} - ${model.user.weight}kg')
-                : null,
-          ),
+          appBar: CustomAppBar(
+              title: snapshot.hasData
+                  ? '${model.user.firstName} - ${model.user.weight}kg'
+                  : '',
+              displayDisconnectionButton: false),
           body: SingleChildScrollView(
             child: SafeArea(
               child: Column(

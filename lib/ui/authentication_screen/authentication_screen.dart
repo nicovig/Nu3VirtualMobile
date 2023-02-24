@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+
 import 'package:stacked/stacked.dart';
 
 import 'package:nu3virtual/ui/authentication_screen/authentication_screen_viewmodel.dart';
 import 'package:nu3virtual/layouts/forms/custom_form_field.dart';
 import 'package:nu3virtual/layouts/forms/password_form_field.dart';
+import 'package:nu3virtual/layouts/screen_layouts/custom_appbar.dart';
 import 'package:nu3virtual/layouts/screen_layouts/custom_title.dart';
 
 class AuthenticationScreen extends StatelessWidget {
@@ -25,10 +27,8 @@ class AuthenticationScreen extends StatelessWidget {
           EasyLoading.dismiss(animation: false);
         },
         builder: (context, model, child) => Scaffold(
-            appBar: AppBar(
-              centerTitle: true,
-              title: Text(title),
-            ),
+            appBar:
+                CustomAppBar(title: title, displayDisconnectionButton: false),
             body: SingleChildScrollView(
               child: SafeArea(
                 child: Form(

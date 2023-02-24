@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:event/event.dart';
 import 'package:flutter/widgets.dart';
 
@@ -17,7 +19,8 @@ class MainScreenViewModel extends ChangeNotifier {
 
   Event<EventArgs> dateChangeEvent = Event();
   DateTime date = DateTime.now();
-  MonitoringModel monitoringDisplayed = MonitoringModel();
+  MonitoringModel monitoringDisplayed =
+      MonitoringModel(nutritionGoalsMonitoring: []);
   UserModel user = UserModel();
 
   Future loadData() async {

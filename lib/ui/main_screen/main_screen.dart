@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:nu3virtual/layouts/screen_layouts/monitoring_box.dart';
+
 import 'package:stacked/stacked.dart';
 
 import 'package:nu3virtual/layouts/screen_layouts/change_date_buttons.dart';
+import 'package:nu3virtual/layouts/screen_layouts/custom_appbar.dart';
+import 'package:nu3virtual/layouts/screen_layouts/monitoring_box.dart';
+import 'package:nu3virtual/ui/main_screen/dialogs/disconnection_dialog/disconnection_dialog.dart';
 import 'package:nu3virtual/ui/main_screen/informations_tab/informations_tab_screen.dart';
 import 'package:nu3virtual/ui/main_screen/main_screen_viewmodel.dart';
 import 'package:nu3virtual/ui/main_screen/meal_tab/meal_tab_screen.dart';
 import 'package:nu3virtual/ui/main_screen/workout_tab/workout_tab_screen.dart';
-
-import 'dialogs/disconnection_dialog/disconnection_dialog.dart';
 
 class MainScreen extends StatefulWidget {
   //constructor
@@ -40,28 +41,17 @@ class _MainScreenState extends State<MainScreen> {
       builder: (context, model, child) => DefaultTabController(
         length: 3,
         child: Scaffold(
-          appBar: AppBar(
-              centerTitle: true,
-              title: Text('${model.user.firstName} - ${model.user.weight}kg'),
-              actions: <Widget>[
-                Padding(
-                    padding: const EdgeInsets.only(right: 20.0),
-                    child: GestureDetector(
-                      onTap: () {
-                        showDialog(
-                          context: context,
-                          builder: (context) => DisconnectionDialog(
-                            handleOnPressedDisconnectButton: () =>
-                                {model.disconnect(context)},
-                          ),
-                        );
-                      },
-                      child: const Icon(
-                        Icons.exit_to_app_sharp,
-                        size: 26.0,
-                      ),
-                    ))
-              ]),
+          appBar: CustomAppBar(
+            title: '${model.user.firstName} - ${model.user.weight}kg',
+            displayDisconnectionButton: true,
+            handleClickOnDisconnection: () => showDialog(
+              context: context,
+              builder: (context) => DisconnectionDialog(
+                handleOnPressedDisconnectButton: () =>
+                    model.disconnect(context),
+              ),
+            ),
+          ),
           body: SingleChildScrollView(
             child: Column(
               children: [

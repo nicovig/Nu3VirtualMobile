@@ -26,22 +26,22 @@ class InformationsGoalsFormViewModel extends ChangeNotifier {
         () => _nutritionGoalService.getAllNutritionGoalsByUserId(user.id));
   }
 
-  Future updateNutritionGoals(BuildContext context) async {
+  Future updateNutritionGoals(BuildContext? context) async {
     List<UpdateNutritionGoalRequest> updatedNutritionGoals = [];
 
-    nutritionGoals.forEach((nutritionGoal) {
+    for (var nutritionGoal in nutritionGoals) {
       updatedNutritionGoals.add(UpdateNutritionGoalRequest(
           id: nutritionGoal.id ?? 0,
-          order: nutritionGoal.order ?? 0,
-          totalValue: nutritionGoal.totalValue ?? 0));
-    });
+          totalValue: nutritionGoal.totalValue ?? 0,
+          isActive: nutritionGoal.isActive));
+    }
 
     UpdateNutritionGoalsRequest allUpdatedNutritionGoals =
         UpdateNutritionGoalsRequest(nutritionGoals: updatedNutritionGoals);
 
     bool isUpdateOk = await _nutritionGoalService
         .updateNutritionGoals(allUpdatedNutritionGoals);
-    if (isUpdateOk) {
+    if (isUpdateOk && context != null) {
       _redirectToInformationsTab(context);
     }
     notifyListeners();

@@ -39,6 +39,7 @@ dependencies:
   favorite_button: ^0.0.4
   carousel_slider: ^4.2.1
   event: ^2.1.2
+  url_launcher: ^6.1.9
   http:
   stacked:
   shared_preferences:

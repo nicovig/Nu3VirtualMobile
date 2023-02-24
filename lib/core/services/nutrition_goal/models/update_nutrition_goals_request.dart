@@ -15,20 +15,21 @@ class UpdateNutritionGoalsRequest {
 
 class UpdateNutritionGoalRequest {
   int id;
-  int order;
   int totalValue;
+  bool isActive;
 
   UpdateNutritionGoalRequest(
-      {required this.id, required this.order, required this.totalValue});
+      {required this.id, required this.totalValue, required this.isActive});
 
   factory UpdateNutritionGoalRequest.fromJson(Map<String, dynamic> parsedJson) {
     return UpdateNutritionGoalRequest(
         id: parsedJson['id'] ?? 0,
-        order: parsedJson['order'] ?? 0,
-        totalValue: parsedJson['totalValue'] ?? 0);
+        totalValue: parsedJson['totalValue'] ?? 0,
+        isActive: parsedJson['isActive'] ?? true);
   }
 
   String toJson() {
-    return jsonEncode({'id': id, 'order': order, 'totalValue': totalValue});
+    return jsonEncode(
+        {'id': id, 'totalValue': totalValue, 'isActive': isActive});
   }
 }
