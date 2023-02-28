@@ -19,9 +19,9 @@ class MonitoringBox extends StatelessWidget {
       width: MediaQuery.of(context).size.width,
       height: 100.0,
       decoration: BoxDecoration(
-        color: color_5,
+        color: color_4,
         border: Border.all(
-          color: color_6,
+          color: color_5,
           width: 1,
         ),
         borderRadius: BorderRadius.circular(10.0),

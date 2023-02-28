@@ -154,7 +154,7 @@ class _WorkoutFormScreenState extends State<WorkoutFormScreen> {
                           child: ElevatedButton(
                             style: ButtonStyle(
                                 backgroundColor:
-                                    MaterialStateProperty.all(color_4)),
+                                    MaterialStateProperty.all(color_3)),
                             onPressed: () async {
                               model.workout = WorkoutModel(
                                   id: snapshot.data?.id,

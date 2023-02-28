@@ -22,7 +22,7 @@ class ChangeDateButtons extends StatelessWidget {
         ElevatedButton(
           onPressed: handleOnPressedLeftButton,
           style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all(color_5),
+            backgroundColor: MaterialStateProperty.all(color_4),
             shape: MaterialStateProperty.all<RoundedRectangleBorder>(
               RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(18.0),
@@ -35,7 +35,7 @@ class ChangeDateButtons extends StatelessWidget {
         ElevatedButton(
           onPressed: handleOnPressedMiddleButton,
           style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all(color_5),
+              backgroundColor: MaterialStateProperty.all(color_4),
               shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                   RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(18.0),
@@ -47,7 +47,7 @@ class ChangeDateButtons extends StatelessWidget {
         ElevatedButton(
           onPressed: handleOnPressedRightButton,
           style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all(color_5),
+            backgroundColor: MaterialStateProperty.all(color_4),
             shape: MaterialStateProperty.all<RoundedRectangleBorder>(
               RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(18.0),

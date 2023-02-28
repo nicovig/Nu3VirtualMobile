@@ -48,7 +48,7 @@ class AuthenticationScreen extends StatelessWidget {
                         width: MediaQuery.of(context).size.width * 0.9,
                         child: ElevatedButton(
                           style: ButtonStyle(
-                            backgroundColor: MaterialStateProperty.all(color_4),
+                            backgroundColor: MaterialStateProperty.all(color_3),
                           ),
                           onPressed: () async {
                             if (_formKey.currentState!.validate()) {
@@ -69,7 +69,7 @@ class AuthenticationScreen extends StatelessWidget {
                       ),
                       ElevatedButton(
                           style: ButtonStyle(
-                            backgroundColor: MaterialStateProperty.all(color_4),
+                            backgroundColor: MaterialStateProperty.all(color_3),
                           ),
                           onPressed: () {
                             model.createAccount(context);

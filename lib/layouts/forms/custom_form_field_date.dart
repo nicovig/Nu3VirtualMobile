@@ -33,10 +33,10 @@ class CustomFormFieldDate extends StatelessWidget {
         lastDate: lastDate,
         decoration: InputDecoration(
           suffixIcon: const Icon(Icons.event_note),
-          focusColor: color_4,
+          focusColor: color_3,
           focusedBorder: const UnderlineInputBorder(
             borderSide: BorderSide(
-              color: color_4,
+              color: color_3,
               width: 1.0,
             ),
           ),

@@ -44,7 +44,7 @@ class _InformationsGoalsFormScreenState
             child: ListTile(
               key: Key('$index'),
               shape: RoundedRectangleBorder(
-                side: BorderSide(color: color_5, width: 1),
+                side: BorderSide(color: color_4, width: 1),
                 borderRadius: BorderRadius.circular(1),
               ),
               contentPadding: const EdgeInsets.all(0),
@@ -55,7 +55,7 @@ class _InformationsGoalsFormScreenState
                     width: 30,
                     height: 56,
                     child: Container(
-                      color: color_5,
+                      color: color_4,
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(10, 18, 0, 0),
                         child: Text(
@@ -81,7 +81,7 @@ class _InformationsGoalsFormScreenState
                               IconButton(
                                 icon: Icon(
                                   Icons.info,
-                                  color: color_3,
+                                  color: color_2,
                                 ),
                                 onPressed: () => openInformationDialog(
                                     context, model, nutritionGoal.type),
@@ -139,7 +139,7 @@ class _InformationsGoalsFormScreenState
                                   ? Icons.visibility
                                   : Icons.visibility_off,
                               color: nutritionGoal.isActive
-                                  ? color_4
+                                  ? color_3
                                   : Colors.grey.shade400,
                             ),
                             onPressed: () => {
@@ -203,7 +203,7 @@ class _InformationsGoalsFormScreenState
                       ),
                       ElevatedButton(
                         style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all(color_4),
+                          backgroundColor: MaterialStateProperty.all(color_3),
                         ),
                         onPressed: () async {
                           await model.updateNutritionGoals(context);

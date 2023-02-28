@@ -139,7 +139,7 @@ class _FavoriteMealScreenState extends State<FavoriteMealScreen> {
                                         style: ButtonStyle(
                                           backgroundColor:
                                               MaterialStateProperty.all(
-                                                  color_4),
+                                                  color_3),
                                         ),
                                         child: const Icon(Icons.add),
                                       ),

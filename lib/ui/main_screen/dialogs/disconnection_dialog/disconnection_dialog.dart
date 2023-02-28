@@ -23,14 +23,14 @@ class DisconnectionDialog extends StatelessWidget {
             const Spacer(),
             ElevatedButton(
                 style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(color_4),
+                  backgroundColor: MaterialStateProperty.all(color_3),
                 ),
                 onPressed: (() => handleOnPressedDisconnectButton()),
                 child: const Text('Oui')),
             const Spacer(),
             ElevatedButton(
                 style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(color_4),
+                  backgroundColor: MaterialStateProperty.all(color_3),
                 ),
                 onPressed: (() => Navigator.pop(context, true)),
                 child: const Text('Non')),

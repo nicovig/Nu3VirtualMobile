@@ -42,7 +42,7 @@ class _MealTabScreenState extends State<MealTabScreen> {
             children: [
               ElevatedButton(
                 style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(color_4),
+                  backgroundColor: MaterialStateProperty.all(color_3),
                 ),
                 onPressed: () => model.openMealScreen(context, 0),
                 child: const Icon(Icons.add),
@@ -51,7 +51,7 @@ class _MealTabScreenState extends State<MealTabScreen> {
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all(
                       model.favoritesMeals.isNotEmpty
-                          ? color_4
+                          ? color_3
                           : Colors.grey.shade300),
                 ),
                 onPressed: () {
@@ -124,7 +124,7 @@ class _MealTabScreenState extends State<MealTabScreen> {
                   SlidableAction(
                       onPressed: (BuildContext context) =>
                           model.openMealScreen(context, meal.id ?? 0),
-                      backgroundColor: color_3,
+                      backgroundColor: color_2,
                       foregroundColor: Colors.white,
                       icon: Icons.update,
                       label: 'Modifier')

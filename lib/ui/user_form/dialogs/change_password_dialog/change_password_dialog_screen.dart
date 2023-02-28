@@ -62,7 +62,7 @@ class ChangePasswordDialogScreen extends StatelessWidget {
               }
             },
             style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all(color_4),
+              backgroundColor: MaterialStateProperty.all(color_3),
             ),
             child: const Text("Modifier"),
           ),

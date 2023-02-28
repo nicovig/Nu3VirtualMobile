@@ -37,7 +37,7 @@ class CustomFormField extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: TextFormField(
-        cursorColor: color_4,
+        cursorColor: color_3,
         initialValue: initialValue,
         maxLines: maxLines,
         maxLength: maxLength,
@@ -49,10 +49,10 @@ class CustomFormField extends StatelessWidget {
         validator: validator,
         obscureText: hideInput ?? false,
         decoration: InputDecoration(
-          focusColor: color_4,
+          focusColor: color_3,
           focusedBorder: const UnderlineInputBorder(
             borderSide: BorderSide(
-              color: color_4,
+              color: color_3,
               width: 1.0,
             ),
           ),

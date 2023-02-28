@@ -42,7 +42,7 @@ class _WorkoutTabScreenState extends State<WorkoutTabScreen> {
             children: [
               ElevatedButton(
                 style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(color_4),
+                  backgroundColor: MaterialStateProperty.all(color_3),
                 ),
                 onPressed: () => model.openWorkoutScreen(context, 0),
                 child: const Icon(Icons.add),

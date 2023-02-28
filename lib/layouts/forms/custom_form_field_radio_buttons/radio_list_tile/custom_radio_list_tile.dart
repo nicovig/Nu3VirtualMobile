@@ -33,10 +33,10 @@ class CustomRadioListTile<T> extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
       decoration: BoxDecoration(
-        color: isSelected ? color_3 : null,
+        color: isSelected ? color_2 : null,
         borderRadius: BorderRadius.circular(4),
         border: Border.all(
-          color: isSelected ? color_4 : Colors.grey[300]!,
+          color: isSelected ? color_3 : Colors.grey[300]!,
           width: 1,
         ),
       ),

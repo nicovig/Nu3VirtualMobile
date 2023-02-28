@@ -24,10 +24,10 @@ class _PasswordFormFieldState extends State<PasswordFormField> {
           //obscureText: !widget.isPasswordVisible,
 
           decoration: InputDecoration(
-            focusColor: color_4,
+            focusColor: color_3,
             focusedBorder: const UnderlineInputBorder(
               borderSide: BorderSide(
-                color: color_4,
+                color: color_3,
                 width: 1.0,
               ),
             ),
@@ -39,7 +39,7 @@ class _PasswordFormFieldState extends State<PasswordFormField> {
                     ? Icons.visibility
                     : Icons.visibility_off,
                 color:
-                    widget.isPasswordVisible ? color_4 : Colors.grey.shade400,
+                    widget.isPasswordVisible ? color_3 : Colors.grey.shade400,
               ),
               onPressed: () {
                 setState(() {

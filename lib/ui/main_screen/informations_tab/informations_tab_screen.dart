@@ -44,7 +44,7 @@ class _InformationsTabScreenState extends State<InformationsTabScreen> {
             child: Column(
               children: [
                 Text(
-                    style: const TextStyle(fontSize: 20, color: color_5),
+                    style: const TextStyle(fontSize: 20, color: color_4),
                     DateFormat('EEEE d MMMM yyyy')
                         .format(model.currentDate)
                         .toString()),
@@ -61,7 +61,7 @@ class _InformationsTabScreenState extends State<InformationsTabScreen> {
                     model.updateNutritionGoals(context);
                   }),
                   style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(color_4)),
+                      backgroundColor: MaterialStateProperty.all(color_3)),
                   child: const Text('Modifier mes objetctifs'),
                 ),
                 const Divider(height: 20, thickness: 0.8),
@@ -72,7 +72,7 @@ class _InformationsTabScreenState extends State<InformationsTabScreen> {
                       children: const [
                         Text(
                           'Mes informations',
-                          style: TextStyle(fontSize: 20, color: color_5),
+                          style: TextStyle(fontSize: 20, color: color_4),
                         )
                       ],
                     ),
@@ -204,7 +204,7 @@ class _InformationsTabScreenState extends State<InformationsTabScreen> {
                         model.updateUserInformations(context);
                       }),
                       style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all(color_4)),
+                          backgroundColor: MaterialStateProperty.all(color_3)),
                       child: const Text('Modifier mes informations'),
                     ),
                   ],
@@ -272,10 +272,10 @@ Color getMacronutrimentGoalPercentageColor(num? achievedRatio) {
       return color_1;
     }
     if (achievedRatio >= 0.66 && achievedRatio <= 1) {
-      return color_3;
+      return color_2;
     }
     if (achievedRatio > 1) {
-      return color_6;
+      return color_5;
     }
   }
   return Colors.black;

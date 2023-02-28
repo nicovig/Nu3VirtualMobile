@@ -95,7 +95,7 @@ class _MainScreenState extends State<MainScreen> {
             ),
           ),
           bottomNavigationBar: BottomNavigationBar(
-            selectedItemColor: color_6,
+            selectedItemColor: color_5,
             onTap: (value) => {
               setState(() {
                 selectedIndex = value;
