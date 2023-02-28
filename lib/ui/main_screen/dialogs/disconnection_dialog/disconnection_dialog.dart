@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:nu3virtual/core/const/colors.dart';
+
 class DisconnectionDialog extends StatelessWidget {
   const DisconnectionDialog({
     Key? key,
@@ -20,10 +22,16 @@ class DisconnectionDialog extends StatelessWidget {
           children: [
             const Spacer(),
             ElevatedButton(
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(color_4),
+                ),
                 onPressed: (() => handleOnPressedDisconnectButton()),
                 child: const Text('Oui')),
             const Spacer(),
             ElevatedButton(
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(color_4),
+                ),
                 onPressed: (() => Navigator.pop(context, true)),
                 child: const Text('Non')),
             const Spacer()

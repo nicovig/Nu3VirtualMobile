@@ -1,5 +1,6 @@
-import 'package:event/event.dart';
 import 'package:flutter/material.dart';
+
+import 'package:event/event.dart';
 
 import 'package:nu3virtual/core/const/routes.dart';
 import 'package:nu3virtual/core/models/favorite_meal_model.dart';

@@ -1,12 +1,13 @@
 // ignore_for_file: library_private_types_in_public_api
-import 'package:event/event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+
+import 'package:event/event.dart';
 import 'package:intl/src/intl/date_format.dart';
 import 'package:stacked/stacked.dart';
 
+import 'package:nu3virtual/core/const/colors.dart';
 import 'package:nu3virtual/core/models/user_model.dart';
-import 'package:nu3virtual/layouts/screen_layouts/change_date_buttons.dart';
 import 'package:nu3virtual/ui/main_screen/informations_tab/informations_tab_viewmodel.dart';
 
 // ignore: must_be_immutable
@@ -43,7 +44,7 @@ class _InformationsTabScreenState extends State<InformationsTabScreen> {
             child: Column(
               children: [
                 Text(
-                    style: const TextStyle(fontSize: 20),
+                    style: const TextStyle(fontSize: 20, color: color_5),
                     DateFormat('EEEE d MMMM yyyy')
                         .format(model.currentDate)
                         .toString()),
@@ -60,8 +61,7 @@ class _InformationsTabScreenState extends State<InformationsTabScreen> {
                     model.updateNutritionGoals(context);
                   }),
                   style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all(Colors.blue.shade200)),
+                      backgroundColor: MaterialStateProperty.all(color_4)),
                   child: const Text('Modifier mes objetctifs'),
                 ),
                 const Divider(height: 20, thickness: 0.8),
@@ -72,7 +72,7 @@ class _InformationsTabScreenState extends State<InformationsTabScreen> {
                       children: const [
                         Text(
                           'Mes informations',
-                          style: TextStyle(fontSize: 20),
+                          style: TextStyle(fontSize: 20, color: color_5),
                         )
                       ],
                     ),
@@ -204,8 +204,7 @@ class _InformationsTabScreenState extends State<InformationsTabScreen> {
                         model.updateUserInformations(context);
                       }),
                       style: ButtonStyle(
-                          backgroundColor:
-                              MaterialStateProperty.all(Colors.blue.shade200)),
+                          backgroundColor: MaterialStateProperty.all(color_4)),
                       child: const Text('Modifier mes informations'),
                     ),
                   ],
@@ -267,16 +266,16 @@ String getMacronutrimentGoalPercentage(num? achievedRatio) {
 Color getMacronutrimentGoalPercentageColor(num? achievedRatio) {
   if (achievedRatio != null) {
     if (achievedRatio < 0.33) {
-      return Colors.red.shade300;
+      return color_red;
     }
     if (achievedRatio >= 0.33 && achievedRatio < 0.66) {
-      return Colors.orange.shade200;
+      return color_1;
     }
-    if (achievedRatio >= 0.66 && achievedRatio < 1) {
-      return Colors.green.shade300;
+    if (achievedRatio >= 0.66 && achievedRatio <= 1) {
+      return color_3;
     }
     if (achievedRatio > 1) {
-      return const Color.fromRGBO(31, 138, 112, 1);
+      return color_6;
     }
   }
   return Colors.black;

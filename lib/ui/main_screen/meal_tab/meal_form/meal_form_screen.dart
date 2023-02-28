@@ -1,12 +1,12 @@
 // ignore_for_file: library_private_types_in_public_api
-
-import 'package:favorite_button/favorite_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
+import 'package:favorite_button/favorite_button.dart';
 import 'package:stacked/stacked.dart';
 
+import 'package:nu3virtual/core/const/colors.dart';
 import 'package:nu3virtual/core/models/meal_model.dart';
 import 'package:nu3virtual/layouts/forms/custom_form_field.dart';
 import 'package:nu3virtual/layouts/forms/custom_form_field_date.dart';
@@ -204,8 +204,8 @@ class _MealFormScreenState extends State<MealFormScreen> {
                           padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
                           child: ElevatedButton(
                             style: ButtonStyle(
-                              backgroundColor: MaterialStateProperty.all(
-                                  Colors.blue.shade300),
+                              backgroundColor:
+                                  MaterialStateProperty.all(color_4),
                             ),
                             onPressed: () async {
                               model.meal = MealModel(

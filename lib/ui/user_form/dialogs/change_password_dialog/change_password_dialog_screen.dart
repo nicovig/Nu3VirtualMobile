@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+
 import 'package:stacked/stacked.dart';
 
+import 'package:nu3virtual/core/const/colors.dart';
 import 'package:nu3virtual/layouts/forms/custom_form_field.dart';
 import 'package:nu3virtual/ui/user_form/dialogs/change_password_dialog/change_password_dialog_screen_viewmodel.dart';
 
@@ -59,6 +61,9 @@ class ChangePasswordDialogScreen extends StatelessWidget {
                     "L'ancien mot de passe est différent de celui renseigné à la création de votre compte");
               }
             },
+            style: ButtonStyle(
+              backgroundColor: MaterialStateProperty.all(color_4),
+            ),
             child: const Text("Modifier"),
           ),
         ],

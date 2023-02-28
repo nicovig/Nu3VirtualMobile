@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 import 'package:nu3virtual/core/models/favorite_meal_model.dart';
-
 import 'package:nu3virtual/core/services/favorite_meal/favorite_meal_service.dart';
 
 class FavoriteMealServiceApi extends FavoriteMealService {

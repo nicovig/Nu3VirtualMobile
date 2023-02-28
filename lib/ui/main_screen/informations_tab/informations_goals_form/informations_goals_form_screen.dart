@@ -1,10 +1,11 @@
-// ignore_for_file: library_private_types_in_public_api
-
+// ignore_for_file: library_private_types_in_public_api, prefer_const_constructors
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+
 import 'package:stacked/stacked.dart';
 
+import 'package:nu3virtual/core/const/colors.dart';
 import 'package:nu3virtual/core/models/nutrition_goal_model.dart';
 import 'package:nu3virtual/core/models/user_model.dart';
 import 'package:nu3virtual/layouts/screen_layouts/custom_appbar.dart';
@@ -43,7 +44,7 @@ class _InformationsGoalsFormScreenState
             child: ListTile(
               key: Key('$index'),
               shape: RoundedRectangleBorder(
-                side: BorderSide(color: Colors.blue.shade200, width: 1),
+                side: BorderSide(color: color_5, width: 1),
                 borderRadius: BorderRadius.circular(1),
               ),
               contentPadding: const EdgeInsets.all(0),
@@ -54,7 +55,7 @@ class _InformationsGoalsFormScreenState
                     width: 30,
                     height: 56,
                     child: Container(
-                      color: Colors.blue.shade200,
+                      color: color_5,
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(10, 18, 0, 0),
                         child: Text(
@@ -80,7 +81,7 @@ class _InformationsGoalsFormScreenState
                               IconButton(
                                 icon: Icon(
                                   Icons.info,
-                                  color: Colors.blue.shade300,
+                                  color: color_3,
                                 ),
                                 onPressed: () => openInformationDialog(
                                     context, model, nutritionGoal.type),
@@ -137,7 +138,9 @@ class _InformationsGoalsFormScreenState
                               nutritionGoal.isActive
                                   ? Icons.visibility
                                   : Icons.visibility_off,
-                              color: Theme.of(context).primaryColorDark,
+                              color: nutritionGoal.isActive
+                                  ? color_4
+                                  : Colors.grey.shade400,
                             ),
                             onPressed: () => {
                               nutritionGoal.isActive = !nutritionGoal.isActive,
@@ -200,8 +203,7 @@ class _InformationsGoalsFormScreenState
                       ),
                       ElevatedButton(
                         style: ButtonStyle(
-                          backgroundColor:
-                              MaterialStateProperty.all(Colors.blue.shade300),
+                          backgroundColor: MaterialStateProperty.all(color_4),
                         ),
                         onPressed: () async {
                           await model.updateNutritionGoals(context);

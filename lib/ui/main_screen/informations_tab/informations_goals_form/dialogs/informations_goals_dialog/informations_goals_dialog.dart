@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
+import 'package:url_launcher/link.dart';
+
 import 'package:nu3virtual/core/const/macronutrients_text.dart';
 import 'package:nu3virtual/core/models/nutrition_goal_model.dart';
 import 'package:nu3virtual/core/models/user_model.dart';
-import 'package:url_launcher/link.dart';
 
 class InformationsGoalsDialog extends StatelessWidget {
   InformationsGoalsDialog({

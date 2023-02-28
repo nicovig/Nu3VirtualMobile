@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'package:nu3virtual/core/const/colors.dart';
+
 class CustomFormField extends StatelessWidget {
   CustomFormField({
     Key? key,
@@ -35,6 +37,7 @@ class CustomFormField extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: TextFormField(
+        cursorColor: color_4,
         initialValue: initialValue,
         maxLines: maxLines,
         maxLength: maxLength,
@@ -46,9 +49,18 @@ class CustomFormField extends StatelessWidget {
         validator: validator,
         obscureText: hideInput ?? false,
         decoration: InputDecoration(
-            errorText: errorText,
-            labelText: label,
-            border: hideBorder == true ? InputBorder.none : null),
+          focusColor: color_4,
+          focusedBorder: const UnderlineInputBorder(
+            borderSide: BorderSide(
+              color: color_4,
+              width: 1.0,
+            ),
+          ),
+          errorText: errorText,
+          labelText: label,
+          labelStyle: TextStyle(color: Colors.grey.shade600),
+          border: hideBorder == true ? InputBorder.none : null,
+        ),
       ),
     );
   }

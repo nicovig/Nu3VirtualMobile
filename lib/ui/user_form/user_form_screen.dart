@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:nu3virtual/layouts/screen_layouts/custom_appbar.dart';
+
 import 'package:stacked/stacked.dart';
 
+import 'package:nu3virtual/core/const/colors.dart';
 import 'package:nu3virtual/core/helpers/ext-classes.dart';
 import 'package:nu3virtual/core/models/user_model.dart';
 import 'package:nu3virtual/layouts/forms/custom_form_field.dart';
 import 'package:nu3virtual/layouts/forms/custom_form_field_date.dart';
 import 'package:nu3virtual/layouts/forms/custom_form_field_radio_buttons/custom_form_field_gender.dart';
 import 'package:nu3virtual/layouts/forms/password_form_field.dart';
+import 'package:nu3virtual/layouts/screen_layouts/custom_appbar.dart';
 import 'package:nu3virtual/layouts/screen_layouts/custom_title.dart';
 import 'package:nu3virtual/layouts/screen_layouts/loading_box.dart';
 import 'package:nu3virtual/ui/user_form/dialogs/change_password_dialog/change_password_dialog_screen.dart';
@@ -193,6 +195,9 @@ Widget getUserForm(UserScreenViewModel model, BuildContext context,
               : Padding(
                   padding: const EdgeInsets.fromLTRB(0, 12, 0, 0),
                   child: ElevatedButton(
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(color_4),
+                    ),
                     onPressed: () => {
                       showDialog(
                         context: context,
@@ -204,15 +209,15 @@ Widget getUserForm(UserScreenViewModel model, BuildContext context,
                 )
         ]),
         isFromLogin
-            ? CustomFormField(
-                onChanged: (value) {
-                  if (value != null && value != "")
-                    model.secondPassword = value;
-                },
+            ? PasswordFormField(
                 label: 'Répétez le mot de passe',
+                onChanged: (value) => model.firstPassword = value!,
               )
             : const SizedBox.shrink(),
         ElevatedButton(
+          style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all(color_4),
+          ),
           onPressed: () async {
             if (!isFromLogin && model.firstPassword == '') {
               EasyLoading.showError(

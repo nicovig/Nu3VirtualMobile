@@ -1,11 +1,12 @@
 // ignore_for_file: library_private_types_in_public_api
-
-import 'package:event/event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+
+import 'package:event/event.dart';
 import 'package:stacked/stacked.dart';
 
+import 'package:nu3virtual/core/const/colors.dart';
 import 'package:nu3virtual/ui/main_screen/meal_tab/meal_tab_viewmodel.dart';
 
 // ignore: must_be_immutable
@@ -41,8 +42,7 @@ class _MealTabScreenState extends State<MealTabScreen> {
             children: [
               ElevatedButton(
                 style: ButtonStyle(
-                  backgroundColor:
-                      MaterialStateProperty.all(Colors.blue.shade200),
+                  backgroundColor: MaterialStateProperty.all(color_4),
                 ),
                 onPressed: () => model.openMealScreen(context, 0),
                 child: const Icon(Icons.add),
@@ -50,8 +50,8 @@ class _MealTabScreenState extends State<MealTabScreen> {
               ElevatedButton(
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all(
-                      model.favoritesMeals.length > 0
-                          ? Colors.blue.shade200
+                      model.favoritesMeals.isNotEmpty
+                          ? color_4
                           : Colors.grey.shade300),
                 ),
                 onPressed: () {
@@ -114,7 +114,7 @@ class _MealTabScreenState extends State<MealTabScreen> {
                               },
                             );
                           },
-                          backgroundColor: const Color(0xFFFE4A49),
+                          backgroundColor: color_red,
                           foregroundColor: Colors.white,
                           icon: Icons.delete,
                           label: 'Supprimer')
@@ -124,7 +124,7 @@ class _MealTabScreenState extends State<MealTabScreen> {
                   SlidableAction(
                       onPressed: (BuildContext context) =>
                           model.openMealScreen(context, meal.id ?? 0),
-                      backgroundColor: const Color(0xFF7BC043),
+                      backgroundColor: color_3,
                       foregroundColor: Colors.white,
                       icon: Icons.update,
                       label: 'Modifier')

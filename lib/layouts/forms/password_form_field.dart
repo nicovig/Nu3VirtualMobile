@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+
+import 'package:nu3virtual/core/const/colors.dart';
 
 class PasswordFormField extends StatefulWidget {
   PasswordFormField({super.key, required this.label, required this.onChanged});
@@ -20,15 +21,25 @@ class _PasswordFormFieldState extends State<PasswordFormField> {
         padding: const EdgeInsets.all(8.0),
         child: TextFormField(
           onChanged: widget.onChanged,
-          obscureText: !widget.isPasswordVisible,
+          //obscureText: !widget.isPasswordVisible,
+
           decoration: InputDecoration(
+            focusColor: color_4,
+            focusedBorder: const UnderlineInputBorder(
+              borderSide: BorderSide(
+                color: color_4,
+                width: 1.0,
+              ),
+            ),
             labelText: widget.label,
+            labelStyle: TextStyle(color: Colors.grey.shade600),
             suffixIcon: IconButton(
               icon: Icon(
                 widget.isPasswordVisible
                     ? Icons.visibility
                     : Icons.visibility_off,
-                color: Theme.of(context).primaryColorDark,
+                color:
+                    widget.isPasswordVisible ? color_4 : Colors.grey.shade400,
               ),
               onPressed: () {
                 setState(() {

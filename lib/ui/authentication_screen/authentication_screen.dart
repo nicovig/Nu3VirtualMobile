@@ -3,11 +3,12 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 import 'package:stacked/stacked.dart';
 
-import 'package:nu3virtual/ui/authentication_screen/authentication_screen_viewmodel.dart';
+import 'package:nu3virtual/core/const/colors.dart';
 import 'package:nu3virtual/layouts/forms/custom_form_field.dart';
 import 'package:nu3virtual/layouts/forms/password_form_field.dart';
 import 'package:nu3virtual/layouts/screen_layouts/custom_appbar.dart';
 import 'package:nu3virtual/layouts/screen_layouts/custom_title.dart';
+import 'package:nu3virtual/ui/authentication_screen/authentication_screen_viewmodel.dart';
 
 class AuthenticationScreen extends StatelessWidget {
   //constructor
@@ -46,6 +47,9 @@ class AuthenticationScreen extends StatelessWidget {
                       SizedBox(
                         width: MediaQuery.of(context).size.width * 0.9,
                         child: ElevatedButton(
+                          style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all(color_4),
+                          ),
                           onPressed: () async {
                             if (_formKey.currentState!.validate()) {
                               EasyLoading.show();
@@ -64,6 +68,9 @@ class AuthenticationScreen extends StatelessWidget {
                         child: const Text("Pas encore de compte ?"),
                       ),
                       ElevatedButton(
+                          style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all(color_4),
+                          ),
                           onPressed: () {
                             model.createAccount(context);
                           },

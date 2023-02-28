@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:nu3virtual/core/const/routes.dart';
 
+import 'package:nu3virtual/core/const/routes.dart';
 import 'package:nu3virtual/core/models/user_model.dart';
 import 'package:nu3virtual/core/services/user/user_service_class.dart';
 import 'package:nu3virtual/service_locator.dart';

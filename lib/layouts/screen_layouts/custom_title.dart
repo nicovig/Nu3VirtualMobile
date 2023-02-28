@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:nu3virtual/core/const/colors.dart';
+
 class CustomTitle extends StatelessWidget {
   const CustomTitle({
     Key? key,
@@ -12,8 +14,8 @@ class CustomTitle extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.only(top: 18),
       child: Text(title,
-          style: TextStyle(
-            color: Colors.blue.shade300,
+          style: const TextStyle(
+            color: color_5,
             fontSize: 26,
           )),
     );

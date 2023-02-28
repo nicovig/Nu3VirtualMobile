@@ -1,4 +1,5 @@
 import 'package:shared_preferences/shared_preferences.dart';
+
 import 'package:nu3virtual/core/services/authentication/authentication_service.dart';
 
 class AuthenticationServiceStore extends AuthenticationStore {

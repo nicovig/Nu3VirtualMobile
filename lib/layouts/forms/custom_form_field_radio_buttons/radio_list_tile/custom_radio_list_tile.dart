@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:nu3virtual/core/const/colors.dart';
+
 class CustomRadioListTile<T> extends StatelessWidget {
   final T value;
   final T groupValue;
@@ -31,10 +33,10 @@ class CustomRadioListTile<T> extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
       decoration: BoxDecoration(
-        color: isSelected ? Colors.blue.shade300 : null,
+        color: isSelected ? color_3 : null,
         borderRadius: BorderRadius.circular(4),
         border: Border.all(
-          color: isSelected ? Colors.blue : Colors.grey[300]!,
+          color: isSelected ? color_4 : Colors.grey[300]!,
           width: 1,
         ),
       ),

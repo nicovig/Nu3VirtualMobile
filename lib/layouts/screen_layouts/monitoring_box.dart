@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'package:nu3virtual/core/const/colors.dart';
 import 'package:nu3virtual/core/helpers/helpers.dart';
 import 'package:nu3virtual/core/models/monitoring_model.dart';
 
@@ -18,8 +19,9 @@ class MonitoringBox extends StatelessWidget {
       width: MediaQuery.of(context).size.width,
       height: 100.0,
       decoration: BoxDecoration(
+        color: color_5,
         border: Border.all(
-          color: Colors.blue,
+          color: color_6,
           width: 1,
         ),
         borderRadius: BorderRadius.circular(10.0),
@@ -30,7 +32,7 @@ class MonitoringBox extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 10),
             child: Text(
               getMonitoringDate(date, context),
-              style: TextStyle(fontSize: 20, color: Colors.blue.shade300),
+              style: const TextStyle(fontSize: 20, color: Colors.white),
             ),
           ),
           Row(
@@ -65,7 +67,7 @@ List<Widget> getMonitoringBoxFirstLine(
       }
       lineText.add(Text(
         getMonitoringBoxText(nutritionGoalMonitoring[i]),
-        style: TextStyle(fontSize: 18, color: Colors.blue.shade300),
+        style: const TextStyle(fontSize: 18, color: Colors.white),
       ));
       if (nutritionGoalMonitoring.length > 3) {
         lineText.add(const Spacer());
@@ -97,7 +99,7 @@ List<Widget> getMonitoringBoxSecondLine(
 
       lineText.add(Text(
         getMonitoringBoxText(nutritionGoalMonitoring[i]),
-        style: TextStyle(fontSize: 16, color: Colors.blue.shade300),
+        style: const TextStyle(fontSize: 16, color: Colors.white),
       ));
 
       if (monitoringTextOnLine != 1) {
@@ -112,10 +114,10 @@ String getMonitoringBoxText(
     NutritionGoalMonitoringModel nutritionGoalMonitoring) {
   switch (nutritionGoalMonitoring.type) {
     case MonitoringInformationTypeEnum.caloriesBurned:
-      return "Cal. brûlées : ${nutritionGoalMonitoring.value}";
+      return "Cal brûlées : ${nutritionGoalMonitoring.value}";
 
     case MonitoringInformationTypeEnum.caloriesConsumed:
-      return "Cal. consommées : ${nutritionGoalMonitoring.value}";
+      return "Cal consommées : ${nutritionGoalMonitoring.value}";
 
     case MonitoringInformationTypeEnum.carbohydrate:
       return "Glucides : ${nutritionGoalMonitoring.value}";

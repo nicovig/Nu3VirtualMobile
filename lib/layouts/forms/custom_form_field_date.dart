@@ -1,6 +1,9 @@
-import 'package:date_field/date_field.dart';
 import 'package:flutter/material.dart';
+
+import 'package:date_field/date_field.dart';
 import 'package:intl/src/intl/date_format.dart';
+
+import 'package:nu3virtual/core/const/colors.dart';
 
 class CustomFormFieldDate extends StatelessWidget {
   CustomFormFieldDate(
@@ -29,10 +32,16 @@ class CustomFormFieldDate extends StatelessWidget {
         firstDate: firstDate,
         lastDate: lastDate,
         decoration: InputDecoration(
-          hintStyle: const TextStyle(color: Colors.black45),
-          errorStyle: const TextStyle(color: Colors.redAccent),
           suffixIcon: const Icon(Icons.event_note),
+          focusColor: color_4,
+          focusedBorder: const UnderlineInputBorder(
+            borderSide: BorderSide(
+              color: color_4,
+              width: 1.0,
+            ),
+          ),
           labelText: label,
+          labelStyle: TextStyle(color: Colors.grey.shade600),
         ),
         mode: DateTimeFieldPickerMode.date,
       ),

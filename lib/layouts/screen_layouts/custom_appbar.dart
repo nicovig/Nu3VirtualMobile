@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:nu3virtual/core/models/monitoring_model.dart';
+import 'package:nu3virtual/core/const/colors.dart';
 
 class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
   @override
@@ -38,6 +38,7 @@ class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       centerTitle: true,
+      backgroundColor: color_5,
       title: Text(
         title,
       ),

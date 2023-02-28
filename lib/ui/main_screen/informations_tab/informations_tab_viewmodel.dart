@@ -1,7 +1,8 @@
-import 'package:event/event.dart';
 import 'package:flutter/widgets.dart';
-import 'package:nu3virtual/core/const/routes.dart';
 
+import 'package:event/event.dart';
+
+import 'package:nu3virtual/core/const/routes.dart';
 import 'package:nu3virtual/core/models/nutrition_goal_model.dart';
 import 'package:nu3virtual/core/models/user_model.dart';
 import 'package:nu3virtual/core/services/date/date_service_class.dart';

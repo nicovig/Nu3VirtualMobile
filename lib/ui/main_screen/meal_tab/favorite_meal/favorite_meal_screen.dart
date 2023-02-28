@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:stacked/stacked.dart';
 
+import 'package:nu3virtual/core/const/colors.dart';
 import 'package:nu3virtual/core/helpers/helpers.dart';
 import 'package:nu3virtual/core/models/favorite_meal_model.dart';
 import 'package:nu3virtual/core/models/meal_model.dart';
@@ -137,7 +139,7 @@ class _FavoriteMealScreenState extends State<FavoriteMealScreen> {
                                         style: ButtonStyle(
                                           backgroundColor:
                                               MaterialStateProperty.all(
-                                                  Colors.green.shade300),
+                                                  color_4),
                                         ),
                                         child: const Icon(Icons.add),
                                       ),
@@ -158,7 +160,7 @@ class _FavoriteMealScreenState extends State<FavoriteMealScreen> {
                                         style: ButtonStyle(
                                           backgroundColor:
                                               MaterialStateProperty.all(
-                                                  Colors.red.shade300),
+                                                  color_red),
                                         ),
                                         child: const Icon(Icons.delete),
                                       ),

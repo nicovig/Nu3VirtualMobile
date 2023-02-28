@@ -8,11 +8,10 @@ import 'package:nu3virtual/service_locator.dart';
 import 'package:nu3virtual/ui/authentication_screen/authentication_screen.dart';
 import 'package:nu3virtual/ui/main_screen/informations_tab/informations_goals_form/informations_goals_form_screen.dart';
 import 'package:nu3virtual/ui/main_screen/main_screen.dart';
+import 'package:nu3virtual/ui/main_screen/meal_tab/favorite_meal/favorite_meal_screen.dart';
 import 'package:nu3virtual/ui/main_screen/meal_tab/meal_form/meal_form_screen.dart';
 import 'package:nu3virtual/ui/main_screen/workout_tab/workout_form/workout_form_screen.dart';
 import 'package:nu3virtual/ui/user_form/user_form_screen.dart';
-
-import 'ui/main_screen/meal_tab/favorite_meal/favorite_meal_screen.dart';
 
 void main() {
   configEasyLoading();

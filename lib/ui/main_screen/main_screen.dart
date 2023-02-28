@@ -3,6 +3,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 import 'package:stacked/stacked.dart';
 
+import 'package:nu3virtual/core/const/colors.dart';
 import 'package:nu3virtual/layouts/screen_layouts/change_date_buttons.dart';
 import 'package:nu3virtual/layouts/screen_layouts/custom_appbar.dart';
 import 'package:nu3virtual/layouts/screen_layouts/monitoring_box.dart';
@@ -94,6 +95,7 @@ class _MainScreenState extends State<MainScreen> {
             ),
           ),
           bottomNavigationBar: BottomNavigationBar(
+            selectedItemColor: color_6,
             onTap: (value) => {
               setState(() {
                 selectedIndex = value;
