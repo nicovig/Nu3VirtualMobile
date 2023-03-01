@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
+import 'package:date_field/date_field.dart';
 import 'package:stacked/stacked.dart';
 
 import 'package:nu3virtual/core/const/colors.dart';
@@ -56,7 +57,8 @@ class _WorkoutFormScreenState extends State<WorkoutFormScreen> {
                                 : '',
                             label: 'Nom'),
                         CustomFormFieldDate(
-                          initialValue: snapshot.data?.date,
+                          initialValue: snapshot.data?.date ?? DateTime.now(),
+                          mode: DateTimeFieldPickerMode.date,
                           firstDate: DateTime(DateTime.now().year,
                               DateTime.now().month - 1, DateTime.now().day),
                           label: 'Date de la séance',

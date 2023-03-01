@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
+import 'package:nu3virtual/core/const/colors.dart';
 import 'package:nu3virtual/core/const/routes.dart';
 import 'package:nu3virtual/service_locator.dart';
 import 'package:nu3virtual/ui/authentication_screen/authentication_screen.dart';
@@ -26,7 +27,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
         title: 'NuVirtual',
-        theme: ThemeData(appBarTheme: AppBarTheme(color: Colors.blue.shade300)),
+        theme: ThemeData(
+          appBarTheme: AppBarTheme(color: color_4),
+          colorScheme: ThemeData().colorScheme.copyWith(
+                primary: color_4,
+              ),
+        ),
         home: AuthenticationScreen(title: 'NuVirtual'),
         routes: {
           favoriteMealsRoute: (context) => FavoriteMealScreen(),

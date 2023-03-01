@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
+import 'package:date_field/date_field.dart';
 import 'package:stacked/stacked.dart';
 
 import 'package:nu3virtual/core/const/colors.dart';
@@ -158,7 +159,8 @@ Widget getUserForm(UserScreenViewModel model, BuildContext context,
           },
         ),
         CustomFormFieldDate(
-            initialValue: user.birthday,
+            initialValue: user.birthday ?? DateTime.now(),
+            mode: DateTimeFieldPickerMode.date,
             firstDate: DateTime(1900),
             label: 'Date de naissance',
             lastDate: DateTime.now(),

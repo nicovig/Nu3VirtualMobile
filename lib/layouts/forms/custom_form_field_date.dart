@@ -12,7 +12,8 @@ class CustomFormFieldDate extends StatelessWidget {
       this.initialValue,
       this.lastDate,
       required this.handleOnSaved,
-      required this.label})
+      required this.label,
+      required this.mode})
       : super(key: key);
 
   final Function(DateTime?) handleOnSaved;
@@ -20,6 +21,7 @@ class CustomFormFieldDate extends StatelessWidget {
   final String label;
   final DateTime? lastDate;
   final DateTime? initialValue;
+  final DateTimeFieldPickerMode mode;
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +30,9 @@ class CustomFormFieldDate extends StatelessWidget {
       child: DateTimeFormField(
         initialValue: initialValue,
         onDateSelected: handleOnSaved,
-        dateFormat: DateFormat('dd MM yyyy'),
+        dateFormat: DateFormat(mode == DateTimeFieldPickerMode.dateAndTime
+            ? 'dd MM yyyy HH:mm'
+            : 'dd MM yyyy'),
         firstDate: firstDate,
         lastDate: lastDate,
         decoration: InputDecoration(
@@ -43,7 +47,7 @@ class CustomFormFieldDate extends StatelessWidget {
           labelText: label,
           labelStyle: TextStyle(color: Colors.grey.shade600),
         ),
-        mode: DateTimeFieldPickerMode.date,
+        mode: mode,
       ),
     );
   }

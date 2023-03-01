@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
+import 'package:date_field/date_field.dart';
 import 'package:favorite_button/favorite_button.dart';
 import 'package:stacked/stacked.dart';
 
@@ -11,7 +12,6 @@ import 'package:nu3virtual/core/models/meal_model.dart';
 import 'package:nu3virtual/layouts/forms/custom_form_field.dart';
 import 'package:nu3virtual/layouts/forms/custom_form_field_date.dart';
 import 'package:nu3virtual/layouts/forms/custom_form_field_radio_buttons/custom_form_field_meal_type.dart';
-import 'package:nu3virtual/layouts/forms/custom_form_field_time.dart';
 import 'package:nu3virtual/layouts/screen_layouts/custom_appbar.dart';
 import 'package:nu3virtual/layouts/screen_layouts/custom_title.dart';
 import 'package:nu3virtual/layouts/screen_layouts/loading_box.dart';
@@ -89,7 +89,8 @@ class _MealFormScreenState extends State<MealFormScreen> {
                             handleOnPressedRadioButton: (MealTypeEnum value) =>
                                 snapshot.data?.type = value),
                         CustomFormFieldDate(
-                          initialValue: snapshot.data?.date,
+                          initialValue: snapshot.data?.date ?? DateTime.now(),
+                          mode: DateTimeFieldPickerMode.dateAndTime,
                           firstDate: DateTime(DateTime.now().year,
                               DateTime.now().month - 1, DateTime.now().day),
                           label: 'Date du repas',
@@ -101,22 +102,6 @@ class _MealFormScreenState extends State<MealFormScreen> {
                                   value.year,
                                   value.month,
                                   value.day,
-                                  snapshot.data?.date?.hour ?? 0,
-                                  snapshot.data?.date?.minute ?? 0);
-                            }
-                          },
-                        ),
-                        CustomFormFieldTime(
-                          initialTime: TimeOfDay(
-                              hour: snapshot.data?.date?.hour ?? 0,
-                              minute: snapshot.data?.date?.minute ?? 0),
-                          label: 'Heure du repas',
-                          handleOnChanged: (value) async {
-                            if (value != null) {
-                              snapshot.data?.date = DateTime(
-                                  snapshot.data?.date?.year ?? 0,
-                                  snapshot.data?.date?.month ?? 0,
-                                  snapshot.data?.date?.day ?? 0,
                                   value.hour,
                                   value.minute);
                             }
