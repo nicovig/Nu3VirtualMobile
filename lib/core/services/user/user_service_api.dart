@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:http/http.dart' as http;
 
@@ -12,24 +13,25 @@ class UserServiceApi extends UserService {
   final AuthenticationStore _authenticationStore = getIt<AuthenticationStore>();
   final UserStore _userStore = getIt<UserStore>();
 
-  static const Map<String, String> headers = {
-    "Content-Type": "application/json"
-  };
   static const hostedDeviceLocalhost =
       '10.0.2.2:'; //not localhost : https://stackoverflow.com/a/55786011/20009977
   static const apiUrl = '7251'; //NuVirtualApi url (not ISS server)
   static const controllerName = 'User';
   static Uri url = Uri.https(hostedDeviceLocalhost + apiUrl, controllerName);
 
+  Map<String, String> headers = {
+    "Content-Type": "application/json",
+    HttpHeaders.authorizationHeader: ''
+  };
+
   @override
   Future<bool> changePassword(
       int userId, String oldPassword, String newPassword) async {
-    Map<String, String> headers = {
-      "Content-Type": "application/json",
-      "userId": userId.toString(),
-      "oldPassword": oldPassword,
-      "newPassword": newPassword,
-    };
+    headers[HttpHeaders.authorizationHeader] =
+        await _authenticationStore.getToken();
+    headers['userId'] = userId.toString();
+    headers['oldPassword'] = oldPassword;
+    headers['newPassword'] = newPassword;
 
     Uri customUrl =
         Uri.https(hostedDeviceLocalhost + apiUrl, '$controllerName/password');
@@ -39,10 +41,10 @@ class UserServiceApi extends UserService {
 
   @override
   Future<bool> create(UserModel userToCreate, String password) async {
-    Map<String, String> headers = {
-      "Content-Type": "application/json",
-      "password": password
-    };
+    headers[HttpHeaders.authorizationHeader] =
+        await _authenticationStore.getToken();
+    headers['password'] = password;
+
     var response =
         await http.post(url, headers: headers, body: userToCreate.toJson());
     if (response.statusCode == 200 || response.statusCode == 204) {
@@ -53,10 +55,9 @@ class UserServiceApi extends UserService {
 
   @override
   Future<bool> isEmailUsable(String email) async {
-    Map<String, String> headers = {
-      "Content-Type": "application/json",
-      "email": email
-    };
+    headers[HttpHeaders.authorizationHeader] =
+        await _authenticationStore.getToken();
+    headers['email'] = email;
 
     Uri customUrl =
         Uri.https(hostedDeviceLocalhost + apiUrl, '$controllerName/email');
@@ -66,10 +67,10 @@ class UserServiceApi extends UserService {
 
   @override
   Future<String> update(UserModel userToUpdate, String password) async {
-    Map<String, String> headers = {
-      "Content-Type": "application/json",
-      "password": password
-    };
+    headers[HttpHeaders.authorizationHeader] =
+        await _authenticationStore.getToken();
+    headers['password'] = password;
+
     var response =
         await http.put(url, headers: headers, body: userToUpdate.toJson());
     if (response.statusCode == 200 || response.statusCode == 204) {
