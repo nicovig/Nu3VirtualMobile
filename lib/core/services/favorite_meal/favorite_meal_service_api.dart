@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:http/http.dart' as http;
 
@@ -10,22 +11,23 @@ import 'package:nu3virtual/service_locator.dart';
 class FavoriteMealServiceApi extends FavoriteMealService {
   final AuthenticationStore _authenticationStore = getIt<AuthenticationStore>();
 
-  static const Map<String, String> headers = {
-    "Content-Type": "application/json"
-  };
   static const hostedDeviceLocalhost =
       '10.0.2.2:'; //not localhost : https://stackoverflow.com/a/55786011/20009977
   static const apiUrl = '7251'; //NuVirtualApi url (not ISS server)
   static const controllerName = 'FavoriteMeal';
   static Uri url = Uri.https(hostedDeviceLocalhost + apiUrl, controllerName);
 
+  Map<String, String> headers = {
+    "Content-Type": "application/json",
+    HttpHeaders.authorizationHeader: ''
+  };
+
   @override
   Future<bool> addFavoriteMealToDailyMeals(
       int favoriteMealId, DateTime date, int userId) async {
-    Map<String, String> headers = {
-      "Content-Type": "application/json",
-      "userId": userId.toString()
-    };
+    headers[HttpHeaders.authorizationHeader] =
+        await _authenticationStore.getToken();
+    headers['userId'] = userId.toString();
 
     var response = await http.post(url,
         headers: headers,
@@ -39,6 +41,9 @@ class FavoriteMealServiceApi extends FavoriteMealService {
 
   @override
   Future<bool> deleteFavoriteMeal(int favoriteMealId) async {
+    headers[HttpHeaders.authorizationHeader] =
+        await _authenticationStore.getToken();
+
     Uri customUrl = Uri.https(hostedDeviceLocalhost + apiUrl,
         '$controllerName/${favoriteMealId.toString()}');
     var response = await http.delete(customUrl, headers: headers);
@@ -48,10 +53,9 @@ class FavoriteMealServiceApi extends FavoriteMealService {
   @override
   Future<List<FavoriteMealModel>> getAllFavoriteMealsByUserId(
       int userId) async {
-    Map<String, String> headers = {
-      "Content-Type": "application/json",
-      "userId": userId.toString(),
-    };
+    headers[HttpHeaders.authorizationHeader] =
+        await _authenticationStore.getToken();
+    headers['userId'] = userId.toString();
 
     var response = await http.get(
       url,
