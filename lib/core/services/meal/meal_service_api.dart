@@ -11,15 +11,16 @@ import 'package:nu3virtual/service_locator.dart';
 class MealServiceApi extends MealService {
   final AuthenticationStore _authenticationStore = getIt<AuthenticationStore>();
 
-  Map<String, String> headers = {
-    "Content-Type": "application/json",
-    HttpHeaders.authorizationHeader: ''
-  };
   static const hostedDeviceLocalhost =
       '10.0.2.2:'; //not localhost : https://stackoverflow.com/a/55786011/20009977
   static const apiUrl = '7251'; //NuVirtualApi url (not ISS server)
   static const controllerName = 'Meal';
   static Uri url = Uri.https(hostedDeviceLocalhost + apiUrl, controllerName);
+
+  Map<String, String> headers = {
+    "Content-Type": "application/json",
+    HttpHeaders.authorizationHeader: ''
+  };
 
   @override
   Future<bool> createMeal(MealModel meal) async {
