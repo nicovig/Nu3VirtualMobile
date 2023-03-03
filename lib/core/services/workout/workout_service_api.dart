@@ -3,9 +3,13 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 import 'package:nu3virtual/core/models/workout_model.dart';
+import 'package:nu3virtual/core/services/authentication/authentication_service.dart';
 import 'package:nu3virtual/core/services/workout/workout_service.dart';
+import 'package:nu3virtual/service_locator.dart';
 
 class WorkoutServiceApi extends WorkoutService {
+  final AuthenticationStore _authenticationStore = getIt<AuthenticationStore>();
+
   static const Map<String, String> headers = {
     "Content-Type": "application/json"
   };

@@ -1,14 +1,19 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:http/http.dart' as http;
 
 import 'package:nu3virtual/core/models/nutrition_goal_model.dart';
+import 'package:nu3virtual/core/services/authentication/authentication_service.dart';
 import 'package:nu3virtual/core/services/nutrition_goal/models/update_nutrition_goals_request.dart';
 import 'package:nu3virtual/core/services/nutrition_goal/nutrition_goal_service.dart';
+import 'package:nu3virtual/service_locator.dart';
 
 class NutritionServiceApi extends NutritionGoalService {
+  final AuthenticationStore _authenticationStore = getIt<AuthenticationStore>();
+
   static const Map<String, String> headers = {
-    "Content-Type": "application/json"
+    "Content-Type": "application/json",
   };
   static const hostedDeviceLocalhost =
       '10.0.2.2:'; //not localhost : https://stackoverflow.com/a/55786011/20009977
@@ -21,7 +26,8 @@ class NutritionServiceApi extends NutritionGoalService {
       int? userId) async {
     Map<String, String> headers = {
       "Content-Type": "application/json",
-      "userId": userId.toString()
+      "userId": userId.toString(),
+      HttpHeaders.authorizationHeader: '',
     };
 
     var response = await http.get(

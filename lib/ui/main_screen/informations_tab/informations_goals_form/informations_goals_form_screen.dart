@@ -39,10 +39,12 @@ class _InformationsGoalsFormScreenState
 
         nutritionGoalsListTile.add(
           Padding(
-            key: Key('$index'),
+            key: Key(MacronutrientTypeEnum.values[nutritionGoal.type ?? 0]
+                .toString()),
             padding: const EdgeInsets.only(top: 20),
             child: ListTile(
-              key: Key('$index'),
+              key: Key(MacronutrientTypeEnum.values[nutritionGoal.type ?? 0]
+                  .toString()),
               shape: RoundedRectangleBorder(
                 side: BorderSide(color: color_4, width: 1),
                 borderRadius: BorderRadius.circular(1),

@@ -48,7 +48,7 @@ class _InformationsTabScreenState extends State<InformationsTabScreen> {
                     DateFormat('EEEE d MMMM yyyy')
                         .format(model.currentDate)
                         .toString()),
-                const Divider(thickness: 0.8),
+                const Divider(height: 20, thickness: 0.8),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 20),
                   child: Row(

@@ -42,6 +42,24 @@ class AuthenticationServiceApi extends AuthenticationService {
     }
   }
 
+  @override
+  Future<bool> resetPassword(String email) async {
+    Map<String, String> headers = {
+      "Content-Type": "application/json",
+      "email": email
+    };
+
+    Uri newUrl =
+        Uri.https(hostedDeviceLocalhost + apiUrl, '$controllerName/email');
+
+    var response = await http.get(
+      newUrl,
+      headers: headers,
+    );
+
+    return response.statusCode == 200 || response.statusCode == 204;
+  }
+
   _saveAuthenticationResponse(String tokenModelString) {
     Map<String, dynamic> json = jsonDecode(tokenModelString);
     TokenModelResponse tokenModelResponse = TokenModelResponse.fromJson(json);

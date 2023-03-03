@@ -39,7 +39,11 @@ class AuthenticationScreenViewModel extends ChangeNotifier {
     return 'Le login ou le mot de passe sont vides';
   }
 
-  void setData() {
+  Future<bool> resetPassword(String email) {
+    return _authenticationService.resetPassword(email);
+  }
+
+  void setDate() {
     _dateStore.setDate(DateTime.now());
   }
 }

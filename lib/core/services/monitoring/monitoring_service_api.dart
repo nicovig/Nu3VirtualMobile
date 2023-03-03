@@ -1,9 +1,13 @@
 import 'package:http/http.dart' as http;
 
 import 'package:nu3virtual/core/models/monitoring_model.dart';
+import 'package:nu3virtual/core/services/authentication/authentication_service.dart';
 import 'package:nu3virtual/core/services/monitoring/monitoring_service.dart';
+import 'package:nu3virtual/service_locator.dart';
 
 class MonitoringServiceApi extends MonitoringService {
+  final AuthenticationStore _authenticationStore = getIt<AuthenticationStore>();
+
   static const Map<String, String> headers = {
     "Content-Type": "application/json"
   };
