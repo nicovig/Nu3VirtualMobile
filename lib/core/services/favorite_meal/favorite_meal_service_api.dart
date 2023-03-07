@@ -21,13 +21,13 @@ class FavoriteMealServiceApi extends FavoriteMealService {
           'date': date.toIso8601String(),
           'favoriteMealId': favoriteMealId
         }));
-    return response.statusCode == 200 || response.statusCode == 204;
+    return _httpService.isResponseOk(response.statusCode);
   }
 
   @override
   Future<bool> deleteFavoriteMeal(int favoriteMealId) async {
     var response = await _httpService.delete(controllerName, favoriteMealId);
-    return response.statusCode == 200 || response.statusCode == 204;
+    return _httpService.isResponseOk(response.statusCode);
   }
 
   @override

@@ -14,34 +14,38 @@ class MealServiceApi extends MealService {
   Future<bool> createMeal(MealModel meal) async {
     var response =
         await _httpService.post(controllerName, [], [], meal.toJson());
-    return response.statusCode == 200 || response.statusCode == 204;
+    return _httpService.isResponseOk(response.statusCode);
   }
 
   @override
   Future<bool> deleteMeal(int mealId) async {
     var response = await _httpService.delete(controllerName, mealId);
-    return response.statusCode == 200 || response.statusCode == 204;
+    return _httpService.isResponseOk(response.statusCode);
   }
 
   @override
   Future<List<MealModel>> getAllMealsByUserIdAndDate(
       int? userId, DateTime date) async {
+    List<MealModel> mealList = [];
     var response = await _httpService.get(controllerName, null,
         ['userId', 'date'], [userId.toString(), date.toIso8601String()]);
-    final List untypedObjects = jsonDecode(response.body);
-    final List<MealModel> mealList =
-        untypedObjects.map((e) => MealModel.fromJson(e)).toList();
+    if (_httpService.isResponseOk(response.statusCode)) {
+      final List untypedObjects = jsonDecode(response.body);
+      mealList = untypedObjects.map((e) => MealModel.fromJson(e)).toList();
+    }
     return mealList;
   }
 
   @override
-  Future<MealModel> getMealById(
-    int mealId,
-  ) async {
+  Future<MealModel> getMealById(int mealId) async {
+    MealModel meal = MealModel();
     var response =
         await _httpService.get(controllerName, 'meal/$mealId', [], []);
-    final Map<String, dynamic> untypedObject = jsonDecode(response.body);
-    final MealModel meal = MealModel.fromJson(untypedObject);
+
+    if (_httpService.isResponseOk(response.statusCode)) {
+      final Map<String, dynamic> untypedObject = jsonDecode(response.body);
+      meal = MealModel.fromJson(untypedObject);
+    }
     return meal;
   }
 
@@ -49,6 +53,6 @@ class MealServiceApi extends MealService {
   Future<bool> updateMeal(MealModel meal) async {
     var response =
         await _httpService.put(controllerName, [], [], meal.toJson());
-    return response.statusCode == 200 || response.statusCode == 204;
+    return _httpService.isResponseOk(response.statusCode);
   }
 }

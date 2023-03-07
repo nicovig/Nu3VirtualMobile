@@ -22,7 +22,7 @@ class UserServiceApi extends UserService {
         'password',
         ['userId', 'oldPassword', 'newPassword'],
         [userId.toString(), oldPassword, newPassword]);
-    return response.statusCode == 200 || response.statusCode == 204;
+    return _httpService.isResponseOk(response.statusCode);
   }
 
   @override
@@ -32,14 +32,14 @@ class UserServiceApi extends UserService {
     if (response.statusCode == 200 || response.statusCode == 204) {
       _saveCreateResponse(response.body);
     }
-    return response.statusCode == 200 || response.statusCode == 204;
+    return _httpService.isResponseOk(response.statusCode);
   }
 
   @override
   Future<bool> isEmailUsable(String email) async {
     var response =
         await _httpService.get(controllerName, 'email', ['email'], [email]);
-    return response.statusCode == 200 || response.statusCode == 204;
+    return _httpService.isResponseOk(response.statusCode);
   }
 
   @override
@@ -47,7 +47,7 @@ class UserServiceApi extends UserService {
     var response = await _httpService.put(
         controllerName, ['password'], [password], userToUpdate.toJson());
 
-    if (response.statusCode == 200 || response.statusCode == 204) {
+    if (_httpService.isResponseOk(response.statusCode)) {
       _saveCreateResponse(response.body);
       return "";
     } else {

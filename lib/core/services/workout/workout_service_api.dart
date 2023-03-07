@@ -14,32 +14,40 @@ class WorkoutServiceApi extends WorkoutService {
   Future<bool> createWorkout(WorkoutModel workout) async {
     var response =
         await _httpService.post(controllerName, [], [], workout.toJson());
-    return response.statusCode == 200 || response.statusCode == 204;
+    return _httpService.isResponseOk(response.statusCode);
   }
 
   @override
   Future<bool> deleteWorkout(int workoutId) async {
     var response = await _httpService.delete(controllerName, workoutId);
-    return response.statusCode == 200 || response.statusCode == 204;
+    return _httpService.isResponseOk(response.statusCode);
   }
 
   @override
   Future<List<WorkoutModel>> getAllWorkoutsByUserIdAndDate(
       int? userId, DateTime date) async {
+    List<WorkoutModel> workoutList = [];
     var response = await _httpService.get(controllerName, null,
         ['userId', 'date'], [userId.toString(), date.toIso8601String()]);
-    final List untypedObjects = jsonDecode(response.body);
-    final List<WorkoutModel> workoutList =
-        untypedObjects.map((e) => WorkoutModel.fromJson(e)).toList();
+
+    if (_httpService.isResponseOk(response.statusCode)) {
+      final List untypedObjects = jsonDecode(response.body);
+      workoutList =
+          untypedObjects.map((e) => WorkoutModel.fromJson(e)).toList();
+    }
     return workoutList;
   }
 
   @override
   Future<WorkoutModel> getWorkoutById(int workoutId) async {
+    WorkoutModel workout = WorkoutModel();
     var response =
         await _httpService.get(controllerName, 'workout/$workoutId', [], []);
-    final Map<String, dynamic> untypedObject = jsonDecode(response.body);
-    final WorkoutModel workout = WorkoutModel.fromJson(untypedObject);
+
+    if (_httpService.isResponseOk(response.statusCode)) {
+      final Map<String, dynamic> untypedObject = jsonDecode(response.body);
+      workout = WorkoutModel.fromJson(untypedObject);
+    }
     return workout;
   }
 
@@ -47,6 +55,6 @@ class WorkoutServiceApi extends WorkoutService {
   Future<bool> updateWorkout(WorkoutModel workout) async {
     var response =
         await _httpService.put(controllerName, [], [], workout.toJson());
-    return response.statusCode == 200 || response.statusCode == 204;
+    return _httpService.isResponseOk(response.statusCode);
   }
 }

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 
@@ -92,5 +93,17 @@ class HttpServiceApi extends HttpService {
     }
     Uri url = Uri.https(hostedDeviceLocalhost + apiUrl, controllerName);
     return http.put(url, headers: headers, body: body);
+  }
+
+  bool isResponseOk(int statusCode) {
+    if (statusCode >= 500) {
+      EasyLoading.showError(
+          'Erreur du service, veuillez contacter un administrateur');
+      return false;
+    } else if (statusCode >= 400) {
+      EasyLoading.showError('Erreur de droits, veuillez vous reconnecter');
+      return false;
+    }
+    return true;
   }
 }

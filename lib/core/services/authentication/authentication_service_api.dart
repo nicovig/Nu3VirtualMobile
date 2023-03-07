@@ -19,12 +19,12 @@ class AuthenticationServiceApi extends AuthenticationService {
     var response = await _httpService.post(
         controllerName, ['login', 'password'], [login, password], null);
 
+    bool isResponseOk = _httpService.isResponseOk(response.statusCode);
+
     try {
       _saveAuthenticationResponse(response.body);
       return AuthenticationResponse(
-          isAuthenticationOk:
-              response.statusCode == 200 || response.statusCode == 204,
-          error: '');
+          isAuthenticationOk: isResponseOk, error: '');
     } catch (e) {
       return AuthenticationResponse(
           isAuthenticationOk: false, error: response.body);
@@ -35,7 +35,7 @@ class AuthenticationServiceApi extends AuthenticationService {
   Future<bool> resetPassword(String email) async {
     var response =
         await _httpService.get(controllerName, 'email', ['email'], [email]);
-    return response.statusCode == 200 || response.statusCode == 204;
+    return _httpService.isResponseOk(response.statusCode);
   }
 
   _saveAuthenticationResponse(String tokenModelString) {

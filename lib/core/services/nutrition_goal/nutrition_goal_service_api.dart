@@ -27,13 +27,15 @@ class NutritionServiceApi extends NutritionGoalService {
   @override
   Future<List<NutritionGoalDisplayedModel>> getAllNutritionGoalsByUserIdAndDate(
       int? userId, DateTime date) async {
+    List<NutritionGoalDisplayedModel> nutritionGoalList = [];
     var response = await _httpService.get(controllerName, 'withDate',
         ['userId', 'date'], [userId.toString(), date.toIso8601String()]);
-
-    final List untypedObjects = jsonDecode(response.body);
-    final List<NutritionGoalDisplayedModel> nutritionGoalList = untypedObjects
-        .map((e) => NutritionGoalDisplayedModel.fromJson(e))
-        .toList();
+    if (_httpService.isResponseOk(response.statusCode)) {
+      final List untypedObjects = jsonDecode(response.body);
+      nutritionGoalList = untypedObjects
+          .map((e) => NutritionGoalDisplayedModel.fromJson(e))
+          .toList();
+    }
     return nutritionGoalList;
   }
 
@@ -42,6 +44,6 @@ class NutritionServiceApi extends NutritionGoalService {
       UpdateNutritionGoalsRequest updatedNutritionGoals) async {
     var response = await _httpService.put(
         controllerName, [], [], updatedNutritionGoals.toJson());
-    return response.statusCode == 200 || response.statusCode == 204;
+    return _httpService.isResponseOk(response.statusCode);
   }
 }
