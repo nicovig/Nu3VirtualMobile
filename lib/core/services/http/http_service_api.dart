@@ -29,8 +29,8 @@ class HttpServiceApi extends HttpService {
   }
 
   @override
-  Future<Response> get(String controllerName, List<String> addToHeaderNames,
-      List<String> addToHeaderValues) async {
+  Future<Response> get(String controllerName, String? routeSuffix,
+      List<String> addToHeaderNames, List<String> addToHeaderValues) async {
     headers[HttpHeaders.authorizationHeader] =
         await _authenticationStore.getToken();
 
@@ -39,18 +39,37 @@ class HttpServiceApi extends HttpService {
     }
 
     Uri url = Uri.https(hostedDeviceLocalhost + apiUrl, controllerName);
+
+    if (routeSuffix != null) {
+      url = Uri.https(
+          hostedDeviceLocalhost + apiUrl, '$controllerName/$routeSuffix');
+    }
     return http.get(url, headers: headers);
   }
 
   @override
-  Future<Response> patch() {
-    // TODO: implement patch
-    throw UnimplementedError();
+  Future<Response> patch(String controllerName, String? routeSuffix,
+      List<String> addToHeaderNames, List<String> addToHeaderValues) async {
+    headers[HttpHeaders.authorizationHeader] =
+        await _authenticationStore.getToken();
+
+    for (int index = 0; index < addToHeaderNames.length; index += 1) {
+      headers[addToHeaderNames[index]] = addToHeaderValues[index];
+    }
+
+    Uri url = Uri.https(hostedDeviceLocalhost + apiUrl, controllerName);
+
+    if (routeSuffix != null) {
+      url = Uri.https(
+          hostedDeviceLocalhost + apiUrl, '$controllerName/$routeSuffix');
+    }
+
+    return http.patch(url, headers: headers);
   }
 
   @override
   Future<Response> post(String controllerName, List<String> addToHeaderNames,
-      List<String> addToHeaderValues, String body) async {
+      List<String> addToHeaderValues, String? body) async {
     headers[HttpHeaders.authorizationHeader] =
         await _authenticationStore.getToken();
 
@@ -63,8 +82,15 @@ class HttpServiceApi extends HttpService {
   }
 
   @override
-  Future<Response> put() {
-    // TODO: implement put
-    throw UnimplementedError();
+  Future<Response> put(String controllerName, List<String> addToHeaderNames,
+      List<String> addToHeaderValues, String body) async {
+    headers[HttpHeaders.authorizationHeader] =
+        await _authenticationStore.getToken();
+
+    for (int index = 0; index < addToHeaderNames.length; index += 1) {
+      headers[addToHeaderNames[index]] = addToHeaderValues[index];
+    }
+    Uri url = Uri.https(hostedDeviceLocalhost + apiUrl, controllerName);
+    return http.put(url, headers: headers, body: body);
   }
 }

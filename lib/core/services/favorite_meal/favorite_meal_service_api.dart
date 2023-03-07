@@ -33,13 +33,12 @@ class FavoriteMealServiceApi extends FavoriteMealService {
   @override
   Future<List<FavoriteMealModel>> getAllFavoriteMealsByUserId(
       int userId) async {
-    var response =
-        await _httpService.get(controllerName, ['userId'], [userId.toString()]);
+    var response = await _httpService
+        .get(controllerName, null, ['userId'], [userId.toString()]);
 
     final List untypedObjects = jsonDecode(response.body);
     final List<FavoriteMealModel> mealList =
         untypedObjects.map((e) => FavoriteMealModel.fromJson(e)).toList();
-
     return mealList;
   }
 
