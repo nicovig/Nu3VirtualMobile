@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:http/http.dart' as http;
 
@@ -10,17 +11,22 @@ import 'package:nu3virtual/service_locator.dart';
 class WorkoutServiceApi extends WorkoutService {
   final AuthenticationStore _authenticationStore = getIt<AuthenticationStore>();
 
-  static const Map<String, String> headers = {
-    "Content-Type": "application/json"
-  };
   static const hostedDeviceLocalhost =
       '10.0.2.2:'; //not localhost : https://stackoverflow.com/a/55786011/20009977
   static const apiUrl = '7251'; //NuVirtualApi url (not ISS server)
   static const controllerName = 'Workout';
   static Uri url = Uri.https(hostedDeviceLocalhost + apiUrl, controllerName);
 
+  Map<String, String> headers = {
+    "Content-Type": "application/json",
+    HttpHeaders.authorizationHeader: ''
+  };
+
   @override
   Future<bool> createWorkout(WorkoutModel workout) async {
+    headers[HttpHeaders.authorizationHeader] =
+        await _authenticationStore.getToken();
+
     var response =
         await http.post(url, headers: headers, body: workout.toJson());
     return response.statusCode == 200 || response.statusCode == 204;
@@ -28,6 +34,9 @@ class WorkoutServiceApi extends WorkoutService {
 
   @override
   Future<bool> deleteWorkout(int workoutId) async {
+    headers[HttpHeaders.authorizationHeader] =
+        await _authenticationStore.getToken();
+
     Uri customUrl = Uri.https(hostedDeviceLocalhost + apiUrl,
         '$controllerName/${workoutId.toString()}');
     var response = await http.delete(customUrl, headers: headers);
@@ -37,11 +46,10 @@ class WorkoutServiceApi extends WorkoutService {
   @override
   Future<List<WorkoutModel>> getAllWorkoutsByUserIdAndDate(
       int? userId, DateTime date) async {
-    Map<String, String> headers = {
-      "Content-Type": "application/json",
-      "userId": userId.toString(),
-      "date": date.toIso8601String()
-    };
+    headers[HttpHeaders.authorizationHeader] =
+        await _authenticationStore.getToken();
+    headers['userId'] = userId.toString();
+    headers['date'] = date.toIso8601String();
 
     var response = await http.get(
       url,
@@ -57,6 +65,9 @@ class WorkoutServiceApi extends WorkoutService {
 
   @override
   Future<WorkoutModel> getWorkoutById(int workoutId) async {
+    headers[HttpHeaders.authorizationHeader] =
+        await _authenticationStore.getToken();
+
     Uri newUrl = Uri.https(
         hostedDeviceLocalhost + apiUrl, '$controllerName/workout/$workoutId');
     var response = await http.get(
@@ -72,6 +83,9 @@ class WorkoutServiceApi extends WorkoutService {
 
   @override
   Future<bool> updateWorkout(WorkoutModel workout) async {
+    headers[HttpHeaders.authorizationHeader] =
+        await _authenticationStore.getToken();
+
     var response =
         await http.put(url, headers: headers, body: workout.toJson());
     return response.statusCode == 200 || response.statusCode == 204;
