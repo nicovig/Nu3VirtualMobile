@@ -1,66 +1,40 @@
 import 'dart:convert';
-import 'dart:io';
-
-import 'package:http/http.dart' as http;
 
 import 'package:nu3virtual/core/models/favorite_meal_model.dart';
-import 'package:nu3virtual/core/services/authentication/authentication_service.dart';
 import 'package:nu3virtual/core/services/favorite_meal/favorite_meal_service.dart';
+import 'package:nu3virtual/core/services/http/http_service.dart';
 import 'package:nu3virtual/service_locator.dart';
 
 class FavoriteMealServiceApi extends FavoriteMealService {
-  final AuthenticationStore _authenticationStore = getIt<AuthenticationStore>();
+  final HttpService _httpService = getIt<HttpService>();
 
-  static const hostedDeviceLocalhost =
-      '10.0.2.2:'; //not localhost : https://stackoverflow.com/a/55786011/20009977
-  static const apiUrl = '7251'; //NuVirtualApi url (not ISS server)
   static const controllerName = 'FavoriteMeal';
-  static Uri url = Uri.https(hostedDeviceLocalhost + apiUrl, controllerName);
-
-  Map<String, String> headers = {
-    "Content-Type": "application/json",
-    HttpHeaders.authorizationHeader: ''
-  };
 
   @override
   Future<bool> addFavoriteMealToDailyMeals(
       int favoriteMealId, DateTime date, int userId) async {
-    headers[HttpHeaders.authorizationHeader] =
-        await _authenticationStore.getToken();
-    headers['userId'] = userId.toString();
-
-    var response = await http.post(url,
-        headers: headers,
-        body: jsonEncode({
+    var response = await _httpService.post(
+        controllerName,
+        ['userId'],
+        [userId.toString()],
+        jsonEncode({
           'date': date.toIso8601String(),
           'favoriteMealId': favoriteMealId
         }));
-
     return response.statusCode == 200 || response.statusCode == 204;
   }
 
   @override
   Future<bool> deleteFavoriteMeal(int favoriteMealId) async {
-    headers[HttpHeaders.authorizationHeader] =
-        await _authenticationStore.getToken();
-
-    Uri customUrl = Uri.https(hostedDeviceLocalhost + apiUrl,
-        '$controllerName/${favoriteMealId.toString()}');
-    var response = await http.delete(customUrl, headers: headers);
+    var response = await _httpService.delete(controllerName, favoriteMealId);
     return response.statusCode == 200 || response.statusCode == 204;
   }
 
   @override
   Future<List<FavoriteMealModel>> getAllFavoriteMealsByUserId(
       int userId) async {
-    headers[HttpHeaders.authorizationHeader] =
-        await _authenticationStore.getToken();
-    headers['userId'] = userId.toString();
-
-    var response = await http.get(
-      url,
-      headers: headers,
-    );
+    var response =
+        await _httpService.get(controllerName, ['userId'], [userId.toString()]);
 
     final List untypedObjects = jsonDecode(response.body);
     final List<FavoriteMealModel> mealList =
