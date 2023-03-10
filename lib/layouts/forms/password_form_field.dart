@@ -21,8 +21,7 @@ class _PasswordFormFieldState extends State<PasswordFormField> {
         padding: const EdgeInsets.all(8.0),
         child: TextFormField(
           onChanged: widget.onChanged,
-          //obscureText: !widget.isPasswordVisible,
-
+          obscureText: !widget.isPasswordVisible,
           decoration: InputDecoration(
             focusColor: color_3,
             focusedBorder: const UnderlineInputBorder(

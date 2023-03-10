@@ -182,7 +182,7 @@ class _FavoriteMealScreenState extends State<FavoriteMealScreen> {
 }
 
 getBorderDecoration() {
-  return BorderSide.lerp(BorderSide(color: Colors.blue.shade200, width: 2),
+  return BorderSide.lerp(BorderSide(color: color_4, width: 2),
       const BorderSide(style: BorderStyle.none), 0);
 }
 

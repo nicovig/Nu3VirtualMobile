@@ -50,7 +50,7 @@ class _InformationsTabScreenState extends State<InformationsTabScreen> {
                         .toString()),
                 const Divider(height: 20, thickness: 0.8),
                 Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 20),
+                  padding: const EdgeInsets.symmetric(vertical: 16),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: getDataGoalsWidgetList(model),
@@ -91,49 +91,73 @@ class _InformationsTabScreenState extends State<InformationsTabScreen> {
                               padding: EdgeInsets.only(
                                   bottom:
                                       spaceBetweenLinesPersonnalInformations),
-                              child: Text('Pseudo :'),
+                              child: Text(
+                                'Pseudo :',
+                                style: TextStyle(fontSize: 16),
+                              ),
                             ),
                             Padding(
                               padding: EdgeInsets.only(
                                   bottom:
                                       spaceBetweenLinesPersonnalInformations),
-                              child: Text('Prénom :'),
+                              child: Text(
+                                'Prénom :',
+                                style: TextStyle(fontSize: 16),
+                              ),
                             ),
                             Padding(
                               padding: EdgeInsets.only(
                                   bottom:
                                       spaceBetweenLinesPersonnalInformations),
-                              child: Text('Nom :'),
+                              child: Text(
+                                'Nom :',
+                                style: TextStyle(fontSize: 16),
+                              ),
                             ),
                             Padding(
                               padding: EdgeInsets.only(
                                   bottom:
                                       spaceBetweenLinesPersonnalInformations),
-                              child: Text('Genre :'),
+                              child: Text(
+                                'Genre :',
+                                style: TextStyle(fontSize: 16),
+                              ),
                             ),
                             Padding(
                               padding: EdgeInsets.only(
                                   bottom:
                                       spaceBetweenLinesPersonnalInformations),
-                              child: Text('Date de naissance :'),
+                              child: Text(
+                                'Date de naissance :',
+                                style: TextStyle(fontSize: 16),
+                              ),
                             ),
                             Padding(
                               padding: EdgeInsets.only(
                                   bottom:
                                       spaceBetweenLinesPersonnalInformations),
-                              child: Text('Taille :'),
+                              child: Text(
+                                'Taille :',
+                                style: TextStyle(fontSize: 16),
+                              ),
                             ),
                             Padding(
                               padding: EdgeInsets.only(
                                   bottom:
                                       spaceBetweenLinesPersonnalInformations),
-                              child: Text('Poids :'),
+                              child: Text(
+                                'Poids :',
+                                style: TextStyle(fontSize: 16),
+                              ),
                             ),
                             Padding(
                               padding: EdgeInsets.only(
                                   bottom:
                                       spaceBetweenLinesPersonnalInformations),
-                              child: Text('Taille :'),
+                              child: Text(
+                                'Taille :',
+                                style: TextStyle(fontSize: 16),
+                              ),
                             ),
                           ],
                         ),
@@ -146,50 +170,71 @@ class _InformationsTabScreenState extends State<InformationsTabScreen> {
                               padding: const EdgeInsets.only(
                                   bottom:
                                       spaceBetweenLinesPersonnalInformations),
-                              child: Text(model.user.pseudo ?? ''),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                  bottom:
-                                      spaceBetweenLinesPersonnalInformations),
-                              child: Text(model.user.firstName ?? ''),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                  bottom:
-                                      spaceBetweenLinesPersonnalInformations),
-                              child: Text(model.user.lastName ?? ''),
+                              child: Text(
+                                model.user.pseudo ?? '',
+                                style: const TextStyle(fontSize: 16),
+                              ),
                             ),
                             Padding(
                               padding: const EdgeInsets.only(
                                   bottom:
                                       spaceBetweenLinesPersonnalInformations),
                               child: Text(
-                                  getGenderEnumText(model.user.gender ?? 0)),
+                                model.user.firstName ?? '',
+                                style: const TextStyle(fontSize: 16),
+                              ),
                             ),
                             Padding(
                               padding: const EdgeInsets.only(
                                   bottom:
                                       spaceBetweenLinesPersonnalInformations),
-                              child: Text(getUserBirthday(model.user.birthday)),
+                              child: Text(
+                                model.user.lastName ?? '',
+                                style: const TextStyle(fontSize: 16),
+                              ),
                             ),
                             Padding(
                               padding: const EdgeInsets.only(
                                   bottom:
                                       spaceBetweenLinesPersonnalInformations),
-                              child:
-                                  Text(getUserHeight(model.user.height ?? 0)),
+                              child: Text(
+                                getGenderEnumText(model.user.gender ?? 0),
+                                style: const TextStyle(fontSize: 16),
+                              ),
                             ),
                             Padding(
                               padding: const EdgeInsets.only(
                                   bottom:
                                       spaceBetweenLinesPersonnalInformations),
-                              child:
-                                  Text(getUserWeight(model.user.weight ?? 0)),
+                              child: Text(
+                                getUserBirthday(model.user.birthday),
+                                style: const TextStyle(fontSize: 16),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  bottom:
+                                      spaceBetweenLinesPersonnalInformations),
+                              child: Text(
+                                getUserHeight(model.user.height ?? 0),
+                                style: const TextStyle(fontSize: 16),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  bottom:
+                                      spaceBetweenLinesPersonnalInformations),
+                              child: Text(
+                                getUserWeight(model.user.weight ?? 0),
+                                style: const TextStyle(fontSize: 16),
+                              ),
                             ),
                             Padding(
                               padding: const EdgeInsets.only(bottom: 3),
-                              child: Text(model.user.email ?? ''),
+                              child: Text(
+                                model.user.email ?? '',
+                                style: const TextStyle(fontSize: 16),
+                              ),
                             ),
                           ],
                         ),
@@ -197,7 +242,7 @@ class _InformationsTabScreenState extends State<InformationsTabScreen> {
                       ],
                     ),
                     const Padding(
-                      padding: EdgeInsets.only(top: 20),
+                      padding: EdgeInsets.only(top: 6),
                     ),
                     ElevatedButton(
                       onPressed: (() {
@@ -226,9 +271,12 @@ List<Widget> getDataGoalsWidgetList(InformationsTabViewModel model) {
     list.add(
       Column(
         children: [
-          Text(informationGoal.name ?? ''),
+          Text(
+            informationGoal.name ?? '',
+            style: const TextStyle(fontSize: 18),
+          ),
           Padding(
-            padding: EdgeInsets.fromLTRB(0, 8, 0, 10),
+            padding: const EdgeInsets.fromLTRB(0, 8, 0, 10),
             child: Text(
                 style: TextStyle(
                     fontSize: 22,
@@ -269,10 +317,10 @@ Color getMacronutrimentGoalPercentageColor(num? achievedRatio) {
       return color_red;
     }
     if (achievedRatio >= 0.33 && achievedRatio < 0.66) {
-      return color_1;
+      return Colors.orange.shade400;
     }
     if (achievedRatio >= 0.66 && achievedRatio <= 1) {
-      return color_2;
+      return const Color.fromARGB(255, 154, 255, 38);
     }
     if (achievedRatio > 1) {
       return color_5;

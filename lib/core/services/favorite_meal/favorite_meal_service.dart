@@ -5,6 +5,4 @@ abstract class FavoriteMealService {
       int favoriteMealId, DateTime date, int userId);
   Future<bool> deleteFavoriteMeal(int favoriteMealId);
   Future<List<FavoriteMealModel>> getAllFavoriteMealsByUserId(int userId);
-  Future<FavoriteMealModel> getFavoriteMealById(int favoriteMealId);
-  Future<bool> updateFavoriteMeal(FavoriteMealModel favoriteMealToUpdate);
 }

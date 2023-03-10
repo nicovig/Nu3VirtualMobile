@@ -73,6 +73,8 @@ class _WorkoutTabScreenState extends State<WorkoutTabScreen> {
                               context: context,
                               builder: (BuildContext context) {
                                 return AlertDialog(
+                                  actionsAlignment:
+                                      MainAxisAlignment.spaceEvenly,
                                   title: const Text("Supprimer"),
                                   content: Text(
                                       'Êtes vous sûr de vouloir supprimer la séance "${workout.name}"'),
@@ -97,7 +99,7 @@ class _WorkoutTabScreenState extends State<WorkoutTabScreen> {
                               },
                             );
                           },
-                          backgroundColor: const Color(0xFFFE4A49),
+                          backgroundColor: color_red,
                           foregroundColor: Colors.white,
                           icon: Icons.delete,
                           label: 'Supprimer')
@@ -107,7 +109,7 @@ class _WorkoutTabScreenState extends State<WorkoutTabScreen> {
                   SlidableAction(
                       onPressed: (BuildContext context) =>
                           model.openWorkoutScreen(context, workout.id ?? 0),
-                      backgroundColor: const Color(0xFF7BC043),
+                      backgroundColor: color_2,
                       foregroundColor: Colors.white,
                       icon: Icons.update,
                       label: 'Modifier')

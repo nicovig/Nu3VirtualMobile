@@ -72,8 +72,9 @@ class AuthenticationScreen extends StatelessWidget {
                         showDialog(
                           context: context,
                           builder: (context) => ForgotPasswordDialog(
-                            handleResetPassword: (email) async =>
-                                await model.resetPassword(email),
+                            handleResetPassword: (email) async {
+                              await model.resetPassword(email);
+                            },
                           ),
                         );
                       },

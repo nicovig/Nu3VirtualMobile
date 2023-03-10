@@ -12,6 +12,6 @@ class AuthenticationServiceStore extends AuthenticationStore {
   @override
   Future<void> saveToken(String token) async {
     final prefs = await SharedPreferences.getInstance();
-    prefs.setString('token', token);
+    prefs.setString('token', 'Bearer $token');
   }
 }

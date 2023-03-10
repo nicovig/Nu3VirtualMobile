@@ -104,9 +104,7 @@ class _InformationsGoalsFormScreenState
                               width: 40,
                               child: TextFormField(
                                 initialValue:
-                                    nutritionGoal.totalValue.toString() != '0'
-                                        ? nutritionGoal.totalValue.toString()
-                                        : '',
+                                    nutritionGoal.totalValue.toString(),
                                 decoration: const InputDecoration(
                                     border: InputBorder.none),
                                 keyboardType: TextInputType.number,
@@ -114,9 +112,8 @@ class _InformationsGoalsFormScreenState
                                   FilteringTextInputFormatter.digitsOnly
                                 ],
                                 onChanged: (value) {
-                                  if (value != null && value != "") {
-                                    nutritionGoal.totalValue = int.parse(value);
-                                  }
+                                  nutritionGoal.totalValue =
+                                      value != "" ? int.parse(value) : 0;
                                 },
                               ),
                             ),

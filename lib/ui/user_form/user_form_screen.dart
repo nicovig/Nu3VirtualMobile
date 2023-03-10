@@ -213,7 +213,7 @@ Widget getUserForm(UserScreenViewModel model, BuildContext context,
         isFromLogin
             ? PasswordFormField(
                 label: 'Répétez le mot de passe',
-                onChanged: (value) => model.firstPassword = value!,
+                onChanged: (value) => model.secondPassword = value!,
               )
             : const SizedBox.shrink(),
         ElevatedButton(
@@ -221,26 +221,21 @@ Widget getUserForm(UserScreenViewModel model, BuildContext context,
             backgroundColor: MaterialStateProperty.all(color_3),
           ),
           onPressed: () async {
-            if (!isFromLogin && model.firstPassword == '') {
-              EasyLoading.showError(
-                  'Le mot de passe est obligatoire pour modifier votre compte');
-            } else if (isFromLogin &&
-                (model.firstPassword == '' || model.secondPassword == '')) {
-              EasyLoading.showError(
-                  'Le mot de passe est obligatoire pour créer votre compte');
-            } else if (isFromLogin &&
-                model.firstPassword != model.secondPassword) {
-              EasyLoading.showError(
-                  'Les deux mots de passe doivent être identiques');
-            } else {
-              String message = await model.validate(
-                  context, user, model.firstPassword, isFromLogin);
-
-              if (message != "") {
-                EasyLoading.showError(message);
+            if (controlForms(context, user)) {
+              if (!isFromLogin && model.firstPassword == '') {
+                EasyLoading.showError(
+                    'Le mot de passe est obligatoire pour modifier votre compte');
+              } else if (isFromLogin &&
+                  (model.firstPassword == '' || model.secondPassword == '')) {
+                EasyLoading.showError(
+                    'Le mot de passe est obligatoire pour créer votre compte');
+              } else if (isFromLogin &&
+                  model.firstPassword != model.secondPassword) {
+                EasyLoading.showError(
+                    'Les deux mots de passe doivent être identiques');
               } else {
-                EasyLoading.showSuccess(
-                    '${isFromLogin ? 'Création' : 'Mise à jour'} du compte effectuée avec succès');
+                await model.validate(
+                    context, user, model.firstPassword, isFromLogin);
               }
             }
           },
@@ -249,4 +244,58 @@ Widget getUserForm(UserScreenViewModel model, BuildContext context,
       ],
     ),
   );
+}
+
+bool controlForms(BuildContext context, UserModel userModel) {
+  List<Widget> emptyFieldMessages = [];
+
+  if (userModel.lastName == null || userModel.lastName == '') {
+    emptyFieldMessages.add(const Text('- Nom de famille'));
+  }
+  if (userModel.firstName == null || userModel.firstName == '') {
+    emptyFieldMessages.add(const Text('- Prénom'));
+  }
+  if (userModel.pseudo == null || userModel.pseudo == '') {
+    emptyFieldMessages.add(const Text('- Pseudo'));
+  }
+  if (userModel.email == null || userModel.email == '') {
+    emptyFieldMessages.add(const Text('- Email'));
+  }
+
+  if (emptyFieldMessages.isNotEmpty) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          actionsAlignment: MainAxisAlignment.spaceEvenly,
+          title: const Text("Erreur de formulaire"),
+          content: SizedBox(
+            height: 120,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text('Les champs suivants sont manquants : '),
+                Padding(
+                  padding: EdgeInsets.only(top: 5),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: emptyFieldMessages,
+                  ),
+                )
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            ElevatedButton(
+              onPressed: () => Navigator.of(context).pop(false),
+              child: const Text("Fermer"),
+            )
+          ],
+        );
+      },
+    );
+
+    return false;
+  }
+  return true;
 }

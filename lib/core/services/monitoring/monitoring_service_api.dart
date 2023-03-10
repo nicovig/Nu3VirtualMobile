@@ -12,6 +12,7 @@ class MonitoringServiceApi extends MonitoringService {
   Future<MonitoringModel> getMonitoringByUserIdAndDate(
       int? userId, DateTime date) async {
     MonitoringModel monitoring = MonitoringModel(nutritionGoalsMonitoring: []);
+    var dateTest = date.toIso8601String();
     var response = await _httpService.get(controllerName, null,
         ['userId', 'date'], [userId.toString(), date.toIso8601String()]);
     if (_httpService.isResponseOk(response.statusCode)) {

@@ -1,8 +1,9 @@
 import 'dart:convert';
 
 import 'package:nu3virtual/core/models/user_model.dart';
-import 'package:nu3virtual/core/services/authentication/models/authentication_response_models.dart';
+import 'package:nu3virtual/core/services/authentication/models/authentication_login_response_model.dart';
 import 'package:nu3virtual/core/services/authentication/authentication_service.dart';
+import 'package:nu3virtual/core/services/authentication/models/authentication_reset_password_response.model.dart';
 import 'package:nu3virtual/core/services/http/http_service.dart';
 import 'package:nu3virtual/core/services/user/user_service_class.dart';
 import 'package:nu3virtual/service_locator.dart';
@@ -32,10 +33,19 @@ class AuthenticationServiceApi extends AuthenticationService {
   }
 
   @override
-  Future<bool> resetPassword(String email) async {
+  Future<ResetPasswordResponse> resetPassword(String email) async {
     var response =
         await _httpService.get(controllerName, 'email', ['email'], [email]);
-    return _httpService.isResponseOk(response.statusCode);
+
+    ResetPasswordResponse resetResponse = ResetPasswordResponse(
+        isEmailSent: false, isPasswordReset: false, isUserExist: false);
+
+    if (_httpService.isResponseOk(response.statusCode)) {
+      final Map<String, dynamic> untypedObject = jsonDecode(response.body);
+      resetResponse = ResetPasswordResponse.fromJson(untypedObject);
+    }
+
+    return resetResponse;
   }
 
   _saveAuthenticationResponse(String tokenModelString) {

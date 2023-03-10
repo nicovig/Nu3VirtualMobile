@@ -90,6 +90,8 @@ class _MealTabScreenState extends State<MealTabScreen> {
                               context: context,
                               builder: (BuildContext context) {
                                 return AlertDialog(
+                                  actionsAlignment:
+                                      MainAxisAlignment.spaceEvenly,
                                   title: const Text("Supprimer"),
                                   content: Text(
                                       'Êtes vous sûr de vouloir supprimer le repas "${meal.name}"'),

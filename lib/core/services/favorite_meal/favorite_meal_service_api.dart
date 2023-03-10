@@ -41,16 +41,4 @@ class FavoriteMealServiceApi extends FavoriteMealService {
         untypedObjects.map((e) => FavoriteMealModel.fromJson(e)).toList();
     return mealList;
   }
-
-  @override
-  Future<FavoriteMealModel> getFavoriteMealById(int favoriteMealId) {
-    // TODO: implement getFavoriteMealById
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<bool> updateFavoriteMeal(FavoriteMealModel favoriteMealToUpdate) {
-    // TODO: implement updateFavoriteMeal
-    throw UnimplementedError();
-  }
 }
