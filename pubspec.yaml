@@ -40,6 +40,7 @@ dependencies:
   carousel_slider: ^4.2.1
   event: ^2.1.2
   url_launcher: ^6.1.9
+  flutter_native_splash: ^2.2.19
   http:
   stacked:
   shared_preferences:

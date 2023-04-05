@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:nu3virtual/ui/authentication_screen/authentication_forgot_password/authentication_forgot_password_dialog.dart';
 
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:stacked/stacked.dart';
 
 import 'package:nu3virtual/core/const/colors.dart';
@@ -9,15 +9,30 @@ import 'package:nu3virtual/layouts/forms/custom_form_field.dart';
 import 'package:nu3virtual/layouts/forms/password_form_field.dart';
 import 'package:nu3virtual/layouts/screen_layouts/custom_appbar.dart';
 import 'package:nu3virtual/layouts/screen_layouts/custom_title.dart';
+import 'package:nu3virtual/ui/authentication_screen/authentication_forgot_password/authentication_forgot_password_dialog.dart';
 import 'package:nu3virtual/ui/authentication_screen/authentication_screen_viewmodel.dart';
 
-class AuthenticationScreen extends StatelessWidget {
-  //constructor
-  AuthenticationScreen({Key? key, required this.title}) : super(key: key);
+class AuthenticationScreen extends StatefulWidget {
+  const AuthenticationScreen({super.key});
 
+  @override
+  // ignore: library_private_types_in_public_api
+  _AuthenticationScreenState createState() => _AuthenticationScreenState();
+}
+
+class _AuthenticationScreenState extends State<AuthenticationScreen> {
   bool isPasswordVisible = false;
-  final String title;
   final _formKey = GlobalKey<FormState>();
+
+  @override
+  void initState() {
+    super.initState();
+    initialization();
+  }
+
+  void initialization() async {
+    FlutterNativeSplash.remove();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +44,8 @@ class AuthenticationScreen extends StatelessWidget {
         EasyLoading.dismiss(animation: false);
       },
       builder: (context, model, child) => Scaffold(
-        appBar: CustomAppBar(title: title, displayDisconnectionButton: false),
+        appBar: CustomAppBar(
+            title: 'Nu3Virtual', displayDisconnectionButton: false),
         body: SingleChildScrollView(
           child: SafeArea(
             child: Form(

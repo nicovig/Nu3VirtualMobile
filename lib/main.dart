@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 
 import 'package:nu3virtual/core/const/colors.dart';
 import 'package:nu3virtual/core/const/routes.dart';
@@ -18,7 +19,9 @@ void main() {
   configEasyLoading();
   setupServiceLocator();
   HttpOverrides.global = MyHttpOverrides();
-  runApp(MyApp());
+  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -26,25 +29,26 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: 'NuVirtual',
-        theme: ThemeData(
-          appBarTheme: AppBarTheme(color: color_4),
-          colorScheme: ThemeData().colorScheme.copyWith(
-                primary: color_4,
-              ),
-        ),
-        home: AuthenticationScreen(title: 'NuVirtual'),
-        routes: {
-          favoriteMealsRoute: (context) => FavoriteMealScreen(),
-          homeRoute: (context) => MainScreen(),
-          mealRoute: (context) => MealFormScreen(),
-          modifyUserRoute: (context) => UserScreen(),
-          nutritionGoalsRoute: (context) => InformationsGoalsFormScreen(),
-          workoutRoute: (context) => WorkoutFormScreen()
-        },
-        color: Colors.white,
-        debugShowCheckedModeBanner: false,
-        builder: EasyLoading.init());
+      title: 'NuVirtual',
+      theme: ThemeData(
+        appBarTheme: const AppBarTheme(color: color_4),
+        colorScheme: ThemeData().colorScheme.copyWith(
+              primary: color_4,
+            ),
+      ),
+      home: const AuthenticationScreen(),
+      routes: {
+        favoriteMealsRoute: (context) => FavoriteMealScreen(),
+        homeRoute: (context) => MainScreen(),
+        mealRoute: (context) => const MealFormScreen(),
+        modifyUserRoute: (context) => UserScreen(),
+        nutritionGoalsRoute: (context) => InformationsGoalsFormScreen(),
+        workoutRoute: (context) => WorkoutFormScreen()
+      },
+      color: Colors.white,
+      debugShowCheckedModeBanner: false,
+      builder: EasyLoading.init(),
+    );
   }
 }
 

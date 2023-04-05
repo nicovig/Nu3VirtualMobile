@@ -17,9 +17,8 @@ import 'package:nu3virtual/layouts/screen_layouts/custom_title.dart';
 import 'package:nu3virtual/layouts/screen_layouts/loading_box.dart';
 import 'package:nu3virtual/ui/main_screen/meal_tab/meal_form/meal_form_viewmodel.dart';
 
-// ignore: must_be_immutable
 class MealFormScreen extends StatefulWidget {
-  MealFormScreen({super.key});
+  const MealFormScreen({super.key});
 
   @override
   _MealFormScreenState createState() => _MealFormScreenState();

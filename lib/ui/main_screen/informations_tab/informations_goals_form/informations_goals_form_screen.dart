@@ -168,7 +168,7 @@ class _InformationsGoalsFormScreenState
         future: model.loadData(),
         builder: (BuildContext context,
                 AsyncSnapshot<List<NutritionGoalDisplayedModel>> snapshot) =>
-            Scaffold(
+            Scaffold(          
           appBar: CustomAppBar(
               title: snapshot.hasData
                   ? '${model.user.firstName} - ${model.user.weight}kg'
