@@ -77,10 +77,11 @@ class _MealTabScreenState extends State<MealTabScreen> {
               final meal = model.meals[index];
               var subtitle =
                   'P: ${meal.protein}g G: ${meal.carbohydrate}g C: ${meal.calorie}g';
-              return Slidable(
-                key: Key('meal-index-$index'),
-                // The start action pane is the one at the left or the top side.
-                startActionPane: ActionPane(
+              return Card(
+                child: Slidable(
+                  key: Key('meal-index-$index'),
+                  // The start action pane is the one at the left or the top side.
+                  startActionPane: ActionPane(
                     // A motion is a widget used to control how the pane animates.
                     motion: const ScrollMotion(),
                     children: [
@@ -120,20 +121,24 @@ class _MealTabScreenState extends State<MealTabScreen> {
                           foregroundColor: Colors.white,
                           icon: Icons.delete,
                           label: 'Supprimer')
-                    ]),
-                endActionPane:
-                    ActionPane(motion: const ScrollMotion(), children: [
-                  SlidableAction(
-                      onPressed: (BuildContext context) =>
-                          model.openMealScreen(context, meal.id ?? 0),
-                      backgroundColor: color_2,
-                      foregroundColor: Colors.white,
-                      icon: Icons.update,
-                      label: 'Modifier')
-                ]),
-                child: ListTile(
-                  title: Text(meal.name ?? ''),
-                  subtitle: Text(subtitle),
+                    ],
+                  ),
+                  endActionPane: ActionPane(
+                    motion: const ScrollMotion(),
+                    children: [
+                      SlidableAction(
+                          onPressed: (BuildContext context) =>
+                              model.openMealScreen(context, meal.id ?? 0),
+                          backgroundColor: color_2,
+                          foregroundColor: Colors.white,
+                          icon: Icons.update,
+                          label: 'Modifier')
+                    ],
+                  ),
+                  child: ListTile(
+                    title: Text(meal.name ?? ''),
+                    subtitle: Text(subtitle),
+                  ),
                 ),
               );
             },

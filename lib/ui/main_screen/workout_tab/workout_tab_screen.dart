@@ -7,6 +7,8 @@ import 'package:event/event.dart';
 import 'package:stacked/stacked.dart';
 
 import 'package:nu3virtual/core/const/colors.dart';
+import 'package:nu3virtual/core/helpers/helpers.dart';
+import 'package:nu3virtual/core/models/workout_model.dart';
 import 'package:nu3virtual/ui/main_screen/workout_tab/workout_tab_viewmodel.dart';
 
 // ignore: must_be_immutable
@@ -55,17 +57,18 @@ class _WorkoutTabScreenState extends State<WorkoutTabScreen> {
           ListView.builder(
             scrollDirection: Axis.vertical,
             shrinkWrap: true,
-            physics: ScrollPhysics(),
+            physics: const ScrollPhysics(),
             itemCount: model.workouts.length,
             itemBuilder: (context, index) {
               final workout = model.workouts[index];
               var subtitle = workout.notes ?? '';
-              return Slidable(
-                key: Key('workout-index-$index'),
-                // The start action pane is the one at the left or the top side.
-                startActionPane: ActionPane(
+              return Card(
+                child: Slidable(
+                  key: Key('workout-index-$index'),
+                  // The start action pane is the one at the left or the top side.
+                  startActionPane: ActionPane(
                     // A motion is a widget used to control how the pane animates.
-                    motion: const ScrollMotion(),
+                    motion: const StretchMotion(),
                     children: [
                       SlidableAction(
                           onPressed: (BuildContext context) {
@@ -103,20 +106,24 @@ class _WorkoutTabScreenState extends State<WorkoutTabScreen> {
                           foregroundColor: Colors.white,
                           icon: Icons.delete,
                           label: 'Supprimer')
-                    ]),
-                endActionPane:
-                    ActionPane(motion: const ScrollMotion(), children: [
-                  SlidableAction(
-                      onPressed: (BuildContext context) =>
-                          model.openWorkoutScreen(context, workout.id ?? 0),
-                      backgroundColor: color_2,
-                      foregroundColor: Colors.white,
-                      icon: Icons.update,
-                      label: 'Modifier')
-                ]),
-                child: ListTile(
-                  title: Text(workout.name ?? ''),
-                  subtitle: Text(subtitle),
+                    ],
+                  ),
+                  endActionPane: ActionPane(
+                    motion: const StretchMotion(),
+                    children: [
+                      SlidableAction(
+                          onPressed: (BuildContext context) =>
+                              model.openWorkoutScreen(context, workout.id ?? 0),
+                          backgroundColor: color_2,
+                          foregroundColor: Colors.white,
+                          icon: Icons.update,
+                          label: 'Modifier'),
+                    ],
+                  ),
+                  child: ListTile(
+                    title: getWorkoutTitle(workout),
+                    subtitle: Text(subtitle),
+                  ),
                 ),
               );
             },
@@ -124,5 +131,16 @@ class _WorkoutTabScreenState extends State<WorkoutTabScreen> {
         ],
       ),
     );
+  }
+}
+
+Widget getWorkoutTitle(WorkoutModel workout) {
+  String workoutName = workout.name ?? '';
+  if (workout.timeInSeconds != 0) {
+    int minutes = getMinutesWithTimeInSeconds(workout.timeInSeconds);
+    int seconds = getSecondsRemains(workout.timeInSeconds);
+    return Text('$workoutName - $minutes min $seconds sec');
+  } else {
+    return Text(workoutName);
   }
 }

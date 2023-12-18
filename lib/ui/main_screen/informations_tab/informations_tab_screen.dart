@@ -38,7 +38,6 @@ class _InformationsTabScreenState extends State<InformationsTabScreen> {
         model.initData(widget.dateChangeEvent);
       },
       builder: (context, model, child) => Container(
-        color: color_1,
         child: Column(
           children: [
             Padding(

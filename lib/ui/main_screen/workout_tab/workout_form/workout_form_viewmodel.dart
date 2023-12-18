@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:nu3virtual/core/const/routes.dart';
+import 'package:nu3virtual/core/helpers/helpers.dart';
 import 'package:nu3virtual/core/models/user_model.dart';
 import 'package:nu3virtual/core/models/workout_model.dart';
 import 'package:nu3virtual/core/services/date/date_service_class.dart';
@@ -21,21 +22,13 @@ class WorkoutFormViewModel extends ChangeNotifier {
   int seconds = 0;
 
   getMinutes(int? timeInSeconds) {
-    if (timeInSeconds != null) {
-      var result = (timeInSeconds / 60).round();
-      minutes = result;
-      return result.toString();
-    }
-    return 0;
+    minutes = getMinutesWithTimeInSeconds(timeInSeconds);
+    return minutes.toString();
   }
 
   getSeconds(int? timeInSeconds) {
-    if (timeInSeconds != null) {
-      var result = timeInSeconds % 60;
-      seconds = result;
-      return result.toString();
-    }
-    return 0;
+    seconds = getSecondsRemains(timeInSeconds);
+    return seconds.toString();
   }
 
   handleValidation(BuildContext context) async {

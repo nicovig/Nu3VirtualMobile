@@ -6,7 +6,6 @@ import 'package:intl/intl.dart';
 import 'package:nu3virtual/core/models/meal_model.dart';
 
 MealTypeEnum getDefaultMealType() {
-  var test = TimeOfDay.now().hour;
   if (TimeOfDay.now().hour <= 10) {
     return MealTypeEnum.breakfast;
   }
@@ -22,8 +21,22 @@ MealTypeEnum getDefaultMealType() {
   return MealTypeEnum.dinner;
 }
 
+int getMinutesWithTimeInSeconds(int? timeInSeconds) {
+  if (timeInSeconds != null) {
+    return (timeInSeconds / 60).round();
+  }
+  return 0;
+}
+
 String getMonitoringDate(DateTime date, context) {
   return DateFormat('EEEE d MMMM yyyy').format(date); //mecredi 30 novembre 2022
+}
+
+int getSecondsRemains(int? timeInSeconds) {
+  if (timeInSeconds != null) {
+    return timeInSeconds % 60;
+  }
+  return 0;
 }
 
 num _getWeekNumber(DateTime date) {
